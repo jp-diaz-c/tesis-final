@@ -1,0 +1,21 @@
+book_filename: "tesis"
+repo: https://github.com/jp-diaz-c/tesis-pregrado
+language:
+  label:
+    fig: 'Figura '
+    tab: 'Tabla '
+#  ui:
+#    chapter_name: " "
+delete_merged_file: true
+output_dir: "docs"
+rmd_files: [
+  "index.Rmd",
+  "01-intro.Rmd",
+  "02-antecedentes.Rmd",
+  "03-metod.Rmd",
+  "04-analisis.Rmd",
+  "05-discusion.Rmd",
+  "06-conclusiones.Rmd",
+  "07-biblio.Rmd"  
+]
+

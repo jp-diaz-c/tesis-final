@@ -1,0 +1,1183 @@
+% This is the Reed College LaTeX thesis template. Most of the work
+% for the document class was done by Sam Noble (SN), as well as this
+% template. Later comments etc. by Ben Salzberg (BTS). Additional
+% restructuring and APA support by Jess Youngberg (JY).
+% Your comments and suggestions are more than welcome; please email
+% them to cus@reed.edu
+%
+% See https://www.reed.edu/cis/help/LaTeX/index.html for help. There are a
+% great bunch of help pages there, with notes on
+% getting started, bibtex, etc. Go there and read it if you're not
+% already familiar with LaTeX.
+%
+% Any line that starts with a percent symbol is a comment.
+% They won't show up in the document, and are useful for notes
+% to yourself and explaining commands.
+% Commenting also removes a line from the document;
+% very handy for troubleshooting problems. -BTS
+
+% As far as I know, this follows the requirements laid out in
+% the 2002-2003 Senior Handbook. Ask a librarian to check the
+% document before binding. -SN
+
+%%
+%% Preamble
+%%
+% \documentclass{<something>} must begin each LaTeX document
+\documentclass[12pt,twoside]{templates/facsothesis}
+% Packages are extensions to the basic LaTeX functions. Whatever you
+% want to typeset, there is probably a package out there for it.
+% Chemistry (chemtex), screenplays, you name it.
+% Check out CTAN to see: https://www.ctan.org/
+%%
+\ifxetex
+  \usepackage{polyglossia}
+  \setmainlanguage{spanish}
+  % Tabla en lugar de cuadro
+  \gappto\captionsspanish{\renewcommand{\tablename}{Tabla}
+          \renewcommand{\listtablename}{Índice de tablas}}
+\else
+  \usepackage[spanish,es-tabla]{babel}
+\fi
+%\usepackage[spanish]{babel}
+\usepackage{graphicx,latexsym}
+\usepackage{amsmath}
+\usepackage{amssymb,amsthm}
+\usepackage{longtable,booktabs,setspace}
+\usepackage{chemarr} %% Useful for one reaction arrow, useless if you're not a chem major
+\usepackage[hyphens]{url}
+% Added by CII
+%\usepackage{hyperref}
+\usepackage[colorlinks = true,
+            linkcolor = blue,
+            urlcolor  = blue,
+            citecolor = blue,
+            anchorcolor = blue]{hyperref}
+\usepackage{lmodern}
+\usepackage{float}
+\floatplacement{figure}{H}
+% End of CII addition
+\usepackage{rotating}
+\usepackage{placeins} % para fijar la posición de las tablas con \FloatBarrier
+
+
+\usepackage[]{natbib}
+
+
+% Next line commented out by CII
+%\usepackage{biblatex}
+%\usepackage{natbib}
+% Comment out the natbib line above and uncomment the following two lines to use the new
+% biblatex-chicago style, for Chicago A. Also make some changes at the end where the
+% bibliography is included.
+%\usepackage{biblatex-chicago}
+%\bibliography{thesis}
+
+
+% Added by CII (Thanks, Hadley!)
+% Use ref for internal links
+\renewcommand{\hyperref}[2][???]{\autoref{#1}}
+\def\chapterautorefname{Chapter}
+\def\sectionautorefname{Section}
+\def\subsectionautorefname{Subsection}
+% End of CII addition
+
+% Added by CII
+\usepackage{caption}
+\captionsetup{width=5in}
+% End of CII addition
+
+% \usepackage{times} % other fonts are available like times, bookman, charter, palatino
+
+% Syntax highlighting #22
+
+% To pass between YAML and LaTeX the dollar signs are added by CII
+\title{Factores asociados a la confianza política: una aproximación empírica a partir del caso chileno}
+\author{Juan Pablo Díaz}
+% The month and year that you submit your FINAL draft TO THE LIBRARY (May or December)
+\date{2025-12-18}
+\division{}
+\advisor{Profesor/a guía: Juan Carlos Castillo}
+\institution{Universidad de Chile}
+\degree{Memoria de Título - Carrera de Sociología}
+%If you have two advisors for some reason, you can use the following
+% Uncommented out by CII
+% End of CII addition
+
+%%% Remember to use the correct department!
+\department{}
+% if you're writing a thesis in an interdisciplinary major,
+% uncomment the line below and change the text as appropriate.
+% check the Senior Handbook if unsure.
+%\thedivisionof{The Established Interdisciplinary Committee for}
+% if you want the approval page to say "Approved for the Committee",
+% uncomment the next line
+%\approvedforthe{Committee}
+
+% Added by CII
+%%% Copied from knitr
+%% maxwidth is the original width if it's less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+%Added by @MyKo101, code provided by @GerbrichFerdinands
+
+\setlength\parindent{0pt}
+
+
+% Added by CII
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\Acknowledgements{
+
+}
+
+\Dedication{
+
+}
+
+\Preface{
+
+}
+
+\Abstract{
+
+}
+
+	\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\usepackage{multicol}
+\usepackage{hhline}
+\newlength\Oldarrayrulewidth
+\newlength\Oldtabcolsep
+\usepackage{hyperref}
+% End of CII addition
+%%
+%% End Preamble
+%%
+%
+\let\chaptername\relax
+\begin{document}
+\bibliographystyle{apalike}
+% Everything below added by CII
+  \maketitle
+
+\frontmatter % this stuff will be roman-numbered
+\pagestyle{empty} % this removes page numbers from the frontmatter
+
+
+
+%  \hypersetup{linkcolor=black}
+  \setcounter{tocdepth}{1}
+  \setlength{\parskip}{0pt}
+  \tableofcontents
+
+\setlength\parskip{1em plus 0.1em minus 0.2em}
+
+  \listoftables
+
+  \listoffigures
+
+
+
+\mainmatter % here the regular arabic numbering starts
+\pagestyle{fancyplain} % turns page numbering back on
+
+\chapter*{Resumen}\label{resumen}
+\addcontentsline{toc}{chapter}{Resumen}
+
+La confianza política es un requisito básico para la estabilidad democrática. La preocupación por sus bajos niveles globales ha expandido el estudio sobre los factores asociados a su construcción. La gran mayoría de la literatura apunta a dos fuentes: la percepción del desempeño institucional (situación económica, corrupción y justicia distributiva) y la confianza generalizada, asumiendo que la primera predomina sobre la segunda. Se argumenta que estas investigaciones han subestimado la importancia de la confianza generalizada por dos razones. Primero, se ha ignorado su rol moderador en la relación entre percepción del desempeño y confianza política, pasando por alto que la confianza generalizada sería un lente a través del cual los individuos interpretarían el mundo de forma positiva, y por tanto serían menos sensibles a disminuir su confianza política en función de malos desempeños. Segundo, dichos estudios se han llevado a cabo en sociedades con altos niveles de confianza generalizada, por lo que subestiman la influencia que puede tener este atributo en sociedades con bajos niveles de este tipo de confianza. El caso chileno resulta el terreno perfecto para poner a prueba estas afirmaciones, debido a que en este país conviven bajos niveles de confianza política y generalizada con un buen desempeño institucional en distintas áreas. De esta forma, el presente estudio busca analizar el impacto que la percepción del desempeño y la confianza generalizada tienen sobre la confianza política de los ciudadanos chilenos. Para esto, se llevan a cabo una serie de modelos de regresión lineal múltiple (MCO) sobre datos secundarios extraídos de la Encuesta Latinobarómetro en su ola del 2024 (\emph{n} = 944).
+
+Los resultados confirman la importancia de la confianza generalizada, así como su efecto moderador en la relación que la percepción de la situación económica y de la justicia distributiva tienen con la confianza política. Sin embargo, se exhibe que la confianza generalizada, en vez de reducir la importancia del desempeño en los juicios de confianza política, potencia su efecto. A su vez, se encuentra que la percepción de la corrupción y la justicia distributiva juegan un papel especialmente importante en la construcción de los juicios de confianza en este país. Desde lo sustantivo, se discuten estos resultados aludiendo al ideal igualitario que estaría asociado a la confianza en los otros, el cual llevaría a los individuos a interpretar los buenos desempeños en estas áreas como avances hacia la consecución de este ideal. En relación al caso chileno, se interpreta lo encontrado a la luz de tres procesos que hace unos años vive la sociedad chilena: la seguidilla de casos de corrupción pública con alto impacto mediático, la politización de las desigualdades y la erosión del lazo social. Se concluye que lo encontrado para Chile sirve como antecedente para avanzar hacia el estudio en torno a cómo interactúan ambos grupos de factores (percepción del desempeño y confianza generalizada) en la confianza política.
+
+\chapter*{Agradecimientos}\label{agradecimientos}
+\addcontentsline{toc}{chapter}{Agradecimientos}
+
+A mis papás, hermanos y familia extendida, por brindarme apoyo emocional y por enseñarme el valor del esfuerzo y la dedicación.
+
+A mis amigos y a Mariana, por acompañarme durante este largo proceso, siempre dispuestos a retroalimentar mis inquietudes intelectuales y a escuchar mis angustias y alegrías.
+
+Al profesor Juan Carlos Castillo, por dedicar su tiempo a orientar mi trabajo por las sendas de la investigación empírica. Al profesor Manuel Antonio Garretón, por estimular en mí las reflexiones necesarias para responder las preguntas que aquí se plantean.
+
+\chapter{Introducción}\label{introducciuxf3n}
+
+Desde hace más de medio siglo los distintos regímenes democráticos alrededor del mundo han sufrido una baja sostenida en la confianza que los ciudadanos depositan en sus instituciones políticas \citep{valgardssonCrisisPoliticalTrust2025}. Preocupados por la supervivencia de este régimen político, los estudiosos de la democracia han destacado durante todo este tiempo la importancia que este tipo de confianza tiene para su estabilidad y buen funcionamiento \citep{zmerliPoliticalTrust2022}. Desde el punto de vista de las instituciones, se argumenta que, cuando son percibidas como confiables, logran una mayor efectividad en la implementación de servicios públicos, facilitan el consenso de los perdedores electorales, reducen la evasión fiscal y poseen una mayor resistencia a periodos de crisis económicas y sociales \citep{vandermeerDeeplyRootedConcern2017, newtonSocialPoliticalTrust2017, citrinPoliticalTrustCynical2018}. A su vez, se plantea que los ciudadanos que confían en sus instituciones tendrían una mayor tendencia a obedecer la ley, a interesarse en política y a respaldar políticas públicas que impliquen un riesgo o sacrificio personal \citep{citrinPoliticalTrustCynical2018, zmerliPoliticalTrust2022}. Por el contrario, se asume comúnmente que los ciudadanos que no confían en sus instituciones políticas serían más propensos a radicalizarse y a impulsar cambios que podrían significar a largo plazo un peligro para la supervivencia de la democracia \citep{andersonSensitiveLeftImpervious2008}. En este sentido, la confianza política se concibe como una condición previa para la consolidación de un régimen democrático sostenible en el tiempo \citep{vandermeerDeeplyRootedConcern2017}.
+
+En función de estas consideraciones sobre la importancia de este fenómeno para la democracia se argumenta que, a fin de revertir esta crisis de confianza, es necesario primero entender en profundidad los diversos factores que influyen en la forma en que los ciudadanos construyen sus juicios de confianza política \footnote{El concepto central de esta investigación es el de confianza política. Como se verá en la introducción, este se entiende como un tipo particular de confianza dirigido hacia las instituciones del régimen político. En función de lo anterior, y siguiendo las prácticas comunes en la literatura internacional sobre el tema, se utilizará este concepto como un equivalente al de ``confianza en las instituciones políticas'' o ``confianza en las instituciones''.}. A grandes rasgos, la literatura indica que habrían dos grupos de perspectivas para explicar sus orígenes y variaciones \citep{mishlerWhatAreOrigins2001, vandermeerDeeplyRootedConcern2017, zmerliPoliticalTrust2022}. Por un lado, se encuentra la perspectiva institucional o ``desde arriba'', la cual pone énfasis en los procesos endógenos a la institucionalidad. Según esta orientación, la confianza en las instituciones políticas tendría su origen en una evaluación racional de su desempeño en cumplir con las expectativas de los ciudadanos en distintos ámbitos \citep{citrinPoliticalTrustCynical2018, hardinWeWantTrust1999, vandermeerEconomicPerformancePolitical2018}. En particular, se tiende a aludir a tres fenómenos que han demostrado ser constitutivos de la percepción del desempeño institucional, como lo son la situación económica nacional, la corrupción y la justicia distributiva. Por otro lado, se observa una perspectiva sociocultural o ``desde abajo'' ligada al concepto de capital social, la cual se centra en factores exógenos a las instituciones como lo son el conjunto de orientaciones valóricas y disposiciones a confiar, cooperar y solidarizar con los otros que los individuos adquieren en los procesos de socialización primaria durante las etapas tempranas de la vida \citep{putnamMakingDemocracyWork1993}. Según esta perspectiva, la presencia de estos valores llevaría a los individuos a involucrarse con los otros y a cooperar en función de objetivos comunes, lo cual se traduciría en una tendencia a confiar en las instituciones políticas. En especifico, se pone énfasis en la importancia de la confianza generalizada como la piedra angular de este grupo de factores, en cuanto sería el motor que impulsa la disposición a participar de la vida en común \citep{uslanerDemocracySocialCapital1999, zmerliSocialTrustAttitudes2008}.
+
+Al evaluar la pertinencia de ambas perspectivas desde el punto de vista empírico, gran parte de las investigaciones previas han llevado a la misma conclusión: tanto la percepción del desempeño en estas áreas como la confianza generalizada se asocian con la confianza política, aunque el efecto de la primera tiende a ser más intenso que el de la segunda. No obstante, estas investigaciones presentan, al menos, dos limitaciones importantes que resulta necesario superar para obtener una comprensión más profunda de este fenómeno. En primer lugar, gran parte de estos estudios conciben la relación entre confianza generalizada y confianza política como un vínculo \emph{exclusivamente} directo. Lo anterior ignora que la confianza generalizada es un lente a través del cual los individuos interpretan el mundo y que, por tanto, el verdadero potencial de este fenómeno está en moderar la relación entre percepción del desempeño y confianza política \citep{oskarssonGeneralizedTrustPolitical2010}. Lo anterior sobre la base de que la confianza en los otros se origina en una disposición moral que orienta la interpretación que los ciudadanos llevan a cabo de los fenómenos que les rodean, y que se traduciría en que aquellos que confían en los demás serían menos susceptibles a disminuir su confianza en las instituciones políticas en función de malos desempeños \citep{oskarssonGeneralizedTrustPolitical2010, uslanerMoralFoundationsTrust2002}. En segundo lugar, la mayoría de los estudios que han comparado detenidamente ambas perspectivas se han realizado en países con altos niveles comparativos de confianza en los otros. En contraste, en esta investigación se plantea la posibilidad de que estos resultados varíen en democracias que funcionan al alero de sociedades con bajos niveles de confianza generalizada \citep{bargstedSocialPoliticalTrust2023}.
+
+Para avanzar en estas limitaciones, el caso chileno presenta un terreno particularmente fértil. Lo anterior debido a que, en contraste con lo que la perspectiva institucional invitaría a pensar, el país ha presenciado por bastante tiempo la paradoja entre la persistencia de un desempeño institucional positivo y la profundización de un extendido descontento frente a las instituciones políticas \citep{huneeusDemocraciaSemisoberanaChile2014, pnudChile20Anos2017}. Así, por un lado, desde el retorno a la democracia el Estado ha sabido mejorar la condiciones materiales de los chilenos en diversos aspectos, a la vez que ha reducido la desigualdad de ingresos y ha mantenido niveles comparativamente bajos de corrupción política \citep{coppedgeVDemDatasetV152025, pnudInformeSobreDesarrollo2024, worldbankPovertyInequalityPlatform2025}. Por el otro lado, todas las instituciones políticas han presenciado una disminución sustantiva de los niveles de confianza que les otorga la ciudadanía en los últimos 30 años \citep{bargstedCulturaPoliticaDiagnostico2018, corporacionlatinobarometroLatinobarometroSeriesTiempo1995}. La diferencias exhibidas entre desempeño y confianza política invitan a pensar que en esta crisis de legitimidad pueden estar influyendo factores exógenos a la institucionalidad política. En particular, se afirma la importancia que podrían tener los bajos niveles de confianza generalizada en cuanto reflejo de un proceso de erosión del lazo social chileno \citep{araujoDesmesurasDesencantosIrritaciones2019, araujoCircuitoDesapegoNeoliberalismo2025a}.
+
+Aunque la pregunta por la confianza política ya ha sido abordada por otros investigadores con anterioridad \citep[véase][]{bargstedSocialPoliticalTrust2023, moralesquirogaEvaluandoConfianzaInstitucional2008, riffoQueInfluyeConfianza2019, saldanazunigaConfianzaInstitucionesPoliticas2019, segoviaMalaiseDemocracyChile2016, segoviaConfianzaInstitucionesPoliticas2008}, se argumenta que estos estudios dejan algunos vacíos que buscarán ser llenados por la presente investigación. En primer lugar, se observa una brecha temporal, en cuanto la mayoría de los estudios mencionados (a excepción de Bargsted et al. \citeyearpar{bargstedSocialPoliticalTrust2023}) se construyen sobre datos levantados con anterioridad al 2019. A lo largo de este periodo de tiempo que va desde el 2019 a la fecha, han ocurrido un conjunto de hitos como el estallido social, la pandemia de covid-19 y el fracaso de los procesos constituyentes. Debido a la relevancia de estos fenómenos en la configuración del panorama sociopolítico nacional, es importante explorar la posibilidad de variaciones en la magnitud de las relaciones encontradas con anterioridad. En segundo lugar, se identifica un déficit local en el estudio de algunos posibles determinantes de la confianza política que podrían ser particularmente importantes para el caso chileno, como la percepción de justicia distributiva, la corrupción y la confianza interpersonal. Por último, se reconoce que ninguno de estos estudios lleva a cabo una comparación directa entre, por un lado, los factores asociados al desempeño institucional y, por el otro, la confianza generalizada.
+
+Al alero de esta problematización, el presente estudio buscará analizar el impacto que tanto la percepción del desempeño institucional como la confianza generalizada tienen sobre la confianza política. A su vez, se pretende explorar posibles variaciones en la relación entre la percepción del desempeño institucional y la confianza política según el nivel de confianza generalizada presente en cada uno de los individuos. Para esto, se aplicará un modelo de regresión lineal con Mínimos Cuadrados Ordinarios (MCO) sobre datos extraídos de la Encuesta Latinobarómetro en su versión del 2024 (\emph{n} = 944). De esta forma, se buscará estimar la intensidad y significancia estadística de cada una de las relaciones planteadas, a modo de contrastar las hipótesis que guiarán esta investigación.
+
+A continuación se presentará un apartado con la pregunta de investigación y los objetivos que guiarán esta investigación. Luego, se discutirán los conceptos principales y las hipótesis que se buscarán contrastar. Por último, se detallará la metodología a utilizar.
+
+\section{Pregunta de investigación}\label{pregunta-de-investigaciuxf3n}
+
+¿Cómo influyen la percepción del desempeño institucional y la confianza generalizada en la confianza política de los ciudadanos chilenos?
+
+\section{Objetivo general}\label{objetivo-general}
+
+Analizar la influencia que la percepción del desempeño institucional y la confianza generalizada tienen en la confianza política de los ciudadanos chilenos.
+
+\section{Objetivos específicos}\label{objetivos-especuxedficos}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Analizar el rol de la percepción del desempeño institucional en la confianza política de los ciudadanos chilenos.
+\item
+  Examinar el rol de la confianza generalizada en la confianza política de los ciudadanos chilenos.
+\item
+  Explorar si varía o no la relación entre la percepción del desempeño institucional y la confianza política al moderar por el nivel de confianza generalizada de los ciudadanos chilenos.
+\end{enumerate}
+
+\chapter{Antecedentes conceptuales y empíricos}\label{antecedentes-conceptuales-y-empuxedricos}
+
+\section{Confianza política}\label{confianza-poluxedtica}
+
+La confianza política se define como ``la expectativa de que las instituciones políticas funcionen según reglas justas incluso en ausencia de escrutinio constante''\footnote{Traducción propia.} \citep[p.16]{marienMeasuringPoliticalTrust2013}. Para clarificar este concepto, resulta pertinente entenderlo como parte de un conjunto de actitudes y comportamientos que funcionan como orientaciones evaluativas hacia los componentes del sistema político (comunidad nacional, régimen político y autoridades políticas), y que se pueden englobar en la idea de apoyo político \citep{eastonSystemsAnalysisPolitical1965, eastonReassessmentConceptPolitical1975}. Para Easton \citetext{\citeyear{eastonSystemsAnalysisPolitical1965}; \citeyear{eastonReassessmentConceptPolitical1975}}, el apoyo político se divide en apoyo específico, orientado hacia las autoridades en función de la evaluación de su desempeño, y apoyo difuso, dirigido hacia los principios y valores que subyacen al sistema político y a la comunidad que lo alberga. Mientras el primero oscila constantemente en función de la contingencia sociopolítica, el segundo se entiende como una ``reserva de actitudes favorables o de buena voluntad'' \citep[p.~273]{eastonSystemsAnalysisPolitical1965} que lleva a que los individuos acepten y toleren los distintos \emph{outputs} del sistema político aun cuando vayan en contra de sus intereses particulares. Si se opta por entender ambos tipos de apoyo como los extremos de un \emph{continuum} \citep{norrisDemocraticDeficitCritical2011}, es posible clasificar la confianza política como un indicador intermedio de apoyo, dirigido a las instituciones políticas del régimen \citep{monterogibertConfianzaSocialConfianza2008, zmerliPoliticalTrust2022}.
+
+Situar la confianza política en el concepto más amplio de apoyo político permite distinguirla respecto a las orientaciones dirigidas a otros componentes del sistema político. Como ya se dijo, la confianza política es un tipo de actitud que va dirigido a un componente específico del sistema político, a saber, las instituciones del régimen político. En función de lo anterior, se asume que la relación que los ciudadanos entablan con estas instituciones es analíticamente distinta a la que mantienen tanto con los actores que las ocupan como con los principios abstractos que las rigen \citep{daltonDemocraticChallengesDemocratic2004, eastonReassessmentConceptPolitical1975, norrisDemocraticDeficitCritical2011}. Por un lado, la confianza política no se limita a un tipo de apoyo específico que los ciudadanos brindan a las instituciones en función de la evaluación que llevan a cabo del desempeño de las autoridades en un momento determinado. Esto implica reconocer que un ciudadano podría, por ejemplo, rechazar al presidente del senado y apoyar la institución del congreso. Esto, sin embargo, tampoco significa que la relación de los individuos con las instituciones se construya de forma independiente a estos desempeños, sino que, la capacidad de las instituciones para cumplir con determinados \emph{outputs} a lo largo de un periodo estable de tiempo tiene como consecuencia que los ciudadanos confíen en estas más allá de los actores que la ocupen. Por otro lado, un individuo podría desconfiar de sus instituciones políticas sin que esto implique un rechazo a los valores que las orientan. A su vez, lo anterior implica asumir que para que las instituciones sean confiables a ojos de los individuos no es suficiente con tener una cultura política fuerte que ponga énfasis en el respeto al andamiaje político, aun cuando esto pueda ayudar \citep{almondCulturaCivicaEstudio1970, eastonReassessmentConceptPolitical1975}.
+
+A partir de lo recientemente expuesto cabe preguntarse si los individuos se relacionan con todas las instituciones políticas por igual o si las juzgan con distintos criterios y expectativas. Desde el punto de vista teórico, se argumenta con Rothstein y Stolle \citeyearpar{rothsteinStateSocialCapital2008} que es posible dividir en dos grupos el complejo entramado de instituciones que forman el sistema político. Por un lado, se encontrarían las instituciones políticas (gobierno, congreso y partidos políticos), las cuales tendrían como principio operar a partir de criterios partisanos y, por ende, en favor de la ideología que representan. Por otro lado, estarían el poder judicial y la policía, cuyo objetivo sería el de implementar la ley de forma imparcial. En este sentido, los autores argumentan que los ciudadanos evaluarían las primeras en función de su posición ideológica, mientras que a las segundas se les evaluaría en función de su neutralidad. Dicha distinción lleva a que algunos estudiosos del postmaterialismo como Inglehart \citeyearpar{inglehartTrustWellbeingDemocracy1999} afirmen que los ciudadanos de las sociedades más desarrolladas rechazarían en mayor grado las instituciones de implementación, en cuanto estas se regirían por valores autoritarios. No obstante la relevancia de esta diferenciación en el plano teórico, en el plano empírico distintas investigaciones han llegado a la conclusión de que los individuos las evalúan de forma similar, siendo la policía la que en mayor grado evalúan diferente \citep{marienMeasuringPoliticalTrust2013, zmerliObjectsPoliticalSocial2017}. Teniendo en cuenta lo anterior, en esta investigación se optará por usar el concepto de instituciones políticas para referirse al conjunto de instituciones que forman parte del régimen político, es decir, el ejecutivo, el congreso, el poder judicial y los partidos políticos, dejando fuera a la policía.
+
+Habiendo delimitado el concepto de confianza política, se pasará a discutir en los siguientes apartados las dos perspectivas desde las que se ha llevado a cabo el estudio de sus factores asociados, a saber, la institucional y la sociocultural. A su vez, se presentarán las hipótesis que guiarán el análisis empírico.
+
+\section{Percepción del desempeño institucional}\label{percepciuxf3n-del-desempeuxf1o-institucional}
+
+Quienes adoptan la perspectiva institucional señalan que la confianza política depende de la evaluación que llevan a cabo los ciudadanos sobre el desempeño de las instituciones del régimen político \citep{vandermeerEconomicPerformancePolitical2018}. Para corroborar esta afirmación, es posible adoptar distintos indicadores de desempeño político y económico. En el marco del presente estudio, se hará énfasis en el uso de tres: desempeño económico, corrupción y desigualdad en la distribución de ingresos. El enfoque sobre estos tres fenómenos se fundamenta en la importancia que estos tienen en el contexto chileno y latinoamericano, presentándose constantemente como una amenaza al buen funcionamiento de la democracia y posicionándose entre las prioridades de sus ciudadanos \citep{munckLatinAmericanPolitics2022a}.
+
+Desde esta perspectiva, la confianza política se concibe como un vínculo estratégico que se puede resumir bajo la famosa fórmula ``A confía en B para que haga x''\footnote{Traducción propia.} \citep[p.26]{hardinWeWantTrust1999}. Esto implica que dicho concepto es relacional, en cuanto contempla un sujeto que confía y un objeto en quien se confía, y situacional, en cuanto refiere a cierto tipo de acción o contexto en el que se desenvuelve esta relación \citep{citrinPoliticalTrustCynical2018, vandermeerEconomicPerformancePolitical2018, vandermeerDeeplyRootedConcern2017}. A su vez, asume que entablar una relación de confianza implica un riesgo para el sujeto, el cual se encuentra en una relación de incertidumbre en torno al comportamiento que va a llevar a cabo el objeto en el que deposita su confianza. Es por esto que, desde el punto de vista de la confianza estratégica, la decisión de confiar depende en gran medida de la información y la experiencia que tenga el sujeto sobre el comportamiento del objeto de confianza \citep{uslanerMoralFoundationsTrust2002, uslanerStudyTrust2017}. Así, podríamos decir que, para que A confíe en B para que haga x, A tiene que tener alguna certeza de que, desde la base de información sobre experiencias pasadas con B y con objetos del mismo tipo, B efectivamente es capaz de llevar a cabo x.
+
+En este sentido, se argumenta que la confianza en las instituciones políticas depende de la evaluación que los ciudadanos hagan de su desempeño en llevar a cabo determinados \emph{outputs} en concordancia con las expectativas que tienen sobre estas. A grandes rasgos, los individuos en los regímenes democráticos valoran a sus instituciones en función de su capacidad para garantizar prosperidad económica para amplios sectores de la población, mediante un contexto económico y político en concordancia con valores como la justicia, la transparencia y la equidad \citep{andersonSensitiveLeftImpervious2008, vandermeerEconomicPerformancePolitical2018, vandermeerDeeplyRootedConcern2017, zmerliPoliticalTrust2022, zmerliIncomeInequalityDistributive2015}. Desde esta perspectiva, la confianza política se concibe como fundamentalmente endógena a las instituciones del régimen, y se encuentra susceptible de variar en función de los cambios económicos, sociales y políticos que ocurren al interior de un país \citep{newtonSocialPoliticalTrust2017}.
+
+\subsection{Desempeño económico}\label{desempeuxf1o-econuxf3mico}
+
+En la literatura existe un consenso global en torno a la importancia que tiene para la confianza política la evaluación que los individuos llevan a cabo del ámbito económico \citep{eastonReassessmentConceptPolitical1975, leeEconomicPerformanceIncome2020, mishlerWhatAreOrigins2001, norrisDemocraticDeficitCritical2011, oskarssonGeneralizedTrustPolitical2010, vandermeerEconomicPerformancePolitical2018, wangGovernmentPerformanceCorruption2016}. Lo anterior implicaría que los ciudadanos valorarían sus instituciones en función de la capacidad que estas tienen de satisfacer sus necesidades materiales mediante el incremento en los estándares de vida de la población \citep{quarantaDoesEconomyReally2016, thomassenSupportDemocraticValues1998, mcallisterEconomicPerformanceGovernments1999}. A este respecto, es necesario tener en cuenta que esta evaluación no necesariamente se condice con lo informado por indicadores macroeconómicos objetivos \citep{vandermeerEconomicPerformancePolitical2018}. Esto se debe a que la percepción que los individuos construyen en este ámbito se ve mediada por otros factores como los medios de comunicación y las expectativas individuales \citep{mcallisterEconomicPerformanceGovernments1999}. A su vez, esta depende del indicador (tasa de desempleo, crecimiento económico, inflación, salarios reales, etc.) al que los individuos le den más importancia en un momento determinado \citep{daltonDemocraticChallengesDemocratic2004}. Teniendo esto en cuenta, las investigaciones previas han ocupado tanto mediciones macroeconómicas particulares como indicadores sobre la percepción general que los individuos tienen del estado de la economía. Respecto a la pertinencia de las primeras, las investigaciones arrojan resultados mixtos \citep{andersonCorruptionPoliticalAllegiances2003, leeEconomicPerformanceIncome2020, mishlerWhatAreOrigins2001, vandermeerPoliticalTrustEvaluation2017}. Por el contrario, los indicadores de percepción del desempeño económico han demostrado consistentemente tener efecto sobre la confianza política. Lo anterior se ha comprobado en diversos contextos, como lo son las regiones de América del Norte y Europa Occidental \citep{oskarssonGeneralizedTrustPolitical2010, torcalDeclinePoliticalTrust2014a, torcalPoliticalTrustWestern2017}, Europa Oriental \citep{mishlerWhatAreOrigins2001}, África \citep{stoyanTrustGovernmentInstitutions2016} y América Latina \citep{bargstedPoliticalTrustLatin2017, mainwaringStateDeficienciesParty2006, mattesSocialPoliticalTrust2018, stoyanTrustGovernmentInstitutions2016, zmerliIncomeInequalityDistributive2015}. A su vez, la presencia de este efecto se ha mantenido en el caso chileno \citep{riffoQueInfluyeConfianza2019, saldanazunigaConfianzaInstitucionesPoliticas2019, segoviaMalaiseDemocracyChile2016}.
+
+En paralelo, también es importante dar cuenta de que la percepción del desempeño económico puede articularse desde dos puntos de vista \citep{vandermeerEconomicPerformancePolitical2018}: por un lado, desde una perspectiva sociotrópica que pone el foco en las condiciones económicas nacionales; por otro lado, desde una perspectiva egotrópica que pone el foco en las circunstancias económicas individuales. En el marco de su relación con la confianza política, se argumenta que este indicador es evaluado en mayor grado a partir de criterios colectivos (sociotrópicos) que de criterios individuales (egotrópicos) \citep{mcallisterEconomicPerformanceGovernments1999}. Esto último es apoyado por la evidencia empírica, en la cual las evaluaciones sociotrópicas han demostrado un mayor efecto en la confianza institucional que las evaluaciones egotrópicas \citep{mainwaringStateDeficienciesParty2006, torcalDeclinePoliticalTrust2014a, torcalResponsivenessPerformanceCorruption2021, vandermeerEconomicPerformancePolitical2018}. De esta forma, para efectos de esta investigación conviene centrarse en la evaluación que los individuos llevan a cabo de la situación económica nacional. No obstante lo anterior, es necesario aclarar que esta evaluación sociotrópica del desempeño económico puede manifestarse en distintas temporalidades, ya sea en retrospectiva, en el presente o respecto al futuro. Las percepciones derivadas de estas, aunque relacionadas, podrían diferir entre sí \citep{torcalResponsivenessPerformanceCorruption2021}. Pese a la importancia de la temporalidad en la evaluación, las investigaciones previas no le han prestado suficiente atención, utilizando indicadores que adoptan una u otra temporalidad sin mayor justificación \citep{mainwaringStateDeficienciesParty2006, leeEconomicPerformanceIncome2020, oskarssonGeneralizedTrustPolitical2010}. En contraste, en esta investigación se buscará medir la percepción de la situación económica nacional teniendo en cuenta la evaluación que los individuos llevan a cabo de este fenómeno en estas tres etapas: pasado, presente y futuro.
+
+Teniendo en cuenta estas consideraciones, se presenta la primera hipótesis de la investigación:
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{H1: La percepción de la situación económica nacional se relaciona positivamente con la confianza política. Es decir, los ciudadanos que evalúan de mejor forma la situación económica del país tendrán un mayor nivel de confianza política que los ciudadanos que evalúan de peor forma esta situación.}
+\end{itemize}
+
+\subsection{Corrupción}\label{corrupciuxf3n}
+
+Junto con el desempeño económico, la literatura ha destacado la importancia de la relación entre la corrupción y la confianza política. En concordancia con otras investigaciones, el concepto de corrupción se entiende como ``el uso indebido del cargo público para beneficio privado''\footnote{Traducción propia.} \citep[p.32]{sandholtzAccountingCorruptionEconomic2000}. A partir de esta definición es posible afirmar que este fenómeno socava principios básicos de la democracia, como son la transparencia en la toma de decisiones, la justicia e imparcialidad en la aplicación de leyes y el acceso equitativo al proceso político -como participante directo o como beneficiario- \citep{andersonCorruptionPoliticalAllegiances2003}. En contraste con estos ideales normativos, la corrupción entrega ventajas a unos sobre otros, debilitando así la creencia de que las instituciones y sus ocupantes actúan en beneficio del interés general y no orientados hacia intereses particulares \citep{beesleyCorruptionInstitutionalTrust2022, uslanerCorruptionInequalityTrap2013}. Inicialmente, el mal uso de los recursos públicos y de las ventajas asociadas a posiciones al interior del aparato político-estatal puede ser atribuible a la deshonestidad de algunos funcionarios, lo que no implicaría necesariamente una peor evaluación de las instituciones políticas. Sin embargo, la regularización de episodios de este tipo a lo largo del tiempo llevaría a que los ciudadanos perciban estos comportamientos como parte del funcionamiento de las instituciones y, por tanto, disminuiría la confianza que depositan en estas \citep{beesleyCorruptionInstitutionalTrust2022}. En este sentido, los individuos que identifican el mal uso de fondos públicos para fines privados como una práctica recurrente al interior de una institución, van a calificar a esta de deshonesta e injusta, tendiendo a confiar menos en ella \citep{uslanerCorruptionInequalityTrap2013}.
+
+Diversas investigaciones han estudiado el vínculo que habría entre la corrupción y la confianza en las instituciones. A diferencia de lo ocurrido con el desempeño económico, para el caso de la corrupción tanto indicadores a nivel macro como la percepción de los individuos han demostrado tener un efecto significativo en el nivel de confianza política. Aunque demuestra ser importante en países con niveles relativamente menores de corrupción \citep{andersonCorruptionPoliticalAllegiances2003, vandermeerPoliticalTrustEvaluation2017, wangGovernmentPerformanceCorruption2016}, este fenómeno cobra mayor relevancia en regiones con altos niveles de corrupción pública, como lo es el caso de América Latina. En este sentido, distintos estudios han revelado la centralidad que tiene la corrupción en la evaluación que los ciudadanos latinoamericanos hacen del desempeño de sus instituciones \citep{boothLegitimacyPuzzleLatin2009, mainwaringStateDeficienciesParty2006, morrisCorruptionTrustTheoretical2010, seligsonImpactCorruptionRegime2002a, stoyanTrustGovernmentInstitutions2016}. Para el caso chileno, al igual que en lo respectivo al desempeño económico, la tendencia global y regional se mantiene, por lo que se encuentra un efecto significativo de la corrupción pública en la confianza institucional \citep{riffoQueInfluyeConfianza2019, saldanazunigaConfianzaInstitucionesPoliticas2019, segoviaMalaiseDemocracyChile2016}.
+
+En base a lo anterior, se propone la segunda hipótesis de la investigación:
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{H2: El progreso en reducir la corrupción se relaciona positivamente con la confianza política. Lo anterior significa que los ciudadanos que perciban un mayor progreso en reducir la corrupción en el país van a tener un mayor nivel de confianza política respecto a los ciudadanos que perciban un menor progreso en reducir la corrupción.}
+\end{itemize}
+
+\subsection{Justicia distributiva}\label{justicia-distributiva}
+
+Por último, en las últimas décadas han surgido distintos autores que afirman la importancia que las percepciones de la distribución de ingresos tendrían en la construcción de los juicios de confianza en las instituciones políticas \citep{vandermeerEconomicPerformancePolitical2018}. Este planteamiento se erige, en concordancia con la teoría de la privación relativa, sobre el supuesto de que los individuos evalúan los productos de las instituciones políticas en referencia a estándares sobre lo que constituiría un resultado justo \citep{tylerSocialJustice2015}. En el caso de la desigualdad en la distribución de la riqueza, estos estándares estarían basados, por lo general, en tres principios: la igualdad, la equidad y la satisfacción de las necesidades básicas de cada uno \citep{tylerSocialJustice2015, zmerliIncomeInequalityDistributive2015}. Estos principios constituyen lo que se conoce como ``justicia distributiva''. Según este concepto, en la medida en que los ciudadanos consideren la distribución de ingresos incompatible con cualquiera de estos principios, percibirán que se han transgredido dichos principios y confiarán menos en las instituciones políticas, atribuyéndoles la responsabilidad de mejorar esta situación \citep{tylerInfluencePerceivedInjustice1985, zmerliIncomeInequalityDistributive2015}.
+
+La evidencia empírica sobre la relación entre justicia distributiva y confianza política ha demostrado ser consistente en distintas investigaciones. En este sentido, se evidencia que los ciudadanos que perciben una mayor desigualdad de ingresos al interior de sus comunidades tienden a calificar esta distribución como injusta, y por ende a demostrar menores niveles de confianza en sus instituciones políticas \citep{bobzienIncomeInequalityPolitical2023, leeEconomicPerformanceIncome2020, schnaudtDistributiveProceduralJustice2021}. A su vez, esta relación resulta extrapolable a contextos con niveles altos de desigualdad de ingresos como el latinoamericano \citep{garcia-sanchezEconomicInequalityUnfairness2025a, granadosRaceInequalityPolitical2025, zmerliIncomeInequalityDistributive2015}. No obstante lo anterior, no se encontraron investigaciones empíricas que den cuenta de esta relación para el caso chileno, más allá de su inclusión en estudios que se concentran en el contexto regional. Aun así, la creciente politización de la desigualdad presente en la última década y su incidencia en la participación política invitan a pensar que Chile debería seguir el patrón latinoamericano a este respecto \citep{castilloInequalityDistributiveJustice2015}. Teniendo en cuenta lo anterior, se identifica la necesidad de producir información que permita dilucidar la particularidad de la relación entre justicia distributiva y confianza en las instituciones políticas en Chile.
+
+A partir de los antecedentes expuestos, se plantea la tercera hipótesis de la investigación:
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{H3: La percepción de justicia distributiva se relaciona positivamente con la confianza política. Esto significa que los ciudadanos que perciban como justa la distribución de ingresos en el país van a tener un mayor nivel de confianza política respecto a los ciudadanos que la perciban como injusta.}
+\end{itemize}
+
+\section{Confianza generalizada}\label{confianza-generalizada}
+
+Para entender el vínculo entre confianza generalizada y confianza política, es necesario situar la primera dentro de la literatura sobre el capital social y su relación con la democracia. Para Putnam \citeyearpar{putnamMakingDemocracyWork1993}, uno de los principales exponentes de esta teoría, el capital social refiere a ``características de la organización social, tales como la confianza, las normas y las redes, que pueden mejorar la eficiencia de la sociedad al facilitar acciones coordinadas'' \footnote{Traducción propia.} (p.~167). Partiendo de esta definición, el autor va a argumentar que dichas características -a saber, la confianza generalizada, las normas de reciprocidad y las redes de participación- funcionan como las bases que permiten a los individuos tomar un rol activo en sus comunidades y cooperar entre sí para lograr fines comunes. Esta capacidad de cooperación, a su vez, sería el sostén sobre el cual se erigen instituciones democráticas eficientes y estables en el tiempo. Aunque Putnam va a profundizar esta teoría poniendo énfasis en la importancia de las asociaciones voluntarias para el buen funcionamiento democrático \citep{putnamBowlingAloneCollapse2000}, otros investigadores van a poner énfasis en la idea de que la confianza generalizada sería la piedra sobre la cual se construyen el resto de actitudes y comportamientos mencionados y, por tanto, sería el componente esencial del capital social. Según esta linea de investigación, en sociedades altamente impersonales y diversas como son las modernas, la confianza en los otros -más allá de los círculos familiares- reduce el riesgo asociado a participar de la vida cívica y por tanto facilita que los ciudadanos adopten un rol activo en sus comunidades \citep{uslanerDemocracySocialCapital1999}. En este sentido, la confianza en los demás estaría a la base de un conjunto de orientaciones, actitudes y comportamiento que funcionarían a la manera de un circulo virtuoso, el cual se traduciría en ciudadanos más dispuestos a participar de su comunidad y más propensos a confiar en que las instituciones políticas actúan de forma justa y orientada hacia el bien común \citep{zmerliSocialTrustAttitudes2008}.
+
+Pese a que este argumento ha sido ampliamente defendido por la comunidad académica desde el punto de vista teórico, la evidencia empírica sobre la relación entre confianza generalizada y confianza política ha estado lejos de ser concluyente. A finales de la década de los 90 diversas investigaciones reportaron encontrar una débil -o nula- relación entre ambos tipos de confianza \citep{kaaseInterpersonalTrustPolitical1999, newtonSocialPoliticalTrust1999, newtonConfidencePublicInstitutions2000}. Mas recientemente, mejoras en la medición de ambos conceptos han llevado a que se encuentre una relación, sin embargo, la influencia de la confianza generalizada en el fenómeno de interés ha demostrado ser comparativamente menor que la de factores asociados a la percepción del desempeño institucional. Lo anterior tanto en otras regiones \citep{dellmuthWhyNationalInternational2020, newtonSocialPoliticalTrust2017, rahnTalePoliticalTrust2005, torcalDeclinePoliticalTrust2014a} como en América Latina \citep{granadosRaceInequalityPolitical2025, mainwaringStateDeficienciesParty2006, morrisCorruptionTrustTheoretical2010}. Frente a la posibilidad de que estos resultados lleven a la apresurada conclusión de que para entender la construcción de la confianza política es suficiente con dar cuenta de sus variables institucionales, se argumenta que la dificultad para encontrar en la práctica lo que se plantea en la literatura del capital social podría ser la consecuencia de un malentendido sobre la naturaleza del vínculo entre ambos tipos de confianza \citep{oskarssonGeneralizedTrustPolitical2010}. En particular, se defiende a partir de los postulados de Uslaner \citetext{\citeyear{uslanerMoralFoundationsTrust2002}; \citeyear{uslanerStudyTrust2017}} que, mientras las investigaciones previas se han limitado a entender esta relación como \emph{exclusivamente} directa, el verdadero potencial de la confianza generalizada se encuentra en moderar la relación entre la percepción del desempeño y la confianza política.
+
+Uslaner \citetext{\citeyear{uslanerMoralFoundationsTrust2002}; \citeyear{uslanerStudyTrust2017}} amplía el debate sobre la confianza argumentando que el tipo de vínculo racionalmente orientado que se describió en el apartado anterior, al cual va a llamar confianza estratégica, es solo uno de los tipos de confianza. Para el autor, este tipo, que presupone la existencia de una experiencia previa que funciona como información sobre la conducta del objeto en el que se deposita la confianza, solo permite explicar por qué los individuos confían en personas que conocen o que son como ellos mismos (ya sea por lazos de clase, étnicos o religiosos). Sin embargo, esta no permite explicar por qué los individuos confían en desconocidos, es decir, en personas ajenas, que probablemente no se parecen a ellos, y de los cuales no tienen ninguna evidencia o información que les permita predecir su comportamiento o actitud. Esta disposición a confiar en desconocidos no es sobre un cálculo racional sino que, por el contrario, descansa sobre una confianza moral, es decir, sobre la base de una convicción de que los otros comparten sus propios valores y, por ende, son parte del mismo universo moral.
+
+Bajo esta perspectiva, la confianza generalizada se define como la ``percepción de que la mayoría de la gente forma parte de tu comunidad moral'' \citep[p.~26]{uslanerMoralFoundationsTrust2002}. Esta se traduce en una expectativa positiva sobre la buena voluntad de la gente en general. Siguiendo la lógica de Hardin (1999) expuesta en el apartado anterior, si la confianza estratégica se puede sintetizar como ``A confía en B para que haga x'', Uslaner resume la confianza moral con la frase ``A confía'' \citep[p.~21]{uslanerMoralFoundationsTrust2002}. La última, a diferencia de la primera, no contempla un objeto particular en el que se confía ni un contexto y un propósito determinados. Por el contrario, la disposición a confiar en los otros descansa en creencias arraigadas al interior del individuo sobre la buena voluntad del resto, las cuales se transmiten durante las etapas tempranas de la socialización y se mantienen con cierta estabilidad a lo largo del tiempo, resultando menos susceptibles a cambiar en función de malas experiencias.
+
+A su vez, la confianza generalizada se entiende como uno de los polos en un \emph{continuum} que del otro lado tiene a la confianza particularizada, que implica la percepción de que solo tus cercanos y gente parecida a ti forma parte de tu comunidad moral. De esta forma, la posición en este \emph{continuum} depende del grado en el que un individuo pueda ser caracterizado como un confiador estratégico o moral \citep{oskarssonGeneralizedTrustPolitical2010}. Por un lado, una persona que construye sus vínculos de confianza únicamente sobre la base de información que tiene sobre el otro es probable que limite su comunidad moral a los individuos que conoce o con los que tiene características en común. Por otro lado, un individuo que entabla sus relaciones de confianza a partir de una predisposición a confiar que descansa sobre una convicción ética es capaz de expandir su comunidad moral más allá de sus círculos similares.
+
+Teniendo en cuenta todo lo anterior, y como se dijo al principio de este apartado, se argumenta que comprende un malentendido interpretar la relación entre confianza generalizada y confianza política como \emph{exclusivamente} directa. Esta confusión remite a que en la literatura se ha tendido a concebir la confianza en los otros como una confianza de tipo estratégica, racional y evaluativa. La distinción entre esta concepción de la confianza generalizada y aquella que Uslaner \citetext{\citeyear{uslanerMoralFoundationsTrust2002}; \citeyear{uslanerStudyTrust2017}} denomina como confianza moral radica en la diferencia en sus fundamentos: mientras la primera refleja la evaluación de las personas que conocemos o que se parecen a nosotros, la segunda refleja una perspectiva optimista sobre las personas en general. Profundizando en esta última perspectiva, se argumenta que la confianza generalizada es un lente a través del cual cierto tipo de individuo interpreta el mundo que lo rodea de forma positiva \citep{oskarssonGeneralizedTrustPolitical2010}. Siguiendo esta lógica, se propone que aquellas personas con niveles más altos de confianza generalizada manifestarían un mayor grado de confianza en las instituciones políticas, en cuanto proyectarían en estas su perspectiva optimista. No obstante lo anterior, la idea de confianza que aquí se plantea obliga a ir más allá de esta afirmación, complementándola con el planteamiento de que la confianza generalizada tiene la capacidad de moderar la relación entre la percepción del desempeño de las instituciones y la confianza en estas. Lo anterior radica en el supuesto de que los individuos que confían en los otros, al poseer una predisposición a confiar que no depende de la información que tienen del objeto en el que se confía, serían menos sensibles a disminuir su confianza en las instituciones políticas en función de una evaluación negativa de su desempeño.
+
+Desde el punto de vista empírico, no se han encontrado intentos por investigar el efecto moderador de la confianza generalizada en la relación entre percepción del desempeño y confianza política. Lo más cercano es la empresa llevada a cabo por Oskarsson \citeyearpar{oskarssonGeneralizedTrustPolitical2010}, en la cual se utilizan datos de la \emph{European Social Survey} (olas 2002 y 2004) para poner a prueba la hipótesis de que la confianza generalizada mitigaría el efecto que la evaluación del desempeño del sistema político tendría sobre el apoyo político. En esta, se utiliza el concepto de apoyo político en reemplazo del de confianza política, y se operacionaliza mediante un índice que comprende la satisfacción con el funcionamiento de la democracia, así como la confianza en tres instituciones: el congreso, el poder judicial y la policía. A partir de este marco, el autor presenta evidencia de que el efecto de la percepción del desempeño en el apoyo político tiene una menor intensidad en aquellos individuos que reportan un mayor grado de confianza generalizada. Pese a la importancia de estos resultados, la investigación de Oskarsson presenta algunas limitaciones. La primera de ellas es conceptual, y remite a la unión en un solo indicador de las actitudes que los individuos tienen respecto a dos dimensiones de apoyo político distintas entre sí, las cuales deberían estudiarse por separado, como lo son la evaluación del desempeño del régimen y la confianza en las instituciones del régimen \citep{norrisDemocraticDeficitCritical2011}. A este respecto, se argumenta que el efecto moderador de la confianza generalizada podría estar presente en las actitudes de solo una de estas dos dimensiones. La segunda limitación tiene que ver con el contexto en el que se aplica, en cuanto se evidencia que en Europa los niveles de confianza generalizada y política son considerablemente mayores que en otras regiones del mundo \citep{bargstedSocialPoliticalTrust2023, mattesSocialPoliticalTrust2018}. En este sentido, se busca mediante la presente investigación superar estas limitaciones.
+
+A la luz de la discusión anterior, se postulan las siguientes hipótesis:
+
+\begin{itemize}
+\item
+  \emph{H4: La confianza generalizada se relaciona positivamente con la confianza política. Es decir, los ciudadanos que reporten un mayor grado de confianza en la mayoría de las personas van a tener un mayor nivel de confianza política respecto a los ciudadanos que reporten un menor grado de confianza en la mayoría de las personas.}
+\item
+  \emph{H5: La relación entre percepción de la situación económica del país y nivel de confianza política se ve moderada negativamente por la confianza generalizada. Esto significa que el efecto de la percepción de la situación económica del país sobre el nivel de confianza política será menor en ciudadanos que reporten confiar en la mayoría de las personas respecto a ciudadanos que no lo hagan.}
+\item
+  \emph{H6: La relación entre el progreso en reducir la corrupción y el nivel de confianza política se ve moderada negativamente por la confianza generalizada. Esto quiere decir que el efecto del progreso en reducir la corrupción en el país sobre el nivel de confianza política será menor en ciudadanos que reporten confiar en la mayoría de las personas respecto a ciudadanos que no lo hagan.}
+\item
+  \emph{H7: La relación entre justicia distributiva y nivel de confianza política se ve moderada negativamente por la confianza generalizada. Lo anterior significa que el efecto de la justicia distributiva sobre el nivel de confianza política será menor en ciudadanos que reporten confiar en la mayoría de las personas respecto a ciudadanos que no lo hagan.}
+\end{itemize}
+
+\section{Las particularidades del caso chileno}\label{las-particularidades-del-caso-chileno}
+
+La confianza política en Chile lleva décadas en caída libre. Al analizar los datos que la Encuesta Latinobarómetro entrega para el periodo entre 1995 hasta la actualidad, es posible evidenciar una baja persistente en la evaluación ciudadana de las instituciones políticas del país \footnote{El porcentaje de confianza se calcula sumando las respuestas ``Algo de confianza'' y ``Mucha confianza'' en cada una de las instituciones mencionadas.}. A lo largo de este periodo la institución que sufrió una mayor merma es el congreso, que pasó de un 47\% de confianza el primer año a un 19\% en 2024. En segundo lugar se encuentra el gobierno, cuya confianza decayó de un 59\% a un 33\%, aunque con mayores fluctuaciones en el tiempo que el resto de instituciones \citep{bargstedCulturaPoliticaDiagnostico2018}. En penúltimo lugar está el poder judicial, que vio reducida su confianza de un 39\% a un 18\%. Por último, la confianza en los partidos políticos es la que disminuyó en menor medida durante estos años, partiendo ya con una baja confianza de tan solo 32\% a principios del periodo, y encontrándose ahora mismo en un 12\%. Si se compara la posición relativa de cada una de estas instituciones entre sí en cuanto a la confianza que generan en los chilenos, es posible ver que el orden se ha mantenido estable, siendo el partido político la que menos confianza genera, seguido por el poder judicial, el congreso y, en lo más arriba de la lista, el gobierno. A su vez, datos del PNUD \citeyearpar{pnudDiezAnosAuditoria2019} indican que entre 2008 y 2018 desaparecieron las diferencias que existían en el juicio de confianza política según edad, nivel educacional, identificación con el eje izquierda y derecha, y pertenencia a zonas urbanas y rurales. Al situar estos datos a nivel regional, se evidencia que las instituciones chilenas tienen un nivel de confianza similar al del resto de países de la región, lo cual es preocupante si se tiene en consideración que América Latina es una de las regiones que menor confianza reporta en sus instituciones políticas \citep{mattesSocialPoliticalTrust2018, pnudDiezAnosAuditoria2019}.
+
+El caso chileno resulta especialmente interesante para el estudio de los factores asociados a la confianza política. Su particularidad radica en la contradicción, persistente desde el retorno a la democracia en 1990 hasta la actualidad, entre las mejoras sustantivas en las condiciones de vida de la población y el extendido descontento frente a las instituciones políticas \citep{huneeusDemocraciaSemisoberanaChile2014, pnudChile20Anos2017}. Por un lado, se evidencia que el PIB per cápita chileno aumentó durante este periodo desde 9.302 dolares a 24.431, a la vez que se redujo la pobreza de un 68.5\% a un 6,5 \% \citep{pnudInformeSobreDesarrollo2024}. En paralelo, se mantenido una baja corrupción política \citep{coppedgeVDemDatasetV152025}, a la vez que se ha disminuido la desigualdad por ingreso, aunque esta última sigue siendo una de las más grandes de América Látina y la más grande entre los países OCDE \citep{pnudInformeSobreDesarrollo2024, worldbankPovertyInequalityPlatform2025}. En este sentido, Chile es lugar de una paradoja entre la actitud de los ciudadanos hacia sus instituciones políticas y el desempeño general de estas \citep{castiglioniChallengesPoliticalRepresentation2016}. Por un lado, los ciudadanos muestran cada vez más desconfianza en sus instituciones y, por otro lado, estas últimas han logrado mantener un desempeño económico decente y una estabilidad política aceptable incluso en momentos de crisis como lo fue el estallido social de 2019.
+
+La distancia entre desempeño y confianza política que presenta el caso chileno lleva a pensar que en la construcción de esta última podrían estar incidiendo con especial importancia factores exógenos a la institucionalidad política, como lo es la confianza generalizada. En la actualidad, tan solo un 15\% de los ciudadanos chilenos indica que se puede confiar en la mayoría de las personas, mínimo histórico que se enmarca en una caída constante desde 2011 \citep{pnudInformeSobreDesarrollo2024}. Esta caída ha sido más pronunciada que la que se evidencia en el promedio global y el de América Latina \citep{livertDeterminantesConfianzaSocial2024}. Esta baja confianza en los demás, entre otras cosas, ha llevado a un retraimiento de los chilenos hacia sus círculos más íntimos, compuestos por familiares, amigos y conocidos, tendencia que se empieza a divisar desde la última década del siglo pasado \citep{cousinoSociabilidadAsociatividadEnsayo2000}. La ausencia de confianza generalizada se encuentra a la base de un proceso más amplio de erosión del lazo social, el cual es explicado por Araujo \citetext{\citeyear{araujoDesmesurasDesencantosIrritaciones2019}; \citeyear{araujoCircuitoDesapegoNeoliberalismo2025a}} haciendo referencia a un ``circuito del desapego'' que se habría forjado en los chilenos a la sombra de la interacción entre, por un lado, la persistencia del modelo de sociedad neoliberal y, por otro lado, los empujes a la democratización de las relaciones sociales que surgen con especial fuerza a principios de la década pasada. Para la autora, este circuito estaría caracterizado por la experiencia de la desmesura de las exigencias de la vida cotidiana y de las desigualdades en las interacciones, el desencanto con las promesas de movilidad ascendente y de horizontalidad en el trato, la irritación frente a las relaciones con la sociedad y sus instituciones y, por último, el desapego, el cual se expresaría en un distanciamiento respecto a las normas, reglas e instituciones que históricamente habían sido servido como fundamento de la vida en común. Así, la sociedad chilena es caracterizada como una ``sociedad archipielago'', en la cual conviven individuos fuertemente individualizados que se ven a sí mismos y a sus círculos cercanos como los únicos capaces de sostener su vida, mientras que perciben a las instituciones políticas como abusivas y prescendibles \citep{araujoCircuitoDesapegoNeoliberalismo2025a}.
+
+A partir de estas consideraciones sobre la paradoja entre el desempeño positivo de las instituciones políticas chilenas y las actitudes negativas de sus ciudadanos hacia estas, sumado al reconocimiento de la baja confianza generalizada y la progresiva erosión del lazo social que se encuentran en la sociedad chilena, se argumenta que el caso elegido podría tener la particularidad de alejarse de la tendencia encontrada en el resto de países en cuanto a los factores asociados a la confianza política. En particular, se plantea la posibilidad de que la confianza generalizada tenga un peso mayor que la percepción del desempeño institucional en la construcción de los juicios de confianza que los ciudadanos chilenos llevan a cabo de sus instituciones políticas. De esta forma, se plantea la última hipótesis de este estudio:
+
+\emph{H8: La confianza generalizada presenta una asociación con la confianza política de mayor magnitud que la percepción del desempeño institucional. Lo anterior implica que el efecto de la confianza generalizada sobre la confianza política va a ser de mayor tamaño que el de los distintos indicadores de la percepción del desempeño sobre la misma variable.}
+
+A modo de ilustración, en la Figura \ref{fig:grafico-1} se presenta un esquema con las hipótesis propuestas:
+
+\begin{figure}[!ht]
+
+{\centering \includegraphics[width=0.8\linewidth,]{IPO/output/graphs/hipotesis_tesis} 
+
+}
+
+\caption{Esquema de presentación de hipótesis. En rojo se presentan los efectos de interacción. Se omite la hipótesis 8. Fuente: Elaboración propia.}\label{fig:grafico-1}
+\end{figure}
+
+\chapter{Metodología}\label{metodologuxeda}
+
+\section{Datos}\label{datos}
+
+En específico, se trabajó sobre datos secundarios a partir de indicadores extraídos de la Encuesta Latinobarómetro, en su ola correspondiente al año 2024. Para el caso chileno, esta encuesta presenta una muestra de 1.200 entrevistados, los cuales fueron seleccionados mediante un muestreo probabilístico en tres etapas y representan al 100\% de la población adulta en el país. Estos datos fueron levantados entre el 23 de agosto y el 13 de septiembre mediante entrevistas presenciales en formato cara a cara. Al eliminar de la base de datos las observaciones influyentes y los valores \emph{NA}, la muestra utilizada quedó de 944 personas.
+
+\section{Variables}\label{variables}
+
+\subsection{Variable dependiente}\label{variable-dependiente}
+
+Para medir el nivel de confianza política, se usó la siguiente pregunta: Por favor, mire esta tarjeta y dígame, para cada uno de los grupos, instituciones o personas de la lista ¿Cuánta confianza tiene usted en ellas: mucha (1), algo (2), poca (3) o ninguna (4) confianza en\ldots?. La elección de esta pregunta constituye una ventaja metodológica, debido a que no hace ninguna referencia al desempeño de las instituciones ni a quienes las ocupan, lo que nos permite asegurarnos que se están tomando como referencia las instituciones políticas en cuanto objeto político distinguible de los actores que las lideran. De la lista de instituciones que se le menciona a los encuestados, se analiza el nivel de confianza reportado en las instituciones centrales del régimen político democrático, es decir, el congreso, el gobierno, el poder judicial y los partidos políticos. A partir de las respuestas de cada una de estas instituciones se construyó un índice aditivo de escala 1-10 (\(\alpha\) = 0.82) que sirve de variable para medir la confianza política como una dimensión única. Lo anterior se justifica a partir del reconocimiento por gran parte de la literatura de que, a nivel empírico, las actitudes expresadas frente a este conjunto de instituciones están determinadas por la orientación general que los individuos tienen hacia el sistema político \citep{marienMeasuringPoliticalTrust2013, zmerliPoliticalTrust2022}. A su vez, se ha comprobado la pertinencia de este indicador en investigaciones previas \citep[ej.][]{bargstedSocialPoliticalTrust2023, zmerliIncomeInequalityDistributive2015}.
+
+\subsection{Variables independientes}\label{variables-independientes}
+
+Para estudiar la pertinencia de las explicaciones sobre las causas de la confianza política mencionadas en el apartado de marco teórico, se seleccionó un indicador para cada una. En lo que respecta a la percepción de la situación económica nacional, se construyó un índice sumativo de escala 1-10 (\(\alpha\) = 0.80) a partir de las respuestas a tres preguntas: 1) ¿Cómo calificaría en general la situación económica actual del país?; 2) ¿Considera Ud. que la situación económica actual del país está mucho mejor, un poco mejor, igual, un poco peor, o mucho peor que hace doce meses?; 3) ¿Y en los próximos doce meses cree Ud. que, en general, la situación económica del país será mucho mejor, un poco mejor, igual, un poco peor, o mucho peor que ahora? La primera de estas comprende los valores desde el 1 (Muy buena) hasta el 5 (Muy mala). Por otro lado, la segunda y la tercera incluyen el mismo rango de valores pero cambia el fraseo, el cual va desde Mucho mejor (1) a Mucho peor (5). A partir de este indicador, se obtiene un panorama más completo de la percepción del individuo a este respecto, debido a que no se limita a conocer únicamente su opinión sobre el presente económico nacional sino que también la comparación que hace con el pasado y sus proyecciones a futuro \citep{saldanazunigaConfianzaInstitucionesPoliticas2019}.
+
+En cuanto al progreso en reducir la corrupción, se hizo uso de la pregunta ¿Cuánto cree Ud. que se ha progresado en reducir la corrupción en las instituciones del Estado en estos últimos 2 años?, la cual incluye como categorías de respuesta valores del 1 (Mucho) al 4 (Nada). De esta forma, se podrá obtener información de la evaluación que los ciudadanos llevan a cabo sobre la eficiencia de las instituciones en combatir la corrupción. A su vez, este indicador ha sido utilizado con éxito en investigaciones similares \citep{andrianiInstitutionalTrustCorruption2021}. Por otro lado, en lo que refiere a la justicia distributiva se ocupó la pregunta ¿Cuán justa cree Ud. que es la distribución del ingreso en Chile?, la cual comprende valores del 1 (Justa) al 4 (Muy injusta). Este indicador se condice con los estudios sobre percepción de desigualdad y confianza política \citep{leeEconomicPerformanceIncome2020, wuIncomeInequalityDistributive2019, zmerliIncomeInequalityDistributive2015}. Para efectos del análisis, ambos indicadores fueron transformados en variables \emph{dummy}. En el caso del primero se agruparon, por un lado, las categorías ``Mucho'' y ``Algo'' y, por el otro lado, las de ``Poco'' y ``Nada''. A su vez, en lo que respecta al segundo se agruparon en una categoría las respuestas ``Muy Justa'' y ``Justa'' y en otra las de ``Injusta'' Y ``Muy injusta''. En ambas recodificaciones se ordenaron las categorías de respuesta de manera tal que el valor ``1'' indique una percepción positiva del desempeño institucional en cada uno de estos ámbitos.
+
+Por último, para medir la confianza generalizada se utilizó la siguiente pregunta: Hablando en general, ¿Diría Ud. que se puede confiar en la mayoría de las personas o que uno nunca es lo suficientemente cuidadoso en el trato con los demás? Esta, a su vez, ofrece las siguientes dos categorías de respuesta: 1) Se puede confiar en la mayoría de las personas; 2) No se puede confiar en la mayoría de las personas. Al igual que las últimas dos, esta variable se recodificó para que adoptara valores ``1'' y ``0'', en los que la puntuación ``1'' expresa confianza generalizada y la puntuación ``0'' indica falta de este atributo. Este indicador, difundido originalmente por Rosenberg \citeyearpar{rosenbergMisanthropyPoliticalIdeology1956}, es el más utilizado por las encuestas para medir la confianza generalizada, y por tanto es adoptado por la mayoría de las investigaciones que ocupan este concepto \citep{andrianiInstitutionalTrustCorruption2021, garcia-sanchezEconomicInequalityUnfairness2025a, mattesSocialPoliticalTrust2018, newtonThreeFormsTrust2011, oskarssonGeneralizedTrustPolitical2010}. Aunque algunos investigadores ponen en duda su funcionalidad debido a que el significado de la frase ``la mayoría de las personas'' se puede prestar para interpretaciones distintas según el individuo \citep{justwanMeasuringSocialTrust2018}, se afirma su pertinencia en cuanto la amplitud en su fraseo permite asumir que lo que se está midiendo es la confianza en los desconocidos \citep{oskarssonGeneralizedTrustPolitical2010, uslanerMoralFoundationsTrust2002}, lo que se encuentra en concordancia con la definición de confianza generalizada adoptada en este estudio.
+
+\subsection{Variables de control}\label{variables-de-control}
+
+Además de los indicadores ya mencionados, se incluyeron a modo de control las siguientes variables sociodemográficas: sexo, edad, religión, nivel educacional y estatus social subjetivo.
+
+\section{Método}\label{muxe9todo}
+
+Una vez procesada la información contenida en la Encuesta Latinobarómetro, se llevaron a cabo las mediciones pertinentes a los objetivos de la investigación. Para esto, en primer lugar, se calcularon una serie de estadísticos descriptivos sobre las variables principales del estudio con el objetivo de presentar un panorama general sobre el estado de estas en la población chilena. En segundo lugar, en orden de comprobar las hipótesis esgrimidas en el apartado anterior, se construyeron modelos de regresión múltiple (MCO). Se eligió esta técnica de investigación en cuanto permite estimar la intensidad y la significación estadística de las relaciones formuladas, así como controlar por el efecto de otras variables, reduciendo al máximo posible el error en la estimación. Con los datos que proporcionan los modelos, es posible llevar a cabo inferencias respecto a la influencia del desempeño institucional y de la confianza generalizada en la confianza política, así como explorar de qué forma interactúan estos dos posibles determinantes.
+
+\chapter{Análisis}\label{anuxe1lisis}
+
+\section{Análisis descriptivo}\label{anuxe1lisis-descriptivo}
+
+\global\setlength{\Oldarrayrulewidth}{\arrayrulewidth}
+
+\global\setlength{\Oldtabcolsep}{\tabcolsep}
+
+\setlength{\tabcolsep}{2pt}
+
+\renewcommand*{\arraystretch}{1.5}
+
+
+
+\providecommand{\ascline}[3]{\noalign{\global\arrayrulewidth #1}\arrayrulecolor[HTML]{#2}\cline{#3}}
+
+\begin{longtable}[c]{|p{5.18in}|p{1.24in}}
+
+\caption{Estadísticas\ descriptivas\ de\ las\ variables\ incluidas\ en\ el\ análisis}\label{tab:tabla-1}\\
+
+\ascline{1pt}{000000}{1-2}
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 5.18in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Variable}}}} & \multicolumn{1}{>{\centering}m{\dimexpr 1.24in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{N\ =\ 944}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textsuperscript{1}}}} \\
+
+\ascline{1pt}{000000}{1-2}\endfirsthead \caption[]{Estadísticas\ descriptivas\ de\ las\ variables\ incluidas\ en\ el\ análisis}\label{tab:tabla-1}\\
+
+\ascline{1pt}{000000}{1-2}
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 5.18in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Variable}}}} & \multicolumn{1}{>{\centering}m{\dimexpr 1.24in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{N\ =\ 944}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textsuperscript{1}}}} \\
+
+\ascline{1pt}{000000}{1-2}\endhead
+
+
+
+\multicolumn{2}{>{\raggedright}m{\dimexpr 6.42in+2\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Fuente:\ Elaboración\ propia\ en\ base\ a\ Encuesta\ Latinobarómetro\ 2024}}} \\
+
+
+
+
+
+\multicolumn{2}{>{\raggedright}m{\dimexpr 6.42in+2\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textsuperscript{1}}}\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Mean\ (SD);\ n\ (\%)}}} \\
+
+\endlastfoot
+
+
+
+\multicolumn{1}{>{\raggedright}p{\dimexpr 5.18in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Indice\ de\ confianza\ política}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 1.24in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{3.43\ (1.87)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}p{\dimexpr 5.18in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Percepción\ de\ la\ situación\ económica\ nacional}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 1.24in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{5.15\ (1.68)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}p{\dimexpr 5.18in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Progreso\ en\ reducir\ la\ corrupción\ política}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 1.24in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}p{\dimexpr 5.18in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Poco/Nada}}} & \multicolumn{1}{>{\centering}p{\dimexpr 1.24in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{612.0\ (64.8\%)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}p{\dimexpr 5.18in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Mucho/Algo}}} & \multicolumn{1}{>{\centering}p{\dimexpr 1.24in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{332.0\ (35.2\%)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}p{\dimexpr 5.18in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Justicia\ en\ la\ distribución\ de\ ingresos}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 1.24in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}p{\dimexpr 5.18in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Injusta/Muy\ injusta}}} & \multicolumn{1}{>{\centering}p{\dimexpr 1.24in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{865.0\ (91.6\%)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}p{\dimexpr 5.18in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Muy\ justa/Justa}}} & \multicolumn{1}{>{\centering}p{\dimexpr 1.24in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{79.0\ (8.4\%)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}p{\dimexpr 5.18in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Confianza\ generalizada}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 1.24in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}p{\dimexpr 5.18in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Uno\ nunca\ es\ lo\ suficientemente\ cuidadoso\ en\ el\ trato\ con\ los\ demás}}} & \multicolumn{1}{>{\centering}p{\dimexpr 1.24in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{786.0\ (83.3\%)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}p{\dimexpr 5.18in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Se\ puede\ confiar\ en\ la\ mayoría\ de\ las\ personas}}} & \multicolumn{1}{>{\centering}p{\dimexpr 1.24in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{158.0\ (16.7\%)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}p{\dimexpr 5.18in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Sexo}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 1.24in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}p{\dimexpr 5.18in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Hombre}}} & \multicolumn{1}{>{\centering}p{\dimexpr 1.24in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{464.0\ (49.2\%)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}p{\dimexpr 5.18in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Mujer}}} & \multicolumn{1}{>{\centering}p{\dimexpr 1.24in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{480.0\ (50.8\%)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}p{\dimexpr 5.18in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Edad}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 1.24in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{45.49\ (16.31)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}p{\dimexpr 5.18in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Religión}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 1.24in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}p{\dimexpr 5.18in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Ninguna/Ateo/Agnóstico}}} & \multicolumn{1}{>{\centering}p{\dimexpr 1.24in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{373.0\ (39.5\%)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}p{\dimexpr 5.18in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Católica}}} & \multicolumn{1}{>{\centering}p{\dimexpr 1.24in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{470.0\ (49.8\%)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}p{\dimexpr 5.18in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{No\ católica}}} & \multicolumn{1}{>{\centering}p{\dimexpr 1.24in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{101.0\ (10.7\%)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}p{\dimexpr 5.18in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Nivel\ educacional}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 1.24in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}p{\dimexpr 5.18in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Sin\ universitario\ completo}}} & \multicolumn{1}{>{\centering}p{\dimexpr 1.24in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{753.0\ (79.8\%)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}p{\dimexpr 5.18in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Con\ universitario\ completo}}} & \multicolumn{1}{>{\centering}p{\dimexpr 1.24in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{191.0\ (20.2\%)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}p{\dimexpr 5.18in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Estatus\ social\ subjetivo}}}} & \multicolumn{1}{>{\centering}p{\dimexpr 1.24in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}p{\dimexpr 5.18in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Clase\ Baja/Media\ baja}}} & \multicolumn{1}{>{\centering}p{\dimexpr 1.24in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{402.0\ (42.6\%)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}p{\dimexpr 5.18in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Clase\ Media}}} & \multicolumn{1}{>{\centering}p{\dimexpr 1.24in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{512.0\ (54.2\%)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}p{\dimexpr 5.18in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Clase\ Media\ alta/Alta}}} & \multicolumn{1}{>{\centering}p{\dimexpr 1.24in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{30.0\ (3.2\%)}}} \\
+
+\ascline{1pt}{000000}{1-2}
+
+
+
+\end{longtable}
+
+
+
+\arrayrulecolor[HTML]{000000}
+
+\global\setlength{\arrayrulewidth}{\Oldarrayrulewidth}
+
+\global\setlength{\tabcolsep}{\Oldtabcolsep}
+
+\renewcommand*{\arraystretch}{1}
+
+En la Tabla \ref{tab:tabla-1} se presentan las estadísticas descriptivas de las variables incluidas en el análisis. En esta, se observa que los ciudadanos chilenos poseen un bajo nivel de confianza en sus instituciones políticas, obteniendo un promedio de 3.43 (\emph{de} = 1.87) en el índice de confianza política. De esta forma, los datos analizados mantienen la tendencia mostrada por anteriores estudios. En lo que refiere a la percepción de la situación económica nacional, se observa un nivel promedio de satisfacción de 5.15 (\emph{de} = 1.68), lo que indicaría una evaluación moderada en este ámbito. A su vez, se evidencia una evaluación negativa del desempeño de las instituciones estatales en el combate de la corrupción, con solo un 35\% de personas que indican que se ha progresado a este respecto en los últimos dos años. Lo anterior se profundiza en lo que respecta a la desigualdad de ingresos, con solo un 8\% de individuos que califica como justa la distribución de ingresos en el país. Por último, destaca el bajo nivel de confianza generalizada evidenciado, con solo un 17\% de sujetos que declaran poder confiar en la mayoría de las personas.
+
+\begin{figure}[!ht]
+
+{\centering \includegraphics[width=1\linewidth,]{IPO/output/graphs/corrplot} 
+
+}
+
+\caption{Matriz de correlaciones entre las variables principales del estudio. Fuente: Elaboración propia en base a Latinobarómetro 2024.}\label{fig:grafico-2}
+\end{figure}
+
+Por otro lado, en la Figura \ref{fig:grafico-2} se expone una matriz de correlaciones en la que se evidencia el grado de asociación de las distintas variables principales entre sí. En esta, se observa que todas las variables independientes se asocian positivamente con la variable de confianza política, aunque con distinto grado de intensidad. En este sentido, la percepción de la situación económica nacional presenta una correlación moderada-alta con este indicador (\emph{r} = 0.50, p \textless{} 0.001). El resto de variables exhiben un grado moderado de asociación, siendo la justicia distributiva (\emph{r} = 0.33, p \textless{} 0.001) la que presenta una mayor intensidad, seguida de la evaluación del progreso en reducir la corrupción (\emph{r} = 0.32, p \textless{} 0.001) y, por último, de la confianza generalizada (\emph{r} = 0.31, p \textless{} 0.001).
+
+\section{Modelos}\label{modelos}
+
+\global\setlength{\Oldarrayrulewidth}{\arrayrulewidth}
+
+\global\setlength{\Oldtabcolsep}{\tabcolsep}
+
+\setlength{\tabcolsep}{2pt}
+
+\renewcommand*{\arraystretch}{1.5}
+
+
+
+\providecommand{\ascline}[3]{\noalign{\global\arrayrulewidth #1}\arrayrulecolor[HTML]{#2}\cline{#3}}
+
+\begin{longtable}[c]{|p{3.75in}|p{0.91in}|p{0.91in}|p{0.91in}}
+
+\caption{Modelos\ sin\ interacción.}\label{tab:tabla-regresiones}\\
+
+\ascline{1.5pt}{666666}{1-4}
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\ }}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Modelo\ 1}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Modelo\ 2}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Modelo\ 3}}} \\
+
+\ascline{1.5pt}{666666}{1-4}\endfirsthead \caption[]{Modelos\ sin\ interacción.}\label{tab:tabla-regresiones}\\
+
+\ascline{1.5pt}{666666}{1-4}
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\ }}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Modelo\ 1}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Modelo\ 2}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Modelo\ 3}}} \\
+
+\ascline{1.5pt}{666666}{1-4}\endhead
+
+
+
+\multicolumn{4}{>{\raggedright}m{\dimexpr 6.49in+6\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{+\ p\ <\ 0.1,\ *\ p\ <\ 0.05,\ **\ p\ <\ 0.01,\ ***\ p\ <\ 0.001}}} \\
+
+
+
+
+
+\multicolumn{4}{>{\raggedright}m{\dimexpr 6.49in+6\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Nota\ 1:\ Se\ muestra\ el\ coeficiente\ de\ regresión\ y\ entre\ paréntesis\ el\ error\ estandar.}}} \\
+
+
+
+
+
+\multicolumn{4}{>{\raggedright}m{\dimexpr 6.49in+6\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Nota\ 2:\ Elaborado\ a\ partir\ de\ Encuesta\ Latinobarómetro\ 2024.}}} \\
+
+\endlastfoot
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Intercepto}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.45**}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.46**}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.34}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.15)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.15)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.23)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Perc.\ situación\ económica\ nacional}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.50***}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.48***}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.49***}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.03)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.03)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.03)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Progreso\ en\ corrupción}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.78***}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.73***}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.72***}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.10)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.10)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.10)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Justicia\ distributiva}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{1.44***}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{1.25***}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{1.19***}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.18)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.18)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.18)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Conf.\ generalizada}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.74***}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.73***}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.13)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.13)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Sexo\ (ref\ =\ hombre)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.15}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.09)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Edad}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.00}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.00)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Religión:\ Católico\ (ref\ =\ sin\ religión)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.02}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.11)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Religión:\ No\ católico\ (ref\ =\ sin\ religión)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.21}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.16)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Educación\ universitaria}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.01}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.12)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Ess:\ Clase\ Media\ (ref\ =\ Baja/Media\ Baja)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{-0.05}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.10)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{ESS:\ Clase\ Alta/Media\ Alta\ (ref\ =\ Baja/Media\ Baja)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.39}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.29)}}} \\
+
+\ascline{0.75pt}{666666}{1-4}
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{R²}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.39}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.41}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.41}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{R²\ Ajustado}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.39}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.41}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.41}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{N\ de\ Observaciones}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{944.00}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{944.00}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{944.00}}} \\
+
+\ascline{1.5pt}{666666}{1-4}
+
+
+
+\end{longtable}
+
+
+
+\arrayrulecolor[HTML]{000000}
+
+\global\setlength{\arrayrulewidth}{\Oldarrayrulewidth}
+
+\global\setlength{\tabcolsep}{\Oldtabcolsep}
+
+\renewcommand*{\arraystretch}{1}
+
+Cómo se puede observar en la Tabla \ref{tab:tabla-regresiones}, se construyeron un total de seis modelos de regresión lineal siguiendo una estrategia incremental, en la cual se van incorporando nuevos términos a la regresión para comprobar si se mantienen los efectos percibidos. Siguiendo esta lógica, el Modelo 1 se calculó solo con las variables de percepción del desempeño. Luego, en los Modelos 2 y 3 se introdujeron, respectivamente, la variable de confianza generalizada y las variables de control. Por último, en los modelos 4, 5 y 6 se introdujeron cada uno de los términos de interacción por separado.
+
+Examinando los resultados de los primeros dos modelos, se observa que tanto las variables de percepción del desempeño como la de confianza generalizada presentan efectos estadísticamente significativos que se mantienen en ambas estimaciones. Por un lado, en lo que respecta a las primeras (Modelo 1) se advierte que aquellos individuos que poseen una percepción más positiva de la situación económica del país presentan, en promedio, 0.50 puntos adicionales (\emph{se} = 0.03, p \textless{} 0.001) en el índice de confianza política. A su vez, los ciudadanos que evalúan positivamente el progreso obtenido en combatir la corrupción en las instituciones del Estado aumentan en promedio 0.78 puntos (\emph{se} = 0.10, p \textless{} 0.001) su valor en la variable dependiente. Aún mayor es el efecto de la justicia distributiva, en cuanto los individuos que califican como justa la distribución de ingresos en el país aumentan en promedio 1.44 (\emph{se} = 0.18, p \textless{} 0.001) puntos su confianza en las instituciones políticas. Por otro lado, se evidencia que, al igual que las variables de percepción del desempeño, la confianza generalizada tiene un efecto positivo sobre la confianza política (Modelo 2). En particular, las personas que declaran confiar en la mayoría de las personas reportan, en promedio, 0.74 puntos adicionales (\emph{se} = 0.13, p \textless{} 0.001) en el índice de confianza política.
+
+\begin{figure}[!ht]
+
+{\centering \includegraphics[width=1\linewidth,]{IPO/output/graphs/coeficientes} 
+
+}
+
+\caption{Comparación coeficientes de regresión Modelo 3. Fuente: Elaboración propia en base a Latinobarómetro 2024.}\label{fig:grafico-3}
+\end{figure}
+
+Al comparar las estimaciones de estos dos modelo con las del Modelo 3, se observa que la variable que se mantiene más estable a lo largo de las distintas mediciones es la de percepción de la situación económica nacional, cuyo efecto prácticamente no varía. Respecto a las otras, se evidencia que la evaluación del progreso en reducir la corrupción disminuye en 0.6 unidades, mientras que el efecto de la justicia distributiva se reduce en 0.25 unidades, siendo la variable menos robusta entre las variables independientes. Por último, el efecto de la confianza generalizada disminuye en tan solo una unidad, mostrándose igual de robusta que la percepción de la situación económica. No obstante los cambios, estas variables se mantienen estadísticamente significativas, de manera tal que es posible aceptar las hipótesis \emph{H1}, \emph{H2}, \emph{H3} y \emph{H4}. En contraste, al comparar entre sí la magnitud del efecto que las distintas variables dependientes tienen sobre el índice de confianza política (véase Figura \ref{fig:grafico-3}), se evidencia que los resultados no permiten aceptar la hipótesis \emph{H8}. Lo anterior debido a que el efecto de la confianza generalizada sobre la confianza política es menor que el efecto que sobre esta tiene la percepción de la desigualdad de ingresos.
+
+\global\setlength{\Oldarrayrulewidth}{\arrayrulewidth}
+
+\global\setlength{\Oldtabcolsep}{\tabcolsep}
+
+\setlength{\tabcolsep}{2pt}
+
+\renewcommand*{\arraystretch}{1.5}
+
+
+
+\providecommand{\ascline}[3]{\noalign{\global\arrayrulewidth #1}\arrayrulecolor[HTML]{#2}\cline{#3}}
+
+\begin{longtable}[c]{|p{3.75in}|p{0.91in}|p{0.91in}|p{0.91in}}
+
+\caption{Modelos\ con\ interacción.}\label{tab:tabla-interacciones}\\
+
+\ascline{1.5pt}{666666}{1-4}
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\ }}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Modelo\ 4}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Modelo\ 5}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Modelo\ 6}}} \\
+
+\ascline{1.5pt}{666666}{1-4}\endfirsthead \caption[]{Modelos\ con\ interacción.}\label{tab:tabla-interacciones}\\
+
+\ascline{1.5pt}{666666}{1-4}
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\ }}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Modelo\ 4}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Modelo\ 5}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Modelo\ 6}}} \\
+
+\ascline{1.5pt}{666666}{1-4}\endhead
+
+
+
+\multicolumn{4}{>{\raggedright}m{\dimexpr 6.49in+6\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{+\ p\ <\ 0.1,\ *\ p\ <\ 0.05,\ **\ p\ <\ 0.01,\ ***\ p\ <\ 0.001}}} \\
+
+
+
+
+
+\multicolumn{4}{>{\raggedright}m{\dimexpr 6.49in+6\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Nota\ 1:\ Se\ muestra\ el\ coeficiente\ de\ regresión\ y\ \ entre\ paréntesis\ el\ error\ estandar.}}} \\
+
+
+
+
+
+\multicolumn{4}{>{\raggedright}m{\dimexpr 6.49in+6\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Nota\ 2:\ Elaborado\ a\ partir\ de\ Encuesta\ Latinobarómetro\ 2024.}}} \\
+
+\endlastfoot
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Intercepto}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.55*}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.35}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.48*}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.24)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.23)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.23)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Perc.\ situación\ económica\ nacional}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.45***}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.49***}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.47***}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.03)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.03)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.03)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Conf.\ generalizada}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{-0.26}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.70***}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.55***}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.41)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.18)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.14)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Progreso\ en\ corrupción}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.72***}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.71***}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.72***}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.10)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.11)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.10)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Justicia\ distributiva}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{1.08***}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{1.19***}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.74***}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.18)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.18)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.22)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Sexo\ (ref\ =\ hombre)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.15}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.15}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.14}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.09)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.09)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.09)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Edad}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{-0.00}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{-0.00}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{-0.00}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.00)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.00)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.00)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Religión:\ Católico\ (ref\ =\ sin\ religión)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.03}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.02}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.04}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.11)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.11)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.11)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Religión:\ No\ católico\ (ref\ =\ sin\ religión)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.20}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.21}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.17}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.16)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.16)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.16)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Educación\ universitaria}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.02}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.01}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{-0.00}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.12)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.12)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.12)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Ess:\ Clase\ Media\ (ref\ =\ Baja/Media\ Baja)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{-0.04}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{-0.05}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{-0.06}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.10)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.10)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.10)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{ESS:\ Clase\ Alta/Media\ Alta\ (ref\ =\ Baja/Media\ Baja)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.34}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.39}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.31}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.29)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.29)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.29)}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Perc.\ situación\ económica\ X\ Conf.\ generalizada}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.18*}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.07)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Prog.\ corrupción\ X\ Conf.\ generalizada}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.06}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.26)}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Just.\ distributiva\ X\ Conf.\ generalizada}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{1.19**}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{(0.36)}}} \\
+
+\ascline{0.75pt}{666666}{1-4}
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{R²}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.42}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.41}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.42}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{R²\ Ajustado}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.41}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.41}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.41}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\raggedright}m{\dimexpr 3.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{N\ de\ Observaciones}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{944.00}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{944.00}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.91in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{944.00}}} \\
+
+\ascline{1.5pt}{666666}{1-4}
+
+
+
+\end{longtable}
+
+
+
+\arrayrulecolor[HTML]{000000}
+
+\global\setlength{\arrayrulewidth}{\Oldarrayrulewidth}
+
+\global\setlength{\tabcolsep}{\Oldtabcolsep}
+
+\renewcommand*{\arraystretch}{1}
+
+Por último, en la Tabla \ref{tab:tabla-interacciones} se presentan los modelos que incluyen los efectos de moderación de la confianza generalizada en la relación de cada una de las variables de percepción del desempeño con la variable dependiente. En esta, se observa que la confianza generalizada produce un efecto de moderación positiva sobre el efecto que la percepción de la situación económica y la justicia distributiva tienen sobre la confianza política. En el primer caso, esto significa que a mayor nivel de confianza generalizada, el efecto positivo de la percepción de la situación económica nacional en la confianza política aumenta en 0.18 unidades (\emph{se} = 0.07, p \textless{} 0.05). A su vez, el segundo caso indica que a mayor nivel de confianza generalizada, el efecto positivo de la justicia distributiva en la confianza política aumenta en 1.19 unidades (\emph{se} = 0.36, p \textless{} 0.01). Ambas relaciones se pueden ver en la Figura \ref{fig:grafico-4}. Al contrastar dichos resultados con las hipótesis \emph{H5} y \emph{H7}, se observa que aún cuando los efectos de moderación predichos están presentes en el modelo, estos no permiten confirmar las hipótesis planteadas en cuanto presentan un sentido distinto al previamente estipulado. En lo que respecta a la evaluación del desempeño en reducir la corrupción, se evidencia que la confianza generalizada no presenta efectos de moderación estadísticamente significativos en la relación que esta tiene con la confianza política, lo que obliga a rechazar la hipótesis \emph{H6}.
+
+\begin{figure}[!ht]
+\includegraphics[width=0.5\linewidth,]{IPO/output/graphs/interaccion_sitecon} \includegraphics[width=0.5\linewidth,]{IPO/output/graphs/interaccion_justdist} \caption{Gráficos que ilustran el efecto de interacción que la confianza generalizada tiene con la percepción de situación económica y la justicia distributiva, respectivamente. Fuente: Elaboración propia en base a Latinobarómetro 2024.}\label{fig:grafico-4}
+\end{figure}
+
+\chapter{Discusión}\label{discusiuxf3n}
+
+El primer hallazgo que se presenta en esta investigación tiene que ver con la importancia relativa que cada uno de los factores asociados a la percepción del desempeño institucional tiene en la construcción de confianza política en Chile. En concordancia con lo planteado en los antecedentes (\emph{H1}, \emph{H2} y \emph{H3}), es posible afirmar que la evaluación del desempeño que las instituciones tienen en distintas áreas prioritarias para la ciudadanía efectivamente tiene relación con los juicios de confianza hacia estas. En particular, se evidencia que la percepción de la situación económica nacional, la evaluación del desempeño en reducir la corrupción y la percepción de justicia distributiva se relacionan positivamente con la confianza que los ciudadanos chilenos depositan sobre sus instituciones políticas. Sin embargo, en los resultados presentados se encuentra la particularidad de que estas últimas dos aparecen en mayor grado relacionadas con el fenómeno de estudio que la primera. Si se compara la magnitud del efecto que la percepción de la economía y de la corrupción exhiben en otras investigaciones, se encuentra que la evidencia aquí presentada difiere de lo presenciado para Europa \citep{oskarssonGeneralizedTrustPolitical2010, torcalDeclinePoliticalTrust2014a, torcalPoliticalTrustWestern2017} y para Chile \citep{riffoQueInfluyeConfianza2019, saldanazunigaConfianzaInstitucionesPoliticas2019, segoviaMalaiseDemocracyChile2016}, aunque coincide con investigaciones que se enfocan en otros países de América Latina \citep{mainwaringStateDeficienciesParty2006, stoyanTrustGovernmentInstitutions2016} y en la región en su conjunto \citep{bargstedPoliticalTrustLatin2017, mattesSocialPoliticalTrust2018}. A su vez, esta distancia entre lo encontrado en este estudio y lo presenciado en la literatura internacional se mantiene si se comparan las magnitudes de la percepción de la economía y de la justicia distributiva, al menos en lo que respecta a América Latina \citep{zmerliIncomeInequalityDistributive2015}. Antes de asumir que esto sería la consecuencia de que los chilenos le restan importancia a la economía en sus juicios de confianza política (lo cual por la intensidad de su efecto pareciera no ser cierto), resulta más pertinente poner atención en las posibles razones detrás de la relevancia política que tanto la corrupción como la desigualdad han adquirido en el último tiempo.
+
+La importancia que los chilenos le otorgan a la corrupción en sus actitudes políticas se puede explicar a partir de la importancia que este tema ha adquirido en el debate público de los últimos años. Desde este punto de vista, se evidencia que la preocupación por la corrupción política en Chile ha adquirido especial fuerza desde la década pasada debido a una serie de escándalos que han puesto en entredicho la percepción generalizada de que las situaciones de mal uso de fondos públicos en el país comprendían casos aislados de individuos inescrupulosos que se desviaban de la práctica recurrente instalada en el sistema político nacional \citep{lunaDemocraciaMuertaChile2024}. Durante este periodo se presenció el destape de prácticas como el financiamiento irregular por parte de empresas privadas a las campañas políticas de todo el espectro ideológico a cambio de legislación favorable (caso SQM, caso PENTA), el cohecho y el tráfico de influencia para obtener información privilegiada en juicios (caso Audios), o la suscripción de millonarios contratos entre instituciones públicas y fundaciones ligadas a partidos de gobierno (caso Convenios). La frecuencia con la que se han conocido estos eventos, la transversalidad con la que han afectado a los distintos poderes del Estado y su persistencia en el tiempo han tenido como consecuencia que los chilenos dejen de ver la corrupción como un hecho aislado y la empiecen a percibir como una práctica recurrente y arraigada en las instituciones políticas del país \citep{castiglioniChallengesPoliticalRepresentation2016, lunaDelegativeDemocracyRevisited2016a}. En este sentido, la apreciación de que el sistema político y las élites están coludidas en la persecución de intereses individuales a costas del bien público ha tenido como correlato el fortalecimiento de una sensación de que las instituciones políticas son abusivas, minando así la confianza en estas \citep{araujoCircuitoDesapegoNeoliberalismo2025a, lunaDelegativeDemocracyRevisited2016a}.
+
+En cuanto a la relevancia que se le concibe a la justicia distributiva, cabe mencionar como posible explicación el proceso de politización de las desigualdades que el país ha presenciado durante este siglo. Durante el periodo de la Concertación de Partidos por la Democracia los distintos gobiernos tomaron la decisión de mantener alejado del debate público las cuestiones redistributivas, ya sea mediante su reducción a criterios técnicos que ignoraban su carácter conflictivo, así como mediante la desmovilización social producto del quiebre en las relaciones entre estos partidos y los actores de la sociedad civil que históricamente habían levantado estas consignas, a saber, los movimientos sindicales y de pobladores \citep{barozetEntreUrnaRedes2016, huneeusDemocraciaSemisoberanaChile2014, robertsRePoliticizingInequalitiesMovements2016}. No obstante lo anterior, la experiencia cotidiana de los altos niveles de desigualdad socioeconómica, expresada no solo en la forma de diferencias en el patrimonio sino que también en el trato desigual que reciben las personas en función de jerarquías sociales (de clase, raza y género) y en las dificultades para ejecutar la promesa de movilidad social vía mercado, terminó desembocando en la repolitización de las demandas redistributivas de la mano de movimientos sociales. De esta forma, van a surgir a lo largo de la década distintos ciclos de movilizaciones que van a poner en el centro de la opinión pública demandas por una sociedad más igualitaria, a través de exigencias por cuestiones como una mayor redistribución de la riqueza, el acceso universal a servicios básicos como salud y educación, y una mayor horizontalidad en las interacciones cotidianas. En este contexto, se ha alimentado en gran parte de la ciudadanía chilena un repertorio de actitudes negativas hacia las instituciones políticas, las cuales son vistas como responsables principales de la mantención de un sistema en donde las expectativas de movilidad social y bienestar económico se estrellan constantemente con su naturaleza exclusionaria \citep{castiglioniChallengesPoliticalRepresentation2016, robertsRePoliticizingInequalitiesMovements2016, sommaNoWaterOasis2021a}.
+
+El segundo hallazgo a discutir hace referencia a la fuerte relación positiva que se encontró entre la confianza generalizada y la confianza política para el caso chileno (\emph{H4}). Este descubrimiento resulta por si solo novedoso, en cuanto se distancia de las investigaciones previas que habían demostrado consistentemente que, al controlar por por el desempeño institucional en diversas áreas, la confianza generalizada quedaba remitida a una variable de segundo orden en lo que respecta a la construcción de juicios de confianza en las instituciones \citep{dellmuthWhyNationalInternational2020, granadosRaceInequalityPolitical2025, mainwaringStateDeficienciesParty2006, morrisCorruptionTrustTheoretical2010, newtonSocialPoliticalTrust2017, rahnTalePoliticalTrust2005, torcalDeclinePoliticalTrust2014a}. No obstante lo anterior, aun más novedosa resulta la evidencia del efecto de moderación que tendría la confianza generalizada en la relación que la percepción de la situación económica y la percepción de la justicia distributiva presentan con la confianza política (\emph{H5} y \emph{H7}). Estos resultados profundizan en lo encontrado por Oskarsson \citeyearpar{oskarssonGeneralizedTrustPolitical2010} para el caso europeo, sin embargo, con una diferencia sustancial. Mientras que en el estudio citado la confianza generalizada disminuye el tamaño del efecto que tendrían las variables de percepción del desempeño institucional en la confianza política, en los resultados presentados en esta investigación esta moderación adopta el sentido contrario. Lo anterior quiere decir que en vez de disminuir la magnitud de la relación, la confianza generalizada en los ciudadanos chilenos la potencia.
+
+Estos resultados con respecto a la confianza generalizada obligan a cuestionar hasta cierto punto los argumentos sobre los cuales se concibió esta relación. Por un lado, estos presentan evidencia para corroborar el planteamiento de que la perspectiva optimista que estaría a la base de la disposición a confiar en los otros más allá del círculo cercano funcionaría como un lente a través del cual los individuos interpretan el mundo que los rodea, incluido las instituciones políticas. Lo anterior se ve reflejado no solo en la relación directa entre la confianza generalizada y la confianza política, sino que también en la capacidad de la primera para moderar la relación entre la percepción del desempeño y la confianza en instituciones. Por otro lado, se evidencia que los individuos que confían en los demás le atribuyen una mayor importancia a la situación económica nacional y a la justicia distributiva al momento de construir sus juicios de confianza en las instituciones. Así, no se presenta lo que fue hipotetizado en un principio, a saber, que los individuos que manifiestan confianza generalizada, al ser menos dependientes de la información para entablar relaciones de confianza, serían menos propensos a disminuir su confianza política en función de una mala gestión institucional. Por el contrario, pareciera ser que esta información, al menos en lo que a la economía y a la desigualdad respecta, refuerza el vinculo entre ambos tipos de confianza.
+
+Lo anterior se podría explicar por el significado que los individuos le atribuyen a este tipo de información. El mismo Uslaner \citep{uslanerMoralFoundationsTrust2002} argumenta que la confianza en los demás tiene por fundamento un ideal igualitario, según el cual se trata a todos por igual y se coopera con el resto para asegurar que mejoren las condiciones de vida de los menos favorecidos, en cuanto todos son parte de una misma comunidad moral. En este sentido, se argumenta la posibilidad de que los individuos interpreten un buen desempeño en estos dos ámbitos como un avance hacia la consecución de este ideal, llevándolos a percibir en mayor medida a las instituciones como poseedoras de sus mismos valores y por tanto confiando más en ellas. Por el contrario, esta afirmación tendría como contraparte la posibilidad de que aquellos individuos que confían en los demás no se mantengan como una base social estable de las instituciones en momentos de crisis socioeconómica. A su vez, no queda claro por qué este disposición a confiar no modera también la relación entre corrupción y confianza política (\emph{H6}), especialmente si se tiene en cuenta que los hechos de corrupción están igualmente asociados a la erosión de los ideales de igualdad \citep{uslanerMoralFoundationsTrust2002}. Debido a lo anterior, para comprender en profundidad la naturaleza moderadora de la confianza generalizada es necesario complementar este estudio con la investigación en contextos distintos al chileno.
+
+El tercer hallazgo de este estudio guarda relación con el argumento según el cual la paradoja entre, por un lado, el desempeño positivo de la institucionalidad chilena y, por el otro, las manifestaciones de rechazo de la ciudadanía hacia estas, tenía como consecuencia la necesidad de buscar los factores detrás de la construcción de la confianza política en los chilenos afuera del ámbito propiamente institucional (\emph{H8}). Los resultados evidenciados complejizan esta afirmación. En particular, los resultados dan cuenta de que esta diferencia entre desempeño y actitudes no significa que los chilenos no presten atención a la capacidad de las instituciones para mejorar sus condiciones de vida a la hora de evaluarlas como confiables o no. Sino que, cómo han señalado otros estudios, pareciera haber una distancia entre lo que sugieren los indicadores macroeconómicos y su experiencia cotidiana \citep{pnudChile20Anos2017, robertsRePoliticizingInequalitiesMovements2016}. Así, la estabilidad de los equilibrios macroeconómicos, la mantención de una corrupción política baja en términos comparativos, y la reducción de la desigualdad de ingresos no se condicen con la experiencia de los individuos de una desigualdad multidimensional y estructural que permea todos los ámbitos de la vida social, y que se concibe como perpetuada por una institucionalidad corrupta que aprovecha su poder para reproducir los privilegios de las élites que la ocupan en desmedro de los intereses de la mayoría \citep{araujoDesmesurasDesencantosIrritaciones2019, araujoCircuitoDesapegoNeoliberalismo2025a}. En este sentido, se argumenta que es esta experiencia la que se ocupa como criterio para evaluar el desempeño de las instituciones, y no la alusión a indicadores abstractos.
+
+No obstante lo anterior, queda claro a partir de la evidencia encontrada que no basta con hacer alusión a estos factores, sino que es necesario ir más allá y considerar la importancia que el vínculo social tiene en los juicios de confianza política de los chilenos. Así, la constatación de la importancia que la confianza generalizada demostró tener en los modelos presentados, incluso por sobre la percepción de la situación económica y de la corrupción, sirve como evidencia para corroborar el planteamiento de que subyacente a la baja confianza de las instituciones se encontraría un largo proceso de erosión del tejido social chileno. Cómo se mencionó en los antecedentes, este proceso estaría caracterizado por el desapego respecto a las normas e instituciones que rigen la sociedad \citep{araujoDesmesurasDesencantosIrritaciones2019, araujoCircuitoDesapegoNeoliberalismo2025a}. Lo anterior no implica la completa desafiliación de la sociedad, sino que se traduce en una especie de retraimiento que se caracteriza por la preocupación y confianza en los círculos familiares -entendiendo este concepto en un sentido amplio-, la cual convive con la convicción de que hay que defenderse de la sociedad existente más allá de este ámbito reducido de confianza. Así, esta experiencia del desapego dificultaría, a su vez, el desarrollo del conjunto de normas de reciprocidad y de actitudes colaborativas que según la literatura del capital social llevaría a los individuos participar activamente de sus comunidades y a confiar en sus instituciones \citep{uslanerDemocracySocialCapital1999, zmerliSocialTrustAttitudes2008}.
+
+\chapter{Conclusiones}\label{conclusiones}
+
+A lo largo de esta investigación se buscó analizar la influencia que la percepción del desempeño institucional y la confianza generalizada tienen sobre la confianza política de los ciudadanos chilenos. Lo anterior consistió en estudiar, por un lado, la relación directa que cada uno de estos factores manifiesta con el fenómeno de estudio y, por otro lado, la capacidad de la confianza generalizada para moderar la relación entre percepción del desempeño y confianza en las instituciones políticas. A su vez, se llevó a cabo una comparación de la magnitud del efecto que cada una de estas perspectivas tiene sobre la variable dependiente. Para esto, se construyeron una serie de modelos de regresión lineal múltiple (MCO) sobre datos secundarios extraídos de la Encuesta Latinobarómetro (\emph{n} = 944), en su versión para el 2024. En primer lugar, los resultados del modelo evidencian que, en concordancia con las hipótesis planteadas (\emph{H1}, \emph{H2}, \emph{H3}, \emph{H4}), tanto la percepción del desempeño institucional -situación económica, reducción de la corrupción y justicia distributiva- como la confianza generalizada se relacionan positivamente con la confianza política. En segundo lugar, los análisis indican que la confianza generalizada modera positivamente la influencia que la percepción de la situación económica y de la desigualdad tienen sobre la confianza en este tipo de instituciones, pero no interactúa con la percepción de corrupción. Lo anterior dista de las hipótesis de moderación planteadas debido a que, aun cuando se encuentra este efecto moderador sobre dos de las variables de desempeño, el mismo se expresa en un sentido distinto al planteado en un principio (\emph{H5}, \emph{H6}, \emph{H7}). Por último, se encontró que la confianza generalizada presenta un efecto sobre la confianza política mayor que la percepción de la situación económica y de la corrupción, pero menor que el que manifiesta la percepción de justicia distributiva, por lo que no se puede aceptar la última hipótesis planteada (\emph{H8}).
+
+Los resultados encontrados para el caso chileno contribuyen a la profundización del entendimiento sobre los factores asociados a la confianza política. En particular, se brinda evidencia que obliga a ir más allá de la dicotomía entre confianza estratégica y confianza generalizada, subyacente al debate en torno a la pertinencia de las perspectivas institucionales y socioculturales. Posicionándose en contra de aquellos que argumentan que la confianza generalizada tendría solo un efecto marginal sobre la confianza política, se argumenta que en ciertos tipos de sociedades de baja confianza este factor puede ser igual o más influyente que algunos asociados a la percepción del desempeño. Debido a lo anterior, se afirma la necesidad de avanzar hacia una comprensión de la confianza política como un fenómeno complejo, el cual tendría su origen en la interacción entre, por una parte, la percepción de un desempeño positivo de las instituciones en determinados ámbitos -confianza estratégica- y, por la otra, la presencia de una disposición a confiar en las personas más allá del circulo familiar -confianza generalizada-. Para avanzar en esta linea, se adoptó una concepción de la confianza generalizada como un lente a partir del cual los individuos que confían en los demás interpretan el mundo \citep{uslanerMoralFoundationsTrust2002}. La pertinencia de esta aproximación se manifiesta en el hallazgo de que la confianza en los demás potencia el efecto que la percepción de la economía y de la justicia distributiva tienen sobre la confianza política. Como posible explicación a este efecto potenciador, se plantea la posibilidad de que los individuos que confían en los demás interpreten los buenos desempeños en estos ámbitos como avances hacia el logro de un ideal igualitario, llevándolos a percibir a las instituciones como alineadas con sus valores y por tanto confiando más en ellas. Aunque esta explicación no resulte del todo satisfactoria, en cuanto no logra explicar la ausencia de este efecto para la percepción de la corrupción, permite estimular el debate a modo que las siguientes investigaciones pongan a prueba la capacidad moderadora de la confianza generalizada en esta relación.
+
+A su vez, el análisis expuesto aporta a llenar el vacío de investigaciones empíricas que estudien la confianza política en Chile tomando en cuenta ambos tipos de factores. Mediante esta empresa, se demostró la pertinencia de este enfoque para la comprensión de la persistente caída en la confianza que suscitan las instituciones del país. En primera instancia, los resultados aquí presentados demuestran la necesidad de expandir la concepción de la percepción del desempeño institucional, incluyendo indicadores sobre corrupción y justicia distributiva. Lo anterior en cuanto ambos exhibieron una mayor influencia en la confianza política que la percepción de la situación económica nacional, lo cual se presenta como una particularidad del caso chileno. Para explicar estos resultados, se aludió al surgimiento de dos procesos que se han profundizado durante la última década en este país. El primero concierne a la aparición cada vez más frecuente en los últimos años de diversos casos de corrupción de alta importancia mediática que, aún cuando no han significado una baja sustantiva en los indicadores internacionales de corrupción política, han contribuido a la percepción de que las instituciones políticas chilenas y las élites que las ocupan abusan de su situación de poder para satisfacer sus intereses individuales, yendo en contra de los intereses comunes \citep{araujoDesmesurasDesencantosIrritaciones2019, araujoCircuitoDesapegoNeoliberalismo2025a, lunaDemocraciaMuertaChile2024}. El segundo, de más largo aliento, refiere a la introducción en el debate público de demandas distributivas en el marco de un proceso de politización de las desigualdades, las cuales tomarían como fundamento de sus exigencias la experiencia de una desigualdad cotidiana que se experimenta no solo en en la diferencia de ingresos, sino que también en la diferencia de acceso a servicios básicos y en las diferencias en el trato recibido \citep{castiglioniChallengesPoliticalRepresentation2016, robertsRePoliticizingInequalitiesMovements2016, sommaNoWaterOasis2021a}. Al igual que en el primero, en este las instituciones políticas también se ven como grandes responsables del malestar, en cuanto contribuirían a perpetuar un sistema que reproduce dichas desigualdades. En este sentido, frente a la reconocida paradoja entre el desempeño positivo de las instituciones chilenas y la extendida animadversión que generan en la ciudadanía, se plantea la necesidad de poner más atención en la distancia entre lo que expresan los indicadores y la experiencia cotidiana de los chilenos. A su vez, se exhibe que para estudiar esta paradoja resulta ineludible tener en consideración la importancia que los ciudadanos le dan a la corrupción y la desigualdad en la construcción de sus juicios de confianza.
+
+En segundo instancia, esta investigación contribuye al estudio de este fenómeno en Chile al demostrar la importancia que tiene la confianza generalizada en la construcción de los juicios de confianza en las instituciones políticas. En particular, da cuenta de que por sí sola tendría un efecto mayor que dos de los tres indicadores de percepción del desempeño seleccionados. Para explicar esta situación, única en la literatura sobre apoyo político, se hace referencia al retraimiento hacia los círculos mas íntimos que estaría presenciando la ciudadanía chilena desde principios de siglo, y que tendría como correlato los bajos niveles de confianza generalizada \citep{cousinoSociabilidadAsociatividadEnsayo2000, livertDeterminantesConfianzaSocial2024}. A su vez, se argumenta que el bajo nivel de confianza en los otros es solamente uno de los indicadores de un fenómeno de mayor alcance como lo es la erosión progresiva que ha sufrido el lazo social que une a los ciudadanos chilenos. Esta erosión tendría como consecuencia la expansión en la ciudadanía del desapego, estado en el cual los sujetos se distanciarían de las normas e instituciones que orientan la vida social, adoptando una actitud de defensa frente a los grupos que existen más allá de su limitado radio de confianza \citep{araujoDesmesurasDesencantosIrritaciones2019, araujoCircuitoDesapegoNeoliberalismo2025a}. Lo anterior implicaría que los ciudadanos chilenos no posean el conjunto de orientaciones, actitudes y normas necesarias para desarrollar una cultura que promueva redes de cooperación y participación activa en la comunidad, la cual resulta imprescindible para generar confianza en las instituciones políticas. De esta forma, se afirma que es indeseable estudiar los factores asociados a la confianza política en Chile sin tener en cuenta este proceso. A su vez, como se puede evidenciar en los efectos de moderación, se plantea que la clave para entender la baja confianza de las instituciones chilenas se encuentra en la interacción entre el debilitamiento del lazo social y la percepción de las instituciones como abusivas y reproductoras de injusticias.
+
+El presente estudio cuenta con algunas limitaciones que se espera sean corregidas en posteriores investigaciones. La primera remite a que se construye sobre transversales. Lo anterior significa que los resultados presentados consisten en una foto sobre el estado de la cuestión en un momento determinado. En este sentido, está fuera de las posibilidades de este estudio el hacer conclusiones estadísticamente válidas sobre cómo cambia la intensidad de las relaciones encontradas a lo largo del tiempo. Así, aunque desde el punto de vista analítico se pueda argumentar que lo encontrado es parte de un proceso de larga data, desde lo puramente estadístico resulta necesario poner a prueba esta hipótesis usando modelos más avanzados -por ejemplo, modelos multinivel o modelos de ecuaciones estructurales- que permitan dar cuenta de las diferencias que estas relaciones exhiben en el tiempo. Relacionado con lo anterior, las limitaciones propias de los modelos de regresión lineal impiden incluir en el análisis variables contextuales que permitan comparar su influencia en la confianza política con la que tienen las variables de percepción. En este sentido, no podemos saber hasta qué punto, por ejemplo, el estado general de la desigualdad incide más o menos en el fenómeno de interés que la percepción de justicia distributiva. Por último, el carácter exploratorio de esta investigación llevó a que se decidiera por no expandir el radio de estudio hacia más países. Lo anterior resulta una limitancia en cuanto una investigación como esta se beneficiaría de la posibilidad de comparar los efectos encontrados con los que se exhiben en otros países de la región, a modo de saber si es que habría alguna tendencia (o divergencia) regional al respecto. Teniendo todo esto en consideración, para que los resultados de esta investigación sean concluyentes, se plantea la necesidad de que próximos estudios aborden la tarea de expandir su alcance en todos los ámbitos recién comentados.
+
+\chapter*{Bibliografía}\label{bibliografuxeda}
+\addcontentsline{toc}{chapter}{Bibliografía}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%% Bibliography                              %%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \addtocontents{toc}{\vspace{.5\baselineskip}}
+% \cleardoublepage
+% \phantomsection
+% \addcontentsline{toc}{chapter}{\protect\numberline{}{Bibliography}}
+\bibliography{tesis}
+
+%% All books from our library (SfS) are already in a BiBTeX file
+%% (Assbib). You can use Assbib combined with your personal BiBTeX file:
+%% \bibliography{Myreferences,Assbib}. Of course, this will only work on
+%% the computers at SfS, unless you copy the Assbib file
+%%  --> /u/sfs/bib/Assbib.bib
+
+
+
+\end{document}

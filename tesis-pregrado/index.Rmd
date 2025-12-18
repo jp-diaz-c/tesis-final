@@ -1,0 +1,40 @@
+---
+title: 'Factores asociados a la confianza política: una aproximación empírica a partir del caso chileno'
+subtitle: "Memoria de Título"
+author: "Juan Pablo Díaz"
+date: "`r Sys.Date()`" # o para fecha actual: "`r Sys.Date()`"
+institution: "Universidad de Chile"
+degree: "Memoria de Título - Carrera de Sociología"
+advisor: "Profesor/a guía: Juan Carlos Castillo"
+bibliography: [tesis.bib]
+csl: apa.csl
+biblio-style: apalike
+link-citations: yes
+site: bookdown::bookdown_site
+output: 
+  bookdown::gitbook:
+    split_bib: no
+    split_by: chapter
+documentclass: book
+fontsize: 14pt
+lof: True
+lot: True
+github-repo: "jp-diaz-c/tesis-pregrado"
+url: ""
+always_allow_html: true
+---
+
+# Resumen {-}
+
+La confianza política es un requisito básico para la estabilidad democrática. La preocupación por sus bajos niveles globales ha expandido el estudio sobre los factores asociados a su construcción. La gran mayoría de la literatura apunta a dos fuentes: la percepción del desempeño institucional (situación económica, corrupción y justicia distributiva) y la confianza generalizada, asumiendo que la primera predomina sobre la segunda. Se argumenta que estas investigaciones han subestimado la importancia de la confianza generalizada por dos razones. Primero, se ha ignorado su rol moderador en la relación entre percepción del desempeño y confianza política, pasando por alto que la confianza generalizada sería un lente a través del cual los individuos interpretarían el mundo de forma positiva, y por tanto serían menos sensibles a disminuir su confianza política en función de malos desempeños. Segundo, dichos estudios se han llevado a cabo en sociedades con altos niveles de confianza generalizada, por lo que subestiman la influencia que puede tener este atributo en sociedades con bajos niveles de este tipo de confianza. El caso chileno resulta el terreno perfecto para poner a prueba estas afirmaciones, debido a que en este país conviven bajos niveles de confianza política y generalizada con un buen desempeño institucional en distintas áreas. De esta forma, el presente estudio busca analizar el impacto que la percepción del desempeño y la confianza generalizada tienen sobre la confianza política de los ciudadanos chilenos. Para esto, se llevan a cabo una serie de modelos de regresión lineal múltiple (MCO) sobre datos secundarios extraídos de la Encuesta Latinobarómetro en su ola del 2024 (*n* = 944). 
+
+Los resultados confirman la importancia de la confianza generalizada, así como su efecto moderador en la relación que la percepción de la situación económica y de la justicia distributiva tienen con la confianza política. Sin embargo, se exhibe que la confianza generalizada, en vez de reducir la importancia del desempeño en los juicios de confianza política, potencia su efecto. A su vez, se encuentra que la percepción de la corrupción y la justicia distributiva juegan un papel especialmente importante en la construcción de los juicios de confianza en este país. Desde lo sustantivo, se discuten estos resultados aludiendo al ideal igualitario que estaría asociado a la confianza en los otros, el cual llevaría a los individuos a interpretar los buenos desempeños en estas áreas como avances hacia la consecución de este ideal. En relación al caso chileno, se interpreta lo encontrado a la luz de tres procesos que hace unos años vive la sociedad chilena: la seguidilla de casos de corrupción pública con alto impacto mediático, la politización de las desigualdades y la erosión del lazo social. Se concluye que lo encontrado para Chile sirve como antecedente para avanzar hacia el estudio en torno a cómo interactúan ambos grupos de factores (percepción del desempeño y confianza generalizada) en la confianza política.
+
+
+# Agradecimientos {-}
+
+A mis papás, hermanos y familia extendida, por brindarme apoyo emocional y por enseñarme el valor del esfuerzo y la dedicación.
+
+A mis amigos y a Mariana, por acompañarme durante este largo proceso, siempre dispuestos a retroalimentar mis inquietudes intelectuales y a escuchar mis angustias y alegrías.
+
+Al profesor Juan Carlos Castillo, por dedicar su tiempo a orientar mi trabajo por las sendas de la investigación empírica. Al profesor Manuel Antonio Garretón, por estimular en mí las reflexiones necesarias para responder las preguntas que aquí se plantean.

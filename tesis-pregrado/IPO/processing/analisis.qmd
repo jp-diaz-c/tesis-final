@@ -1,0 +1,974 @@
+---
+title: "Análisis"
+editor: source
+format: 
+  html:
+    self-contained: true
+    code-fold: true
+    code-tools: true 
+lang: es 
+
+---
+
+## Análisis latinobarómetro
+
+### Cargar paquetes y BBDD
+
+```{r}
+
+#0. Cargar paquetes----
+
+pacman::p_load(sjmisc,
+               dplyr,
+               sjlabelled,
+               kableExtra,
+               sjPlot,
+               corrplot,
+               summarytools,
+               gridExtra,
+               texreg,
+               ggpubr,
+               interactions,
+               knitr,
+               stargazer,
+               survey,
+               gtsummary,
+               gt,
+               showtext,
+               broom,
+               viridis,
+               lmtest,
+               sandwich,
+               webshot2,
+               flextable)
+
+#1. Cargar datos----
+
+latbaro_proc <- readRDS("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/input/proc/latbaro_filt.rds")
+
+```
+
+
+### Análisis descriptivos
+
+```{r}
+#2. Preparar una base para el análisis descriptivo con etiquetas y descripciones----
+
+colnames(latbaro_proc)
+
+latbaro_descr <- latbaro_proc |> 
+  select(confpol, perc_sitecon, reduc_corrup_rec, just_distr_rec, conf_gen_rec, sexo_mujer, edad, religion, nivel_educ_rec, estatus_subj)
+
+latbaro_descr <- as.data.frame(latbaro_descr)
+
+#3. Poner etiquetas en las variables----
+
+#3.1 Confianza en las instituciones----
+
+
+latbaro_descr$confpol <- set_label(latbaro_descr$confpol, "Indice de confianza política")
+
+
+
+#¿cuánta confianza tiene usted en ellas: mucha (1), algo (2), poca (3) o ninguna (4) confianza en...? 
+
+#3.2 Confianza generalizada----
+
+latbaro_descr$conf_gen_rec <- factor(latbaro_descr$conf_gen_rec,
+                                         levels = c(0, 1),
+                                         labels = c("Uno nunca es lo suficientemente cuidadoso en el trato con los demás", "Se puede confiar en la mayoría de las personas"))
+latbaro_descr$conf_gen_rec <- set_label(latbaro_descr$conf_gen_rec, "Confianza generalizada")
+
+#3.3 Situación económica----
+
+latbaro_descr$perc_sitecon <- set_label(latbaro_descr$perc_sitecon, "Percepción de la situación económica nacional")
+
+
+#3.4 Percepción de corrupción----
+
+frq(latbaro_descr$reduc_corrup_rec)
+
+latbaro_descr$reduc_corrup_rec <- factor(latbaro_descr$reduc_corrup_rec,
+                                         levels = c(0, 1),
+                                         labels = c("Poco/Nada", "Mucho/Algo"))
+latbaro_descr$reduc_corrup_rec <- set_label(latbaro_descr$reduc_corrup_rec, "Progreso en reducir la corrupción política")
+
+frq(latbaro_descr$reduc_corrup_rec)
+
+#3.5 Percepción distribución de ingresos----
+
+frq(latbaro_descr$just_distr_rec)
+
+latbaro_descr$just_distr_rec <- factor(latbaro_descr$just_distr_rec,
+                                         levels = c(0, 1),
+                                         labels = c("Injusta/Muy injusta", "Muy justa/Justa"))
+latbaro_descr$just_distr_rec <- set_label(latbaro_descr$just_distr_rec, "Justicia en la distribución de ingresos")
+
+frq(latbaro_descr$just_distr_rec)
+
+#3.6 Variables de control----
+
+latbaro_descr$sexo_mujer <- factor(latbaro_descr$sexo_mujer,
+                                         levels = c(0, 1),
+                                         labels = c("Hombre", "Mujer"))
+latbaro_descr$sexo_mujer <- set_label(latbaro_descr$sexo_mujer, "Sexo")
+
+
+latbaro_descr$edad <- set_label(latbaro_descr$edad, "Edad")
+
+
+latbaro_descr$religion <- factor(latbaro_descr$religion,
+                                         levels = c(1, 2, 3),
+                                         labels = c("Ninguna/Ateo/Agnóstico", "Católica", "No católica"))
+latbaro_descr$religion <- set_label(latbaro_descr$religion, "Religión")
+
+
+
+latbaro_descr$nivel_educ_rec <- factor(latbaro_descr$nivel_educ_rec,
+                                         levels = c(0, 1),
+                                         labels = c("Sin universitario completo", "Con universitario completo"))
+latbaro_descr$nivel_educ_rec <- set_label(latbaro_descr$nivel_educ_rec, "Nivel educacional")
+
+
+ 
+
+latbaro_descr$estatus_subj <- factor(latbaro_descr$estatus_subj,
+                                         levels = c(1, 2, 3),
+                                         labels = c("Clase Baja/Media baja", "Clase Media", "Clase Media alta/Alta"))
+
+latbaro_descr$estatus_subj <- set_label(latbaro_descr$estatus_subj, "Estatus social subjetivo")
+
+
+freq(latbaro_descr$estatus_subj)
+
+
+ saveRDS(latbaro_descr, file = "C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/input/proc/latbaro_descr.rds")
+
+
+```
+
+```{r results='asis'}
+
+#4. Crear tabla----
+
+
+
+
+setwd("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO")
+
+tabla_descriptivos <- tbl_summary(latbaro_descr,
+    statistic = list(
+      all_continuous() ~ "{mean} ({sd})",
+      all_categorical() ~ "{n} ({p}%)"
+    ),
+    digits = list(
+      all_continuous() ~ 2,
+      all_categorical() ~ 1
+    ),
+     missing = "no"
+  ) |> 
+  bold_labels() |> 
+  modify_header(label ~ "**Variable**") 
+
+
+tabla_desc_df <- tabla_descriptivos |> 
+  as_tibble() 
+
+tabla_desc_df <- tabla_desc_df |> 
+  mutate(across(everything(), ~replace(., is.na(.), "")))
+
+ saveRDS(tabla_desc_df, file = "C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/output/tables/tabla_descriptiva.rds")
+
+```
+
+
+```{r}
+
+#5. Calculo descriptivos variable dependiente según independientes----
+
+#5.1 Percepción situación económica nacional ----
+
+
+cor.test(latbaro_proc$confpol, latbaro_proc$perc_sitecon, method = "pearson") 
+
+#5.2 Progreso en corrupción----
+
+latbaro_proc |> 
+  group_by(reduc_corrup_rec) |> 
+  descr(confpol)
+
+cor.test(latbaro_proc$confpol, latbaro_proc$reduc_corrup_rec, method = "pearson")
+
+
+#5. Justicia en distribución de ingresos----
+
+latbaro_proc |> 
+  group_by(just_distr_rec) |> 
+  descr(confpol)
+
+cor.test(latbaro_proc$confpol, latbaro_proc$just_distr_rec, method = "pearson")
+
+#5.4 Confianza generalizada----
+
+latbaro_proc |> 
+  group_by(conf_gen_rec) |> 
+  descr(confpol)
+
+cor.test(latbaro_proc$confpol, latbaro_proc$conf_gen_rec, method = "pearson")
+
+
+  
+```
+
+```{r}
+
+#Grafico----
+
+
+
+latbaro_graf <- latbaro_proc
+
+latbaro_graf$conf_gen_rec <- factor(latbaro_graf$conf_gen_rec,
+                                         levels = c(0, 1),
+                                         labels = c("Sin conf. generalizada", "Con conf. generalizada"))
+
+latbaro_graf$conf_gen_rec <- set_label(latbaro_graf$conf_gen_rec, "Confianza generalizada")
+
+#3.1 Confianza en las instituciones----
+
+
+latbaro_graf$confpol <- set_label(latbaro_graf$confpol, "Indice de confianza política")
+
+
+#3.3 Situación económica----
+
+latbaro_graf$perc_sitecon <- set_label(latbaro_graf$perc_sitecon, "Indice de percepción de la situación económica nacional")
+
+
+#3.4 Percepción de corrupción----
+
+frq(latbaro_graf$reduc_corrup_rec)
+
+latbaro_graf$reduc_corrup_rec <- factor(latbaro_graf$reduc_corrup_rec,
+                                         levels = c(0, 1),
+                                         labels = c("Poco/Nada", "Mucho/Algo"))
+latbaro_graf$reduc_corrup_rec <- set_label(latbaro_graf$reduc_corrup_rec, "Progreso en reducir la corrupción política")
+
+frq(latbaro_graf$reduc_corrup_rec)
+
+#3.5 Percepción distribución de ingresos----
+
+frq(latbaro_graf$just_distr_rec)
+
+latbaro_graf$just_distr_rec <- factor(latbaro_graf$just_distr_rec,
+                                         levels = c(0, 1),
+                                         labels = c("Injusta/Muy injusta", "Muy justa/Justa"))
+latbaro_graf$just_distr_rec <- set_label(latbaro_graf$just_distr_rec, "Justicia en la distribución de ingresos")
+
+frq(latbaro_graf$just_distr_rec)
+
+
+# Grafico 1----
+
+resumen_confgen <- latbaro_graf %>% group_by(conf_gen_rec) %>%
+  summarise(n = n(),
+            mean = mean(confpol, na.rm = TRUE),
+            sd = sd(confpol, na.rm = TRUE),
+            se = sd / sqrt(n),
+            lower = mean - 1.96 * se,
+            upper = mean + 1.96 * se)
+
+resumen_justdist <- latbaro_graf %>% group_by(just_distr_rec) %>%
+  summarise(n = n(),
+            mean = mean(confpol, na.rm = TRUE),
+            sd = sd(confpol, na.rm = TRUE),
+            se = sd / sqrt(n),
+            lower = mean - 1.96 * se,
+            upper = mean + 1.96 * se)
+
+resumen_corrup <- latbaro_graf %>% group_by(reduc_corrup_rec) %>%
+  summarise(n = n(),
+            mean = mean(confpol, na.rm = TRUE),
+            sd = sd(confpol, na.rm = TRUE),
+            se = sd / sqrt(n),
+            lower = mean - 1.96 * se,
+            upper = mean + 1.96 * se)
+
+
+graf_congen <- ggplot(resumen_confgen, aes(x = conf_gen_rec, y = mean, fill = conf_gen_rec)) +
+  geom_col() +
+  labs(
+    x = " ",                               # elimina o cambia el título del eje x
+    y = "Promedio confpol",           # título eje y
+    fill = "Confianza generalizada"    # título de la leyenda
+  ) +
+  theme_minimal() +                        # puedes usar otro tema si prefieres
+  theme(
+    axis.text.x = element_blank(),         # oculta los nombres en el eje x
+    axis.ticks.x = element_blank(),        # elimina las marcas del eje x
+    plot.title = element_text(hjust = 0.5, face = "bold")
+  )
+
+graf_justdist <- ggplot(resumen_justdist, aes(x = just_distr_rec, y = mean, fill = just_distr_rec)) +
+  geom_col() +
+  labs(
+    x = " ",                               # elimina o cambia el título del eje x
+    y = "Promedio confpol",           # título eje y
+    fill = "Justicia distributiva"    # título de la leyenda
+  ) +
+  theme_minimal() +                        # puedes usar otro tema si prefieres
+  theme(
+    axis.text.x = element_blank(),         # oculta los nombres en el eje x
+    axis.ticks.x = element_blank(),        # elimina las marcas del eje x
+    plot.title = element_text(hjust = 0.5, face = "bold")
+  )
+
+graf_corrup <- ggplot(resumen_corrup, aes(x = reduc_corrup_rec, y = mean, fill = reduc_corrup_rec)) +
+  geom_col() +
+  labs(
+    x = " ",                               # elimina o cambia el título del eje x
+    y = "Promedio confpol",           # título eje y
+    fill = "Progreso corrupción"    # título de la leyenda
+  ) +
+  theme_minimal() +                        # puedes usar otro tema si prefieres
+  theme(
+    axis.text.x = element_blank(),         # oculta los nombres en el eje x
+    axis.ticks.x = element_blank(),        # elimina las marcas del eje x
+    plot.title = element_text(hjust = 0.5, face = "bold")
+  )
+
+graf_corrup
+
+graf_justdist
+
+graf_congen
+
+graf_corrup <- graf_corrup +
+  theme(
+    plot.title = element_text(size = 26, color = "black"),       # título del gráfico
+    axis.title = element_text(size = 18, color = "black"),       # títulos ejes X e Y
+    axis.text = element_text(size = 18, color = "black"),        # etiquetas de ejes
+    legend.title = element_text(size = 18, color = "black"),     # título leyenda
+    legend.text = element_text(size = 16, color = "black")       # texto de leyenda
+  )
+
+graf_justdist <- graf_justdist +
+  theme(
+    plot.title = element_text(size = 26, color = "black"),       # título del gráfico
+    axis.title = element_text(size = 18, color = "black"),       # títulos ejes X e Y
+    axis.text = element_text(size = 18, color = "black"),        # etiquetas de ejes
+    legend.title = element_text(size = 18, color = "black"),     # título leyenda
+    legend.text = element_text(size = 16, color = "black")       # texto de leyenda
+  )
+
+graf_congen <- graf_congen +
+  theme(
+    plot.title = element_text(size = 26, color = "black"),       # título del gráfico
+    axis.title = element_text(size = 20, color = "black"),       # títulos ejes X e Y
+    axis.text = element_text(size = 20, color = "black"),        # etiquetas de ejes
+    legend.title = element_text(size = 20, color = "black"),     # título leyenda
+    legend.text = element_text(size = 18, color = "black")       # texto de leyenda
+  )
+
+ggsave("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/output/graphs/graf_corrup.png", graf_corrup, width = 6, height = 4, dpi = 100)
+
+ggsave("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/output/graphs/graf_justdist.png", graf_justdist, width = 6, height = 4, dpi = 100)
+
+ggsave("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/output/graphs/graf_congen.png", graf_congen, width = 6, height = 4, dpi = 100)
+
+
+```
+
+
+```{r}
+
+#6. Crear matriz de correlaciones----
+
+#6.1 Crear objeto----
+correlaciones <- select(latbaro_proc, confpol, perc_sitecon, reduc_corrup_rec, just_distr_rec, conf_gen_rec)
+
+cor_mat <- cor(correlaciones)
+
+cor_df <- as.data.frame(cor_mat)
+
+colnames(cor_mat)
+
+colnames(cor_mat) <- rownames(cor_mat) <- c(
+  "Conf. política",
+  "Perc. situación económica",
+  "Prog. corrupción ",
+  "Just. distributiva",
+  "Conf. generalizada"
+)
+
+setwd("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/output/graphs")
+
+#6.2 Crear tabla----
+
+font_add("Arial", "C:/Windows/Fonts/arial.ttf")  
+showtext_auto()  
+
+png("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/output/graphs/corrplot.png", width = 800, height = 600) 
+corrplot(cor_mat,
+         method = "color",        
+         type = "lower",          
+         addCoef.col = "black",   
+         number.cex = 0.8,        
+         tl.col = "black",        
+         tl.srt = 45,
+         tl.offset = 0.5,
+         col = colorRampPalette(c("white","skyblue","blue"))(200), 
+         diag = FALSE,            
+         mar = c(0,0,3,0)
+)
+dev.off() 
+```
+
+```{r}
+
+#7. Calcular modelos----
+
+desempeño_simple <- lm(confpol ~ perc_sitecon + reduc_corrup_rec + just_distr_rec, data = latbaro_proc)  
+
+desempeño_confianza_simple <- lm(confpol ~ perc_sitecon + reduc_corrup_rec + just_distr_rec + conf_gen_rec, data = latbaro_proc)
+
+desempeño_confianza_multiple <- lm(confpol ~ perc_sitecon + reduc_corrup_rec + just_distr_rec + conf_gen_rec + sexo_mujer + edad + religion + nivel_educ_rec + estatus_subj, data = latbaro_proc)
+
+
+#Interacciones por separado
+
+inter1 <- lm(confpol ~ conf_gen_rec * perc_sitecon + reduc_corrup_rec + just_distr_rec + sexo_mujer + edad + religion + nivel_educ_rec + estatus_subj, data = latbaro_proc)
+
+inter2 <- lm(confpol ~ perc_sitecon + reduc_corrup_rec * conf_gen_rec + just_distr_rec + sexo_mujer + edad + religion + nivel_educ_rec + estatus_subj, data = latbaro_proc)
+
+inter3 <- lm(confpol ~ sitecon_full + reduc_corrup_rec + just_distr_rec*conf_gen_rec + sexo_mujer + edad + religion + nivel_educ_rec + estatus_subj, data = latbaro_proc)
+
+
+
+
+#7.3 Tabla de regresión----
+
+
+
+sjPlot::tab_model(
+  list(desempeño_simple, desempeño_confianza_simple, desempeño_confianza_multiple),
+  show.ci=FALSE, 
+  p.style = "stars", 
+  dv.labels = c("Modelo 1", "Modelo 2", "Modelo 3"),
+  string.pred = "Predictores", 
+  string.est = "**$\\beta$**",
+  show.se = TRUE,
+  string.se = "**se**",
+  title = ""
+)
+
+
+sjPlot::tab_model(
+  list(inter1, inter2, inter3),
+  show.ci=FALSE, 
+  p.style = "stars", 
+  dv.labels = c("Modelo 4", "Modelo 5", "Modelo 6"),
+  string.pred = "Predictores", 
+  string.est = "**$\\beta$**",
+  show.se = TRUE,
+  string.se = "**se**",
+  title = ""
+)
+
+```
+
+
+
+```{r}
+
+#8. Chequeo de supuestos ----
+
+#8.1 Observaciones influyentes ----
+
+n<- nobs(desempeño_confianza_multiple) #n de observaciones
+k<- length(coef(desempeño_confianza_multiple)) # n de parametros
+dcook<- 4/(n-k-1) #punt de corte
+
+final <- broom::augment_columns(desempeño_confianza_multiple,data = latbaro_proc)
+final$id <- as.numeric(row.names(final))
+# identify obs with Cook's D above cutoff
+ggplot(final, aes(id, .cooksd))+
+geom_bar(stat="identity", position="identity")+
+xlab("Obs. Number")+ylab("Cook's distance")+
+geom_hline(yintercept=dcook)+
+geom_text(aes(label=ifelse((.cooksd>dcook),id,"")),
+vjust=-0.2, hjust=0.5)
+
+ident<- final %>% filter(.cooksd>dcook)
+latbaro_final <- final %>% filter(!(id %in% ident$id))
+
+## Guardar BBDD sin observaciones influyentes
+
+saveRDS(latbaro_final, file = "C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/input/proc/latbaro_final.rds")
+
+#8.2 Modelos sin OI----
+
+econ <- lm(confpol ~ perc_sitecon, data = latbaro_final)
+
+econpres <- lm(confpol ~ perc_sitecon, data = latbaro_final)
+
+frq(latbaro_final$sitecon_act)
+frq(latbaro_final$sitecon_fut)
+frq(latbaro_final$sitecon_comp)
+
+corrup <- lm(confpol ~ reduc_corrup_rec, data = latbaro_final)
+
+justdist <- lm(confpol ~ just_distr_rec, data = latbaro_final)
+
+confgen <- lm(confpol ~ conf_gen_rec, data = latbaro_final)
+
+sexo <- lm(confpol ~ sexo_mujer, data = latbaro_final)
+
+edad <- lm(confpol ~ edad, data = latbaro_final)
+
+religion <- lm(confpol ~ religion, data = latbaro_final)
+
+niveleduc <- lm(confpol ~ nivel_educ_rec, data = latbaro_final)
+
+estatus <- lm(confpol ~ estatus_subj, data = latbaro_final)
+
+partpol <- lm(confpol ~ partpol, data = latbaro_final)
+
+
+desempeño_simple <- lm(confpol ~ perc_sitecon + reduc_corrup_rec + just_distr_rec, data = latbaro_final)  
+
+desempeño_confianza_simple <- lm(confpol ~ perc_sitecon + reduc_corrup_rec + just_distr_rec + conf_gen_rec, data = latbaro_final)
+
+desempeño_confianza_multiple <- lm(confpol ~ perc_sitecon + reduc_corrup_rec + just_distr_rec + conf_gen_rec + sexo_mujer + edad + religion + nivel_educ_rec + estatus_subj, data = latbaro_final)
+
+
+#Calcular modelos de interacción
+
+inter1 <- lm(confpol ~ perc_sitecon*conf_gen_rec + reduc_corrup_rec + just_distr_rec + sexo_mujer + edad + religion + nivel_educ_rec + estatus_subj, data = latbaro_final)
+
+inter2 <- lm(confpol ~ perc_sitecon + reduc_corrup_rec*conf_gen_rec + just_distr_rec + sexo_mujer + edad + religion + nivel_educ_rec + estatus_subj, data = latbaro_final)
+
+inter3 <-lm(confpol ~ perc_sitecon + reduc_corrup_rec + just_distr_rec*conf_gen_rec + sexo_mujer + edad + religion + nivel_educ_rec + estatus_subj, data = latbaro_final)
+
+
+##Guardar BBDD
+
+saveRDS(desempeño_simple, file = "C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/input/proc/desempeño_simple.rds")
+
+ saveRDS(desempeño_confianza_simple, file = "C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/input/proc/desempeño_confianza_simple.rds")
+ 
+ saveRDS(desempeño_confianza_multiple, file = "C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/input/proc/desempeño_confianza_multiple.rds")
+
+  saveRDS(inter1, file = "C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/input/proc/inter1.rds")
+ saveRDS(inter2, file = "C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/input/proc/inter2.rds")
+ saveRDS(inter3, file = "C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/input/proc/inter3.rds")
+
+#Crear tablas modelos sin OI 
+ 
+nombres_modelos <-  c(
+  "Intercepto", "Perc. situación económica nacional", "Progreso en corrupción", "Justicia distributiva", "Conf. generalizada", "Sexo", "Edad", "Religión: Católico", "Religión: No católico", "Universitario", "ESS: Clase Media", "ESS: Clase Alta/Media alta") 
+ 
+sjPlot::tab_model(
+  list(desempeño_simple, desempeño_confianza_simple, desempeño_confianza_multiple),
+  show.ci=FALSE, 
+  p.style = "stars", 
+  dv.labels = c("Modelo 1", "Modelo 2", "Modelo 3"),
+  string.pred = "Predictores", 
+  string.est = "**$\\beta$**",
+  show.se = TRUE,
+  pred.labels = nombres_modelos,
+  string.se = "**se**",
+  title = "",
+  file = "C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/output/tables/tabla_regresiones.html"
+)
+
+nombres_modelos_inter <-  c(
+  "Intercepto", "Perc. situación económica nacional", "Conf. generalizada", "Progreso en corrupción", "Justicia distributiva", "Sexo", "Edad", "Religión: Católico", "Religión: No católico", "Universitario", "ESS: Clase Media", "ESS: Clase Alta/Media alta", "Perc. situación económica x Conf. generalizada", "Prog. corrupción x Conf. generalizada", "Just. distributiva X Conf. generalizada" )
+
+sjPlot::tab_model(
+  list(inter1, inter2, inter3),
+  show.ci=FALSE, 
+  p.style = "stars", 
+  dv.labels = c("Modelo 4", "Modelo 5", "Modelo 6"),
+  string.pred = "Predictores", 
+  string.est = "**$\\beta$**",
+  show.se = TRUE,
+  string.se = "**se**",
+  pred.labels = nombres_modelos_inter,
+  title = "",
+  file = "C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/output/tables/tabla_interacciones.html"
+)
+
+
+#10.2 Linealidad
+
+
+linealidad_econ <- ggplot(econ, aes(.fitted, .resid)) +
+  geom_point() +
+  geom_hline(yintercept = 0) +
+  geom_smooth(se = TRUE) +
+  labs(title = "Econ")
+
+linealidad_corrup <- ggplot(corrup, aes(.fitted, .resid)) +
+  geom_point() +
+  geom_hline(yintercept = 0) +
+  geom_smooth(se = TRUE) +
+  labs(title = "corrup")
+
+linealidad_justdist <- ggplot(justdist, aes(.fitted, .resid)) +
+  geom_point() +
+  geom_hline(yintercept = 0) +
+  geom_smooth(se = TRUE) +
+  labs(title = "justdist")
+
+linealidad_confgen <- ggplot(confgen, aes(.fitted, .resid)) +
+  geom_point() +
+  geom_hline(yintercept = 0) +
+  geom_smooth(se = TRUE) +
+  labs(title = "cofgen")
+
+linealidad_edad <- ggplot(edad, aes(.fitted, .resid)) +
+  geom_point() +
+  geom_hline(yintercept = 0) +
+  geom_smooth(se = TRUE) +
+  labs(title = "Edad")
+
+linealidad_religion <- ggplot(religion, aes(.fitted, .resid)) +
+  geom_point() +
+  geom_hline(yintercept = 0) +
+  geom_smooth(se = TRUE) +
+  labs(title = "Religión")
+
+linealidad_niveleduc <- ggplot(niveleduc, aes(.fitted, .resid)) +
+  geom_point() +
+  geom_hline(yintercept = 0) +
+  geom_smooth(se = TRUE) +
+  labs(title = "niveleduc")
+
+linealidad_ess <- ggplot(estatus, aes(.fitted, .resid)) +
+  geom_point() +
+  geom_hline(yintercept = 0) +
+  geom_smooth(se = TRUE) +
+  labs(title = "ESS")
+
+linealidad_partpol <- ggplot(partpol, aes(.fitted, .resid)) +
+  geom_point() +
+  geom_hline(yintercept = 0) +
+  geom_smooth(se = TRUE) +
+  labs(title = "Partpol")
+
+linealidad_simple <- ggplot(desempeño_simple, aes(.fitted, .resid)) +
+  geom_point() +
+  geom_hline(yintercept = 0) +
+  geom_smooth(se = TRUE) 
+
+linealidad_doble <- ggplot(desempeño_confianza_simple, aes(.fitted, .resid)) +
+  geom_point() +
+  geom_hline(yintercept = 0) +
+  geom_smooth(se = TRUE) 
+
+linealidad_multiple <- ggplot(desempeño_confianza_multiple, aes(.fitted, .resid)) +
+  geom_point() +
+  geom_hline(yintercept = 0) +
+  geom_smooth(se = TRUE) +
+  labs(title = "Multiple")
+
+linealidad_inter <- ggplot(inter1, aes(.fitted, .resid)) +
+  geom_point() +
+  geom_hline(yintercept = 0) +
+  geom_smooth(se = TRUE) +
+  labs(title = "Inter")
+
+
+
+
+linealidad_simple
+linealidad_doble
+linealidad_multiple
+linealidad_inter
+linealidad_econ
+linealidad_corrup
+linealidad_justdist
+linealidad_confgen
+linealidad_niveleduc
+linealidad_edad
+linealidad_religion
+linealidad_ess
+linealidad_inter
+
+
+#10.3 Homogeneidad de varianza (homocedasticidad)
+
+lmtest::bptest(desempeño_confianza_multiple)
+lmtest::bptest(inter1)
+lmtest::bptest(inter2)
+
+
+
+##Modelos con errores estandar robustos
+
+multiple_rob <- coeftest(desempeño_confianza_multiple, vcov=vcovHC)
+inter1_rob <- coeftest(inter1, vcov=vcovHC)
+inter2_rob <- coeftest(inter2, vcov=vcovHC)
+inter3_rob <- coeftest(inter3, vcov=vcovHC)
+
+sjPlot::tab_model(
+  list(multiple_rob, inter1_rob, inter2_rob, inter3_rob),
+  show.ci=FALSE, 
+  p.style = "stars", 
+  string.pred = "Predictores", 
+  string.est = "**$\\beta$**",
+  show.se = TRUE,
+  string.se = "**se**",
+  title = ""
+) 
+
+#Al no haber grandes diferencias entre el modelo con errores robustos y el original, podemos afirmar que la heterocedasticidad no es perjudicial para nuestros modelos.
+
+#10.4 Multicolinealidad
+
+car::vif(desempeño_confianza_multiple)
+car::vif(inter1)
+car::vif(inter2)
+car::vif(inter3)
+
+```
+
+
+```{r}
+
+#8.Gráfico de coeficientes----
+
+coeficientes <- plot_model(desempeño_confianza_multiple, 
+           type = "est", 
+           terms = c("conf_gen_rec","just_distr_rec", "reduc_corrup_rec", "perc_sitecon"), 
+           show.values = TRUE, 
+           value.offset = .2,
+           axis.labels = c("Conf. generalizada", "Just. distributiva", "Prog. corrupción", "Perc. situación económica"),
+           axis.title = "β",
+           colors = "Black",
+           title = ""
+)
+
+
+coeficientes <- coeficientes +
+  theme(
+    plot.title = element_text(size = 26, color = "black"),       # título del gráfico
+    axis.title = element_text(size = 28, color = "black"),       # títulos ejes X e Y
+    axis.text = element_text(size = 28, color = "black"),        # etiquetas de ejes
+    legend.title = element_text(size = 28, color = "black"),     # título leyenda
+    legend.text = element_text(size = 28, color = "black")       # texto de leyenda
+  )
+
+ggsave("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/output/graphs/coeficientes.png", coeficientes, width = 6, height = 4, dpi = 300)
+
+```
+
+```{r}
+
+#Descriptivos sin OI----
+
+latbaro_descr <- latbaro_final |> 
+   select(confpol, perc_sitecon, reduc_corrup_rec, just_distr_rec, conf_gen_rec, sexo_mujer, edad, religion, nivel_educ_rec, estatus_subj)
+
+saveRDS(latbaro_descr, file = "C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/input/proc/latbaro_descr.rds")
+
+#Etiquetas
+#3.1 Confianza en las instituciones----
+
+
+latbaro_descr$confpol <- set_label(latbaro_descr$confpol, "Indice de confianza política")
+
+
+
+#¿cuánta confianza tiene usted en ellas: mucha (1), algo (2), poca (3) o ninguna (4) confianza en...? 
+
+#3.2 Confianza generalizada----
+
+latbaro_descr$conf_gen_rec <- factor(latbaro_descr$conf_gen_rec,
+                                         levels = c(0, 1),
+                                         labels = c("Uno nunca es lo suficientemente cuidadoso en el trato con los demás", "Se puede confiar en la mayoría de las personas"))
+latbaro_descr$conf_gen_rec <- set_label(latbaro_descr$conf_gen_rec, "Confianza generalizada")
+
+#3.3 Situación económica----
+
+latbaro_descr$perc_sitecon <- set_label(latbaro_descr$perc_sitecon, "Percepción de la situación económica nacional")
+
+
+#3.4 Percepción de corrupción----
+
+frq(latbaro_descr$reduc_corrup_rec)
+
+latbaro_descr$reduc_corrup_rec <- factor(latbaro_descr$reduc_corrup_rec,
+                                         levels = c(0, 1),
+                                         labels = c("Poco/Nada", "Mucho/Algo"))
+latbaro_descr$reduc_corrup_rec <- set_label(latbaro_descr$reduc_corrup_rec, "Progreso en reducir la corrupción política")
+
+frq(latbaro_descr$reduc_corrup_rec)
+
+#3.5 Percepción distribución de ingresos----
+
+frq(latbaro_descr$just_distr_rec)
+
+latbaro_descr$just_distr_rec <- factor(latbaro_descr$just_distr_rec,
+                                         levels = c(0, 1),
+                                         labels = c("Injusta/Muy injusta", "Muy justa/Justa"))
+latbaro_descr$just_distr_rec <- set_label(latbaro_descr$just_distr_rec, "Justicia en la distribución de ingresos")
+
+frq(latbaro_descr$just_distr_rec)
+
+#3.6 Variables de control----
+
+latbaro_descr$sexo_mujer <- factor(latbaro_descr$sexo_mujer,
+                                         levels = c(0, 1),
+                                         labels = c("Hombre", "Mujer"))
+latbaro_descr$sexo_mujer <- set_label(latbaro_descr$sexo_mujer, "Sexo")
+
+
+latbaro_descr$edad <- set_label(latbaro_descr$edad, "Edad")
+
+
+latbaro_descr$religion <- factor(latbaro_descr$religion,
+                                         levels = c(1, 2, 3),
+                                         labels = c("Ninguna/Ateo/Agnóstico", "Católica", "No católica"))
+latbaro_descr$religion <- set_label(latbaro_descr$religion, "Religión")
+
+
+
+latbaro_descr$nivel_educ_rec <- factor(latbaro_descr$nivel_educ_rec,
+                                         levels = c(0, 1),
+                                         labels = c("Sin universitario completo", "Con universitario completo"))
+latbaro_descr$nivel_educ_rec <- set_label(latbaro_descr$nivel_educ_rec, "Nivel educacional")
+
+
+ 
+
+latbaro_descr$estatus_subj <- factor(latbaro_descr$estatus_subj,
+                                         levels = c(1, 2, 3),
+                                         labels = c("Clase Baja/Media baja", "Clase Media", "Clase Media alta/Alta"))
+
+latbaro_descr$estatus_subj <- set_label(latbaro_descr$estatus_subj, "Estatus social subjetivo")
+
+ saveRDS(latbaro_descr, file = "C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/input/proc/latbaro_descr.rds")
+
+#Tabla
+
+tabla_descriptivos <- tbl_summary(latbaro_descr,
+    statistic = list(
+      all_continuous() ~ "{mean} ({sd})",
+      all_categorical() ~ "{n} ({p}%)"
+    ),
+    digits = list(
+      all_continuous() ~ 2,
+      all_categorical() ~ 1
+    ),
+     missing = "no"
+  ) |> 
+  bold_labels() |> 
+  modify_header(label ~ "**Variable**") 
+
+tabla_desc_df <- tabla_descriptivos |> 
+  as_tibble() 
+
+tabla_desc_df <- tabla_desc_df |> 
+  mutate(across(everything(), ~replace(., is.na(.), "")))
+
+ saveRDS(tabla_desc_df, file = "C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/output/tables/tabla_descriptiva_final.rds")
+
+
+
+```
+
+
+```{r}
+#9 Gráfico de interacción
+
+graf_interaccion_sitecon <- interact_plot(inter1, 
+                                  pred = "perc_sitecon", 
+                                  modx = "conf_gen_rec", 
+                                  plot.points = FALSE,
+                                  x.label = "Perc. situación económica",
+                                  y.label = "Confianza política",
+                                  modx.labels = c("No confía en los otros", "Si confía en los otros"),
+                                  legend.main = "Nivel de confianza generalizada"
+                                  ) +
+  ggplot2::labs(title = "Interacción perc. situación económica y confianza generalizada")
+
+
+graf_interaccion_justdist <- interact_plot(inter3, 
+                                  pred = "conf_gen_rec", 
+                                  modx = "just_distr_rec", 
+                                  plot.points = FALSE,
+                                  x.label = "Confianza generalizada",
+                                  y.label = "Confianza política",
+                                  modx.labels = c("No hay justicia distributiva", "Si hay justicia distributiva"),
+                                  legend.main = "Justicia distributiva"
+                                  ) +
+  ggplot2::labs(title = "Interacción justicia distributiva y confianza generalizada")
+
+
+graf_interaccion_sitecon
+graf_interaccion_justdist
+
+
+graf_interaccion_sitecon <- graf_interaccion_sitecon +
+  theme_minimal()
+
+graf_interaccion_justdist <- graf_interaccion_justdist +
+  theme_minimal()
+
+graf_interaccion_sitecon
+graf_interaccion_justdist
+
+graf_interaccion_sitecon <- graf_interaccion_sitecon +
+  theme(
+    plot.title = element_text(size = 38, color = "black"),       # título del gráfico
+    axis.title = element_text(size = 38, color = "black"),       # títulos ejes X e Y
+    axis.text = element_text(size = 38, color = "black"),        # etiquetas de ejes
+    legend.title = element_text(size = 38, color = "black"),     # título leyenda
+    legend.text = element_text(size = 38, color = "black")       # texto de leyenda
+  )
+
+graf_interaccion_justdist <- graf_interaccion_justdist +
+  theme(
+    plot.title = element_text(size = 38, color = "black"),       # título del gráfico
+    axis.title = element_text(size = 38, color = "black"),       # títulos ejes X e Y
+    axis.text = element_text(size = 38, color = "black"),        # etiquetas de ejes
+    legend.title = element_text(size = 38, color = "black"),     # título leyenda
+    legend.text = element_text(size = 38, color = "black")       # texto de leyenda
+  )
+
+
+graf_interaccion_sitecon
+graf_interaccion_justdist
+
+
+graf_interaccion_sitecon_p <- graf_interaccion_sitecon +
+  theme(
+    plot.title = element_text(size = 26, color = "black"),       # título del gráfico
+    axis.title = element_text(size = 28, color = "black"),       # títulos ejes X e Y
+    axis.text = element_text(size = 28, color = "black"),        # etiquetas de ejes
+    legend.title = element_text(size = 28, color = "black"),     # título leyenda
+    legend.text = element_text(size = 28, color = "black")       # texto de leyenda
+  )
+
+graf_interaccion_justdist_p <- graf_interaccion_justdist +
+  theme(
+    plot.title = element_text(size = 26, color = "black"),       # título del gráfico
+    axis.title = element_text(size = 28, color = "black"),       # títulos ejes X e Y
+    axis.text = element_text(size = 28, color = "black"),        # etiquetas de ejes
+    legend.title = element_text(size = 28, color = "black"),     # título leyenda
+    legend.text = element_text(size = 28, color = "black")       # texto de leyenda
+  )
+
+graf_interaccion_sitecon_p
+graf_interaccion_justdist_p
+
+ggsave("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/output/graphs/interaccion_sitecon.png", graf_interaccion_sitecon, width = 6, height = 4, dpi = 300)
+ggsave("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/output/graphs/interaccion_justdist.png", graf_interaccion_justdist, width = 6, height = 4, dpi = 300)
+
+ggsave("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/output/graphs/interaccion_sitecon-p.png", graf_interaccion_sitecon_p, width = 6, height = 4, dpi = 300)
+ggsave("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/output/graphs/interaccion_justdist-p.png", graf_interaccion_justdist_p, width = 6, height = 4, dpi = 300)
+
+```
+

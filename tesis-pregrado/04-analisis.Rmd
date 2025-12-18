@@ -1,0 +1,206 @@
+# Análisis
+
+## Análisis descriptivo
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+library(gt)
+library(gtsummary)
+library(knitr)
+library(kableExtra)
+library(flextable)
+library(modelsummary)
+
+
+latbaro_descr <- readRDS("IPO/input/proc/latbaro_descr.rds")
+
+tabla_descriptivos <- tbl_summary(latbaro_descr,
+    statistic = list(
+      all_continuous() ~ "{mean} ({sd})",
+      all_categorical() ~ "{n} ({p}%)"
+    ),
+    digits = list(
+      all_continuous() ~ 2,
+      all_categorical() ~ 1
+    ),
+      missing = "no"
+  ) |>
+  bold_labels() |> 
+  modify_header(label ~ "**Variable**")
+
+# 2. Conversión a gt y Adición de Fuente
+# Esta es la tabla que se debe imprimir al final del chunk
+tabla_final <- tabla_descriptivos |>
+  as_flex_table() |> 
+  add_footer_row(values = "Fuente: Elaboración propia en base a Encuesta Latinobarómetro 2024", 
+                 colwidths = 2) %>%
+  autofit()
+
+```
+
+```{r tabla-1, echo=FALSE, results='asis', message=FALSE, warning=FALSE, tab.cap="Estadísticas descriptivas de las variables incluidas en el análisis"}
+
+
+tabla_final
+
+
+
+```
+
+
+En la Tabla \@ref(tab:tabla-1) se presentan las estadísticas descriptivas de las variables incluidas en el análisis. En esta, se observa que los ciudadanos chilenos poseen un bajo nivel de confianza en sus instituciones políticas, obteniendo un promedio de 3.43 (*de* = 1.87) en el índice de confianza política. De esta forma, los datos analizados mantienen la tendencia mostrada por anteriores estudios. En lo que refiere a la percepción de la situación económica nacional, se observa un nivel promedio de satisfacción de 5.15 (*de* = 1.68), lo que indicaría una evaluación moderada en este ámbito. A su vez, se evidencia una evaluación negativa del desempeño de las instituciones estatales en el combate de la corrupción, con solo un 35% de personas que indican que se ha progresado a este respecto en los últimos dos años. Lo anterior se profundiza en lo que respecta a la desigualdad de ingresos, con solo un 8% de individuos que califica como justa la distribución de ingresos en el país. Por último, destaca el bajo nivel de confianza generalizada evidenciado, con solo un 17% de sujetos que declaran poder confiar en la mayoría de las personas.
+
+
+```{r grafico-2, fig.width=8, fig.height=6, out.width='100%', fig.align='center', fig.cap="Matriz de correlaciones entre las variables principales del estudio. Fuente: Elaboración propia en base a Latinobarómetro 2024.", echo=FALSE}
+
+knitr::include_graphics("IPO/output/graphs/corrplot.png")
+
+```
+
+
+Por otro lado, en la Figura \@ref(fig:grafico-2) se expone una matriz de correlaciones en la que se evidencia el grado de asociación de las distintas variables principales entre sí. En esta, se observa que todas las variables independientes se asocian positivamente con la variable de confianza política, aunque con distinto grado de intensidad. En este sentido, la percepción de la situación económica nacional presenta una correlación moderada-alta con este indicador (*r* = 0.50, p < 0.001). El resto de variables exhiben un grado moderado de asociación, siendo la justicia distributiva (*r* = 0.33, p < 0.001) la que presenta una mayor intensidad, seguida de la evaluación del progreso en reducir la corrupción (*r* = 0.32, p < 0.001)  y, por último, de la confianza generalizada (*r* = 0.31, p < 0.001).
+
+## Modelos
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+latbaro_final <- readRDS("IPO/input/proc/latbaro_final.rds")
+
+desempeño_simple <- lm(confpol ~ perc_sitecon + reduc_corrup_rec + just_distr_rec, data = latbaro_final)  
+
+desempeño_confianza_simple <- lm(confpol ~ perc_sitecon + reduc_corrup_rec + just_distr_rec + conf_gen_rec, data = latbaro_final)
+
+desempeño_confianza_multiple <- lm(confpol ~ perc_sitecon + reduc_corrup_rec + just_distr_rec + conf_gen_rec + sexo_mujer + edad + religion + nivel_educ_rec + estatus_subj, data = latbaro_final)
+
+inter1 <- lm(confpol ~ perc_sitecon*conf_gen_rec + reduc_corrup_rec + just_distr_rec + sexo_mujer + edad + religion + nivel_educ_rec + estatus_subj, data = latbaro_final)
+
+inter2 <- lm(confpol ~ perc_sitecon + reduc_corrup_rec*conf_gen_rec + just_distr_rec + sexo_mujer + edad + religion + nivel_educ_rec + estatus_subj, data = latbaro_final)
+
+inter3 <-lm(confpol ~ perc_sitecon + reduc_corrup_rec + just_distr_rec*conf_gen_rec + sexo_mujer + edad + religion + nivel_educ_rec + estatus_subj, data = latbaro_final)
+
+modelos <- list(
+  "Modelo 1" = desempeño_simple, 
+  "Modelo 2" = desempeño_confianza_simple, 
+  "Modelo 3" = desempeño_confianza_multiple
+)
+
+mapa_coeficientes <- c(
+    "(Intercept)" = "Intercepto",
+    "perc_sitecon" = "Perc. situación económica nacional",
+    "reduc_corrup_rec" = "Progreso en corrupción",
+    "just_distr_rec" = "Justicia distributiva",
+    "conf_gen_rec" = "Conf. generalizada",
+    "sexo_mujer" = "Sexo (ref = hombre)",
+    "edad" = "Edad",
+    "religion2" = "Religión: Católico (ref = sin religión)",
+    "religion3" = "Religión: No católico (ref = sin religión)",
+    "nivel_educ_rec" = "Educación universitaria",
+    "estatus_subj2" = "Ess: Clase Media (ref = Baja/Media Baja)",
+    "estatus_subj3" = "ESS: Clase Alta/Media Alta (ref = Baja/Media Baja)"
+    )
+
+mapa_gof <- data.frame(
+    # 'raw': Nombre interno del estadístico en R (no cambiar)
+    raw = c("r.squared", "adj.r.squared", "nobs"), 
+    
+    # 'clean': Etiqueta que aparece en la tabla
+    clean = c("R²", "R² Ajustado", "N de Observaciones"), 
+    
+    # 'fmt': Controla el formato de las columnas. 
+    # Usar 1 para el formato predeterminado de modelsummary.
+    fmt = 2 
+)
+
+modelos_final <- modelsummary(
+    modelos, 
+    output = "flextable",
+    coef_map = mapa_coeficientes,
+    gof_map = mapa_gof,
+    stars = T,
+    fmt = 2
+) |> 
+  flextable::add_footer_lines("Nota 1: Se muestra el coeficiente de regresión y entre paréntesis el error estandar.") |>
+  flextable::add_footer_lines("Nota 2: Elaborado a partir de Encuesta Latinobarómetro 2024.") |>
+  autofit()
+
+```
+
+
+```{r tabla-regresiones, results='asis', echo=FALSE, message=FALSE, warning=FALSE, tab.cap="Modelos sin interacción."}
+
+modelos_final
+
+```
+
+Cómo se puede observar en la Tabla \@ref(tab:tabla-regresiones), se construyeron un total de seis modelos de regresión lineal siguiendo una estrategia incremental, en la cual se van incorporando nuevos términos a la regresión para comprobar si se mantienen los efectos percibidos. Siguiendo esta lógica, el Modelo 1 se calculó solo con las variables de percepción del desempeño. Luego, en los Modelos 2 y 3 se introdujeron, respectivamente, la variable de confianza generalizada y las variables de control. Por último, en los modelos 4, 5 y 6 se introdujeron cada uno de los términos de interacción por separado.
+
+Examinando los resultados de los primeros dos modelos, se observa que tanto las variables de percepción del desempeño como la de confianza generalizada presentan efectos estadísticamente significativos que se mantienen en ambas estimaciones. Por un lado, en lo que respecta a las primeras (Modelo 1) se advierte que aquellos individuos que poseen una percepción más positiva de la situación económica del país presentan, en promedio, 0.50 puntos adicionales (*se* = 0.03, p < 0.001) en el índice de confianza política. A su vez, los ciudadanos que evalúan positivamente el progreso obtenido en combatir la corrupción en las instituciones del Estado aumentan en promedio 0.78 puntos (*se* = 0.10, p < 0.001) su valor en la variable dependiente. Aún mayor es el efecto de la justicia distributiva, en cuanto los individuos que califican como justa la distribución de ingresos en el país aumentan en promedio 1.44 (*se* = 0.18, p < 0.001) puntos su confianza en las instituciones políticas. Por otro lado, se evidencia que, al igual que las variables de percepción del desempeño, la confianza generalizada tiene un efecto positivo sobre la confianza política (Modelo 2). En particular, las personas que declaran confiar en la mayoría de las personas reportan, en promedio, 0.74 puntos adicionales (*se* = 0.13, p < 0.001) en el índice de confianza política.
+
+```{r grafico-3, fig.width= 8, fig.height=6, out.width='100%', fig.align='center', fig.cap="Comparación coeficientes de regresión Modelo 3. Fuente: Elaboración propia en base a Latinobarómetro 2024.", echo=FALSE}
+
+knitr::include_graphics("IPO/output/graphs/coeficientes.png")
+
+```
+
+
+Al comparar las estimaciones de estos dos modelo con las del Modelo 3, se observa que la variable que se mantiene más estable a lo largo de las distintas mediciones es la de percepción de la situación económica nacional, cuyo efecto prácticamente no varía. Respecto a las otras, se evidencia que la evaluación del progreso en reducir la corrupción disminuye en 0.6 unidades, mientras que el efecto de la justicia distributiva se reduce en 0.25 unidades, siendo la variable menos robusta entre las variables independientes. Por último, el efecto de la confianza generalizada disminuye en tan solo una unidad, mostrándose igual de robusta que la percepción de la situación económica. No obstante los cambios, estas variables se mantienen estadísticamente significativas, de manera tal que es posible aceptar las hipótesis *H1*, *H2*, *H3* y *H4*. En contraste, al comparar entre sí la magnitud del efecto que las distintas variables dependientes tienen sobre el índice de confianza política (véase Figura \@ref(fig:grafico-3)), se evidencia que los resultados no permiten aceptar la hipótesis *H8*. Lo anterior debido a que el efecto de la confianza generalizada sobre la confianza política es menor que el efecto que sobre esta tiene la percepción de la desigualdad de ingresos.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+modelos_inter <- list(
+  "Modelo 4" = inter1, 
+  "Modelo 5" = inter2, 
+  "Modelo 6" = inter3
+)
+
+mapa_inter <- c(
+    "(Intercept)" = "Intercepto",
+    "perc_sitecon" = "Perc. situación económica nacional",
+    "conf_gen_rec" = "Conf. generalizada",
+    "reduc_corrup_rec" = "Progreso en corrupción",
+    "just_distr_rec" = "Justicia distributiva",
+    "sexo_mujer" = "Sexo (ref = hombre)",
+    "edad" = "Edad",
+    "religion2" = "Religión: Católico (ref = sin religión)",
+    "religion3" = "Religión: No católico (ref = sin religión)",
+    "nivel_educ_rec" = "Educación universitaria",
+    "estatus_subj2" = "Ess: Clase Media (ref = Baja/Media Baja)",
+    "estatus_subj3" = "ESS: Clase Alta/Media Alta (ref = Baja/Media Baja)",
+    "perc_sitecon:conf_gen_rec" = "Perc. situación económica X Conf. generalizada",
+    "reduc_corrup_rec:conf_gen_rec" = "Prog. corrupción X Conf. generalizada",
+    "just_distr_rec:conf_gen_rec" = "Just. distributiva X Conf. generalizada"
+    )
+
+modelos_inter_final <- modelsummary(
+    modelos_inter, 
+    output = "flextable",
+    coef_map = mapa_inter,
+    gof_map = mapa_gof,
+    stars = T,
+    fmt = 2
+) |> 
+  flextable::add_footer_lines("Nota 1: Se muestra el coeficiente de regresión y  entre paréntesis el error estandar.") |>
+  flextable::add_footer_lines("Nota 2: Elaborado a partir de Encuesta Latinobarómetro 2024.") |>
+  autofit() 
+
+
+
+```
+
+
+```{r tabla-interacciones, results='asis', echo=FALSE, message=FALSE, warning=FALSE, tab.cap="Modelos con interacción."}
+
+modelos_inter_final
+
+```
+
+
+Por último, en la Tabla \@ref(tab:tabla-interacciones) se presentan los modelos que incluyen los efectos de moderación de la confianza generalizada en la relación de cada una de las variables de percepción del desempeño con la variable dependiente. En esta, se observa que la confianza generalizada produce un efecto de moderación positiva sobre el efecto que la percepción de la situación económica y la justicia distributiva tienen sobre la confianza política. En el primer caso, esto significa que a mayor nivel de confianza generalizada, el efecto positivo de la percepción de la situación económica nacional en la confianza política aumenta en 0.18 unidades (*se* = 0.07, p < 0.05). A su vez, el segundo caso indica que a mayor nivel de confianza generalizada, el efecto positivo de la justicia distributiva en la confianza política aumenta en 1.19 unidades (*se* = 0.36, p < 0.01). Ambas relaciones se pueden ver en la Figura \@ref(fig:grafico-4). Al contrastar dichos resultados con las hipótesis *H5* y *H7*, se observa que aún cuando los efectos de moderación predichos están presentes en el modelo, estos no permiten confirmar las hipótesis planteadas en cuanto presentan un sentido distinto al previamente estipulado. En lo que respecta a la evaluación del desempeño en reducir la corrupción, se evidencia que la confianza generalizada no presenta efectos de moderación estadísticamente significativos en la relación que esta tiene con la confianza política, lo que obliga a rechazar la hipótesis *H6*.   
+
+```{r grafico-4, fig.width= 10, fig.height=8, out.width='50%', fig.show='hold', fig.cap= "Gráficos que ilustran el efecto de interacción que la confianza generalizada tiene con la percepción de situación económica y la justicia distributiva, respectivamente. Fuente: Elaboración propia en base a Latinobarómetro 2024.", echo=FALSE}
+
+knitr::include_graphics("IPO/output/graphs/interaccion_sitecon.png")
+knitr::include_graphics("IPO/output/graphs/interaccion_justdist.png")
+
+```
+

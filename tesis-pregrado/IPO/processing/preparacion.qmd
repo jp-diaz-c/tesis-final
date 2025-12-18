@@ -1,0 +1,460 @@
+---
+title: "Preparacion"
+editor: source
+format: 
+  html:
+    self-contained: true
+    code-fold: true
+    code-tools: true 
+lang: es 
+---
+
+## Preparación Latinobarómetro
+
+### Cargar paquetes y BBDD.   Filtrar BBDD y seleccionar variables.
+
+```{r}
+#| label: "0. Cargar paquetes"
+
+pacman::p_load(dplyr, sjmisc, car, sjlabelled, stargazer, haven, knitr, fastDummies, psych)
+
+```
+
+```{r}
+#| label: "1. Cargar datos"
+
+latbaro_2024 <- read_sav("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/input/original/latbaro_2024.sav")
+
+```
+
+```{r}
+#| label: "2. Filtrar BBDD y seleccionar variables"
+
+colnames(latbaro_2024)
+
+latbaro_filt <- latbaro_2024 |> 
+  select(P14ST.D, P14ST.E, P14ST.F, P14ST.G, P6STGBS, P7STGBS, P8ST, P55ST, P17ST,
+         P10STGBS, SEXO, EDAD, REEDAD, S1, S11, REEDUC.1, S2, P16ST, PERPART)
+
+
+```
+
+### Preparación variables dependientes
+
+```{r, include=FALSE}
+
+#| label: "3. Preparación variables confianza institucional"
+
+#3.1 Variables de confianza institucional----
+
+frq(latbaro_filt$P14ST.D)
+frq(latbaro_filt$P14ST.E)
+frq(latbaro_filt$P14ST.F)
+frq(latbaro_filt$P14ST.G)
+
+latbaro_filt = latbaro_filt |> 
+  rename(conf_cong = P14ST.D,
+         conf_gob = P14ST.E,
+         conf_jud = P14ST.F,
+         conf_part = P14ST.G) |> 
+ mutate(across(
+    .cols = c(conf_cong, conf_gob, conf_jud, conf_part),
+    .fns  = ~ as.numeric(.) |> 
+            car::recode("c(-1, -2, -3, -4, -5) = NA") |> 
+            car::recode("1 = 4; 2 = 3; 3 = 2; 4 = 1")
+  )) 
+
+frq(latbaro_filt$conf_cong)
+frq(latbaro_filt$conf_gob)
+frq(latbaro_filt$conf_jud)
+frq(latbaro_filt$conf_part)
+
+## Se reducen algunas observaciones al transformar las variables ya que existe la posibilidad de que algunos datos sean NA en solo una de las variables, lo que implicaría que al ser eliminados se eliminarían de todas las variables.
+
+###Valores recodificados: 1 = Ninguna; 2 = Poca; 3 = Algo; 4 = Mucha
+
+
+```
+
+### Preparación variables independientes
+
+```{r, include=FALSE}
+#| label: "4. Preparación variables independientes"
+
+#4.1. Variables de percepción situación económica----
+
+frq(latbaro_filt$P6STGBS)
+frq(latbaro_filt$P7STGBS)
+frq(latbaro_filt$P8ST)
+
+latbaro_filt <- latbaro_filt |> 
+  rename(
+    sitecon_act  = P6STGBS,
+    sitecon_comp = P7STGBS,
+    sitecon_fut  = P8ST
+  ) %>%
+  mutate(across(
+    .cols = c(sitecon_act, sitecon_comp, sitecon_fut),
+    .fns  = ~ as.numeric(.) |> 
+            car::recode("c(-1, -2, -3, -4, -5) = NA") |> 
+            car::recode("1 = 5; 2 = 4; 3 = 3; 4 = 2; 5 = 1")
+  )) 
+
+frq(latbaro_filt$sitecon_act)
+frq(latbaro_filt$sitecon_comp)
+frq(latbaro_filt$sitecon_fut)
+
+latbaro_filt <- latbaro_filt |> 
+  mutate(
+    sitecon_full = sitecon_act |> 
+      as.numeric() |> 
+      car::recode("c(1, 2) = 1; 3 = 2; c(4, 5) = 3") |> 
+      as_factor()
+  ) 
+
+frq(latbaro_filt$sitecon_full)
+    
+##Valores recodificados:  1 = Mucho peor; 2 = Un poco peor; 3 = Igual; 4 = Un poco mejor; 5 = Mucho mejor
+
+###Asimetría y CV aceptables
+
+#4.2 Percepción de la corrupción. ----
+
+frq(latbaro_filt$P55ST)
+
+latbaro_filt <- latbaro_filt |> 
+  mutate(
+    reduc_corrup = P55ST |> 
+      as.numeric() |> 
+      car::recode("c(-1, -2, -3, -4, -5) = NA") |> 
+      car::recode("c(1, 2) = 1; c(3, 4) = 2")
+  ) 
+
+frq(latbaro_filt$reduc_corrup)
+
+latbaro_filt <- latbaro_filt |> 
+  dummy_cols(select_columns = "reduc_corrup") |> 
+  rename(reduc_corrup_rec = reduc_corrup_1)
+  
+frq(latbaro_filt$reduc_corrup_rec)
+descr(latbaro_filt$reduc_corrup_rec)
+
+##Recodificación: 1 = Mucho/Algo; 0 = Poco/Nada
+
+###Asimetría aceptable
+
+
+
+#4.3 Percepción de la distribución de ingresos ----
+
+frq(latbaro_filt$P17ST)
+
+latbaro_filt <- latbaro_filt |> 
+  mutate(
+    just_distr = P17ST |> 
+      as.numeric() |> 
+      car::recode("c(-1, -2, -3, -4, -5) = NA") |> 
+      car::recode("c(1, 2) = 1; c(3, 4) = 2")
+  ) 
+
+frq(latbaro_filt$just_distr)
+
+latbaro_filt <- latbaro_filt |> 
+  dummy_cols(select_columns = "just_distr") |> 
+  rename(just_distr_rec = just_distr_1)
+  
+
+frq(latbaro_filt$just_distr_rec)
+descr(latbaro_filt$just_distr_rec)
+
+## Recodificación: 1 = Muy justa/Justa; 0 = Injusta/Muy injusta
+
+###Asimetría alta
+
+#4.4 Confianza generalizada ----
+
+frq(latbaro_filt$P10STGBS)
+
+latbaro_filt <- latbaro_filt |> 
+  mutate(
+    conf_gen = P10STGBS |> 
+      as.numeric() |> 
+      car::recode("c(-1, -2, -3, -4, -5) = NA")
+  ) 
+
+frq(latbaro_filt$conf_gen)
+
+latbaro_filt <- latbaro_filt |> 
+  dummy_cols(select_columns = "conf_gen") |> 
+  rename(conf_gen_rec = conf_gen_1)
+
+
+
+frq(latbaro_filt$conf_gen_rec)
+descr(latbaro_filt$conf_gen_rec)
+
+## Recodificación: 1 = Se puede confiar en la mayoría de las personas; 0 = Uno nunca es suficientemente cuidadoso en el trato con los demas
+
+### Asimetría aceptable
+
+```
+
+### Preparación variables de control
+
+```{r, include=FALSE}
+#| label: "5. Preparación variables de control"
+
+#5.1 Sexo ----
+
+frq(latbaro_filt$SEXO)
+
+latbaro_filt <- latbaro_filt |> 
+  dummy_cols(select_columns = "SEXO") |> 
+  rename(sexo_mujer = SEXO_2)
+
+frq(latbaro_filt$sexo_mujer)
+descr(latbaro_filt$sexo_mujer)
+
+# Recodificación: 1 = Mujer; 0 = Hombre
+
+## Asimetría baja
+
+#5.2 Edad ----
+
+descr(latbaro_filt$EDAD)
+
+latbaro_filt <- latbaro_filt |> 
+  rename(edad = EDAD)
+
+
+descr(latbaro_filt$edad)
+
+
+frq(latbaro_filt$REEDAD)
+
+latbaro_filt <- latbaro_filt |> 
+ mutate(
+   grupo_etario = REEDAD |> 
+     as_factor()
+ ) 
+
+frq(latbaro_filt$grupo_etario)
+
+## Recodificación: 1 = 16-25 años; 2 = 26-40 años; 3 = 41-60 años; 4 = 61 y más
+
+#5.3 Religión----
+
+frq(latbaro_filt$S1)
+
+latbaro_filt <- latbaro_filt |> 
+  mutate(
+    religion = S1 |> 
+      as.numeric() |> 
+      car::recode("c(-1, -2, -3, -4, -5) = NA") |> 
+      car::recode("1 = 2; c(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 96) = 3; c(13, 14, 97) = 1") |> 
+      as_factor()
+  )
+  
+
+frq(latbaro_filt$religion)
+
+##  Recodificación: 1 = Ninguna/ateo/agnostico; 2 = Católica; 3 = No católica
+
+#5.4 Nivel educacional----
+
+frq(latbaro_filt$S11)
+
+frq(latbaro_filt$REEDUC.1)
+
+latbaro_filt <- latbaro_filt |> 
+  mutate(
+    nivel_educ = REEDUC.1 |> 
+      as.numeric() |> 
+      car::recode("7 = 1; 1:6 = 2")
+  )
+
+frq(latbaro_filt$nivel_educ)
+
+latbaro_filt <- latbaro_filt |> 
+  dummy_cols(select_columns = "nivel_educ") |> 
+  rename(nivel_educ_rec = nivel_educ_1)
+
+frq(latbaro_filt$nivel_educ_rec)
+descr(latbaro_filt$nivel_educ_rec)
+
+## Recodificación: 1 = Universitario completo; 0 = Menos de universitario completo
+
+### Asimetría aceptable
+
+#5.5 Estatus social subjetivo -----
+
+frq(latbaro_filt$S2)
+
+latbaro_filt <- latbaro_filt |> 
+  mutate(estatus_subj = S2 |> 
+           as.numeric() |> 
+           car::recode("c(-1,-2,-3,-4,-5) = NA") |> 
+           car::recode("c(1,2) = 3; 3 = 2; c(4,5) = 1") |> 
+           as_factor()
+           ) 
+
+frq(latbaro_filt$estatus_subj)
+
+## Recodificación: 1 = Baja/media baja; 2 = Media; 3= Alta/ Media Alta
+
+#5.6 Pertenencia partidaria
+
+frq(latbaro_filt$PERPART)
+
+latbaro_filt <- latbaro_filt |> 
+  mutate(partpol = PERPART |> 
+           as.numeric() |> 
+           car::recode("1 = 1; 2 = 2; c(3,4) = 3") |> 
+           as_factor()
+  )
+
+frq(latbaro_filt$partpol)
+
+## Recodificación: 1 = Gobierno; 2 = Oposición; 3 = Otro/No menciona partido.
+
+#5.7 Ideología política
+
+frq(latbaro_filt$P16ST)
+
+latbaro_filt <- latbaro_filt |> 
+  mutate(ideopol = P16ST |> 
+           as.numeric() |> 
+           car::recode("97 = 0; 0 = 1; 1 = 2; 2 = 3; 3 = 4; 4 = 5; 5 = 6; 6 = 7; 7 = 8; 8 = 9; 9 = 10; 10 = 11; c(-1,-2) = NA") 
+  )
+
+frq(latbaro_filt$ideopol)
+
+latbaro_filt <- latbaro_filt |> 
+  mutate(sin_ideopol = P16ST |> 
+           car::recode("c(0,1,2,3,4,5,6,7,8,9,10) = 1; 97 = 2") 
+  )
+
+frq(latbaro_filt$sin_ideopol)
+
+latbaro_filt <- latbaro_filt |> 
+  dummy_cols(select_columns = "sin_ideopol") |> 
+  rename(sin_ideopol_rec = sin_ideopol_2)
+
+frq(latbaro_filt$sin_ideopol_rec)
+
+```
+
+
+### Construcción indices para el análisis
+
+```{r, include=FALSE}
+#| label: "6. Construcción indices"
+
+#6.1 Eliminar variables sobrantes y NA ----
+
+colnames(latbaro_filt)
+
+latbaro_filt <- latbaro_filt |> 
+  select(-c(P55ST, P17ST, P10STGBS, S1, S2, reduc_corrup_2, reduc_corrup_NA, just_distr_2, just_distr_NA, conf_gen_2, conf_gen_NA, SEXO_1, nivel_educ_2, sin_ideopol, sin_ideopol_1, sin_ideopol_NA))
+
+colnames(latbaro_filt)
+
+latbaro_filt <- na.omit(latbaro_filt)
+
+
+
+#6.2 Indice de confianza política----
+
+#6.2.1 Correlacion
+
+cor(latbaro_filt |>  select(conf_cong, conf_gob, conf_jud, conf_part))
+
+## Correlaciones altas en general, aunque conf_gob correlaciona en menor medida con las otras.
+
+#6.2.2 Construcción indice 
+
+latbaro_filt <- latbaro_filt |> 
+  rowwise() |>  #cada fila como "grupo" independiente
+  mutate(confpol = sum(conf_cong, conf_gob, conf_jud, conf_part)) |>  #Suma en cada fila las 4 variables indicadas
+  ungroup() |> 
+  mutate(confpol = (1 + ((confpol-4)*9 / (16-4)))
+         )
+
+descr(latbaro_filt$confpol)
+
+## Baja asimetría
+
+#6.2.3 Alpha de cronbach (medida de consistencia interna)
+
+confpol_var <- latbaro_filt |> 
+  select(conf_cong, conf_gob, conf_jud, conf_part)
+
+resultado_confpol <- psych::alpha(confpol_var)
+
+print(resultado_confpol)
+
+resultado_confpol$total$raw_alpha
+
+## alpha = 0.82. Medidas sobre 0.7 son aceptables.
+
+#6.2.4 Análisis factorial
+
+fa_confpol = princomp(confpol_var, cor = T, scores = T)
+summary(fa_confpol)
+
+loadings(fa_confpol)
+
+##Todos los estadísticos de factor loading son mayores a 0.5 menos conf_gob que es mayor a 0.4, lo que sigue siendo aceptable.
+
+
+#6.3 Indice de percepción situación económica----
+
+#6.3.1 Correlaciones
+
+cor(latbaro_filt |> 
+      select (sitecon_act, sitecon_comp, sitecon_fut))
+
+## Correlaciones altas entre si. Todas por sobre el 0.5
+
+#6.3.2 Construcción indice
+
+latbaro_filt <- latbaro_filt |> 
+  rowwise() |>  #cada fila como "grupo" independiente
+  mutate(perc_sitecon = sum(sitecon_act, sitecon_comp, sitecon_fut)) |>  #Suma en cada fila las 4 variables indicadas
+  ungroup() |> 
+  mutate(perc_sitecon = (1 + ((perc_sitecon-3)*9 / (15-3)))
+         )
+
+
+descr(latbaro_filt$perc_sitecon)
+
+##Baja asimetría
+
+#6.3.3 Alpha de cronbach
+
+sitecon_var <- latbaro_filt |> 
+  select(sitecon_act, sitecon_comp, sitecon_fut)
+
+resultado_sitecon <- psych::alpha(sitecon_var)
+
+print(resultado_sitecon)
+
+resultado_sitecon$total$raw_alpha
+
+##alpha = 0.80. Aceptable.
+
+#6.3.4 Análisis de factor
+
+fa_sitecon = princomp(sitecon_var, cor = T, scores = T)
+summary(fa_sitecon)
+
+loadings(fa_sitecon)
+
+## Todos los estadísticos de factor loading están sobre el 0.56.
+
+#7. Guardar BBDD final----
+
+saveRDS(latbaro_filt, file = "C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/input/proc/latbaro_filt.rds")
+
+
+```
