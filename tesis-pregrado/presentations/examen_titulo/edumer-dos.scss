@@ -1,0 +1,158 @@
+/* ====== PALETA ESMERALDA VIBRANTE ====== */
+$emerald-50:  #e6fff6;
+$emerald-100: #c3ffeb;
+$emerald-500: #00d68f;   /* tono principal */
+$emerald-600: #00b07a;   
+$emerald-700: #009366;   
+$emerald-800: #006e4c;
+$emerald-900: #004f37;
+
+/* ====== FUENTES ====== */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap");
+
+/*-- scss:defaults --*/
+$backgroundColor: #ffffff;
+$mainFont: 'Noto Serif', serif;
+$mainFontSize: 28px;
+$mainColor: #272828;
+$headingColor: $emerald-900;
+$presentation-heading-font: "Montserrat", sans-serif;
+$headingFontWeight: 700;
+
+/*-- scss:rules --*/
+
+/* 1. MEJORA DE NITIDEZ GLOBAL (FIX RESOLUCIÓN) */
+.reveal {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  
+  .slides {
+    /* Evita el suavizado borroso de la GPU */
+    transform-style: flat !important; 
+  }
+}
+
+/* 2. CONFIGURACIÓN DE LA SLIDE OSCURA (CENTRADA) */
+/* Se activa usando: ## Título {.slide-dark-center} */
+.reveal .slides section.slide-dark-center {
+  background-color: $emerald-900 !important;
+  color: #ffffff !important;
+  
+  /* Forzamos que todo el contenido sea blanco */
+  h1, h2, h3, h4, p, li, span, div {
+    color: #ffffff !important;
+  }
+
+  /* Centrado vertical y horizontal profesional */
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
+
+  /* Quitamos márgenes que puedan desplazar el centro */
+  .quarto-figure, figure { margin: 0 auto; }
+}
+
+/* 2. PORTADA (TITLE SLIDE) */
+#title-slide {
+  background: linear-gradient(135deg, $emerald-700 0%, $emerald-500 100%);
+  color: #ffffff;
+  text-align: left;
+
+  .title { color: #ffffff; font-weight: 800; font-size: 1.8em; }
+  .subtitle { color: $emerald-50; font-weight: 700; }
+  .author, .date, .quarto-title-affiliation { color: #ffffff; opacity: 0.9; }
+}
+
+/* 3. CONTENIDO GENERAL */
+.reveal section p, 
+.reveal section li {
+  text-align: left; /* El justificado causa desenfoque en web */
+  line-height: 1.5;
+  margin-bottom: 0.5em;
+}
+
+/* 4. DIAPOSITIVA OSCURA CENTRADA (OPTIMIZADA) */
+.reveal section.slide-dark-center {
+  background: $emerald-900 !important;
+  color: #ffffff !important;
+  
+  h1, h2, h3, p, li { color: #ffffff !important; }
+  
+  /* Centrado vertical nativo de Revealjs */
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* 5. COMPONENTES PERSONALIZADOS (TIMELINE & ANTECEDENTES) */
+.antecedentes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.antecedente-card {
+  padding: 1.2rem;
+  background: #ffffff;
+  border-left: 6px solid $emerald-600;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  color: $mainColor;
+}
+
+.timeline {
+  position: relative;
+  padding-left: 4rem;
+  margin: 1em 0;
+  border-left: 3px solid $emerald-500;
+
+  .tl-item {
+    position: relative;
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    
+    &::before { /* El punto de la línea */
+      content: "";
+      position: absolute;
+      left: -11px; top: 10px;
+      width: 18px; height: 18px;
+      background: $emerald-600;
+      border-radius: 50%;
+    }
+  }
+}
+
+/* 6. TABLAS PROFESIONALES */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1em;
+
+  thead th {
+    background: $emerald-50;
+    color: $emerald-900;
+    padding: 15px;
+    border-bottom: 2px solid $emerald-500;
+  }
+
+  tbody td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+  }
+
+  tbody tr:nth-child(odd) td { background: rgba($emerald-50, 0.3); }
+}
+
+/* 7. UTILIDADES DE TAMAÑO */
+.tiny { font-size: 0.6em; }
+.small { font-size: 0.8em; }
+.large { font-size: 1.2em; }
+
+/* 8. CLASES PARA COLUMNAS (SOPORTE MANUAL) */
+.columns { display: flex; gap: 20px; }
+.column { flex: 1; }
+

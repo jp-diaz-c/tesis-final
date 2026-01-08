@@ -1,5 +1,5 @@
 ---
-title: "Análisis"
+title: "Analisis"
 editor: source
 format: 
   html:
@@ -942,33 +942,56 @@ graf_interaccion_justdist <- graf_interaccion_justdist +
 graf_interaccion_sitecon
 graf_interaccion_justdist
 
-
-graf_interaccion_sitecon_p <- graf_interaccion_sitecon +
-  theme(
-    plot.title = element_text(size = 26, color = "black"),       # título del gráfico
-    axis.title = element_text(size = 28, color = "black"),       # títulos ejes X e Y
-    axis.text = element_text(size = 28, color = "black"),        # etiquetas de ejes
-    legend.title = element_text(size = 28, color = "black"),     # título leyenda
-    legend.text = element_text(size = 28, color = "black")       # texto de leyenda
-  )
-
-graf_interaccion_justdist_p <- graf_interaccion_justdist +
-  theme(
-    plot.title = element_text(size = 26, color = "black"),       # título del gráfico
-    axis.title = element_text(size = 28, color = "black"),       # títulos ejes X e Y
-    axis.text = element_text(size = 28, color = "black"),        # etiquetas de ejes
-    legend.title = element_text(size = 28, color = "black"),     # título leyenda
-    legend.text = element_text(size = 28, color = "black")       # texto de leyenda
+graf_interaccion_sitecon_p <- interact_plot(inter1, 
+                                  pred = "perc_sitecon", 
+                                  modx = "conf_gen_rec", 
+                                  plot.points = FALSE,
+                                  x.label = "Perc. situación económica",
+                                  y.label = "Confianza política",
+                                  modx.labels = c("No confía en los otros", "Si confía en los otros"),
+                                  legend.main = "Nivel de confianza generalizada"
+                                  ) +
+  theme_minimal()+
+  ggplot2::labs(caption = "Elaboración propia basado en Latinobarómetro 2024") +
+  ggplot2::theme(       
+    axis.title = element_text(size = 24, color = "black"),       # títulos ejes X e Y
+    axis.text = element_text(size = 24, color = "black"),        # etiquetas de ejes
+    legend.title = element_text(size = 24, color = "black"),     # título leyenda
+    legend.text = element_text(size = 24, color = "black"),
+    plot.caption = element_text(hjust = 0, size = 16, color = "black"), # El caption se va a la izquierda
+    plot.caption.position = "plot"       # texto de leyenda
   )
 
 graf_interaccion_sitecon_p
+
+
+graf_interaccion_justdist_p <- interact_plot(inter3, 
+                                  pred = "conf_gen_rec", 
+                                  modx = "just_distr_rec", 
+                                  plot.points = FALSE,
+                                  x.label = "Confianza generalizada",
+                                  y.label = "Confianza política",
+                                  modx.labels = c("No hay justicia distributiva", "Si hay justicia distributiva"),
+                                  legend.main = "Justicia distributiva"
+                                  ) +
+  theme_minimal()+
+  ggplot2::labs(caption = "Elaboración propia basado en Latinobarómetro 2024")+
+  ggplot2::theme( 
+    axis.title = element_text(size = 24, color = "black"),       # títulos ejes X e Y
+    axis.text = element_text(size = 24, color = "black"),# etiquetas de ejes
+    legend.title = element_text(size = 24, color = "black"),     # título leyenda
+    legend.text = element_text(size = 24, color = "black"),
+    plot.caption = element_text(hjust = 0, size = 16, color = "black"),
+    plot.caption.position = "plot"
+  )
+
 graf_interaccion_justdist_p
 
 ggsave("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/output/graphs/interaccion_sitecon.png", graf_interaccion_sitecon, width = 6, height = 4, dpi = 300)
 ggsave("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/output/graphs/interaccion_justdist.png", graf_interaccion_justdist, width = 6, height = 4, dpi = 300)
 
-ggsave("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/output/graphs/interaccion_sitecon-p.png", graf_interaccion_sitecon_p, width = 6, height = 4, dpi = 300)
-ggsave("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/output/graphs/interaccion_justdist-p.png", graf_interaccion_justdist_p, width = 6, height = 4, dpi = 300)
+ggsave("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/presentations/examen_titulo/graphs/interaccion_sitecon-p.png", graf_interaccion_sitecon_p, width = 6, height = 3, dpi = 300)
+ggsave("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/presentations/examen_titulo/graphs/interaccion_justdist-p.png", graf_interaccion_justdist_p, width = 6, height = 3, dpi = 300)
 
 ```
 
