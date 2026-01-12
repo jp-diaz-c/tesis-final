@@ -81,7 +81,7 @@ editor_options:
 
 - “Percepción de que la **mayoría de la gente** forma parte de tu comunidad moral” [@uslanerMoralFoundationsTrust2002, p. 26].
 
-- Disposición moral que funciona como un lente a través del cual se interpreta el mundo de forma positiva [@oskarssonGeneralizedTrustPolitical2010].
+- **Disposición moral** que funciona como un lente a través del cual se interpreta el mundo de forma positiva [@oskarssonGeneralizedTrustPolitical2010].
 
 - Quienes confían en los otros serían **menos sensibles a disminuir su confianza política** en función de una evaluación negativa de su desempeño al corto plazo.
 
@@ -118,7 +118,7 @@ knitr::include_graphics(path = "C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-f
 ::: {.incremental  style="font-size: 125%;"}
   
   
-- Conclusiones previas: la percepción del desempeño institucional **importaría más** para la confianza política que la confianza generalizada.
+- Conclusiones previas: la percepción del desempeño institucional **importaría más** para la confianza política que la confianza generalizada. *Dos limitaciones*:
 
   a. Conciben la relación entre confianza generalizada y confianza política como un vínculo **exclusivamente** directo, ignorando su **potencial moderador**.  
   b. Se han construido sobre información de **sociedades de alta confianza generalizada**. Es posible encontrar un panorama diferente en **sociedades de baja confianza generalizada**.
