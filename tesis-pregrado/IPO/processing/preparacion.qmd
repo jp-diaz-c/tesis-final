@@ -458,3 +458,54 @@ saveRDS(latbaro_filt, file = "C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-fin
 
 
 ```
+
+
+```{r}
+
+#8. Análisis Factorial Exploratorio confianza política
+
+# 1. Prueba de Bartlett (¿Hay correlaciones significativas?)
+cortest.bartlett(confpol_var)
+
+# 2. Prueba KMO (¿Es suficiente el tamaño de la muestra y la relación?)
+# Se busca un valor > 0.70
+KMO(confpol_var)
+
+modelo_efa <- fa(confpol_var, 
+                 nfactors = 1,      # Número de factores decidido en el paso anterior
+                 rotate = "oblimin", 
+                 fm = "minres")
+
+# Ver resultados
+print(modelo_efa$loadings, cutoff = 0.3)
+
+fa.diagram(modelo_efa, main = "EFA: Confianza Institucional")
+
+library(parameters)
+tab_efa <- model_parameters(modelo_efa)
+print(tab_efa)
+
+#9. Análisis Factorial Exploratorio desempeño económico
+# 1. Prueba de Bartlett (¿Hay correlaciones significativas?)
+cortest.bartlett(sitecon_var)
+
+# 2. Prueba KMO (¿Es suficiente el tamaño de la muestra y la relación?)
+# Se busca un valor > 0.70
+KMO(sitecon_var)
+
+modelo_efa <- fa(sitecon_var, 
+                 nfactors = 1,      # Número de factores decidido en el paso anterior
+                 rotate = "oblimin", 
+                 fm = "minres")
+
+# Ver resultados
+print(modelo_efa$loadings, cutoff = 0.3)
+
+fa.diagram(modelo_efa, main = "EFA: Confianza Institucional")
+
+library(parameters)
+tab_efa <- model_parameters(modelo_efa)
+print(tab_efa)
+
+```
+

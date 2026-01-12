@@ -1,0 +1,498 @@
+---
+pagetitle: "Confianza política, percepción del desempeño y confianza generalizada: un estudio para el caso chileno"
+author: "Juan Pablo Díaz"
+bibliography: "tesis.bib"
+csl: "apa.csl"
+lang: es
+format:
+  revealjs:
+    slide-number: true
+    theme: "edumer-borr.scss"
+    auto-stretch: false
+    title-slide-attributes:
+      visibility: false
+    transition: fade
+    auto-play-media: true
+    mathjax: "default"
+    self-contained: true
+editor_options: 
+  chunk_output_type: console
+---
+
+
+
+::: title-cover
+<img src="images/logo-sociales-color.png" class="logo-inline"/>
+
+<h1><strong> Factores asociados a la confianza política:</strong></h1>
+
+<p class="cover-subtitle">
+
+<strong> Una aproximación empírica a partir del caso chileno</strong>
+
+</p>
+
+<hr class="title-divider"/>
+
+<p class="title-meta">
+
+<strong>Juan Pablo Díaz</strong><br> Examen de Título <br> 12 de enero de 2026
+
+</p>
+
+:::
+
+
+# Tabla de contenidos
+
+# Introducción {.antecedentes-grid}
+
+## Contexto 
+
+::: {.columns}
+
+
+::: {.column width="50%"}
+
+- Ciclo de protestas 2011 - 2019.
+
+- Encausamiento institucional fallido.
+
+- Ruptura política institucional y sociedad [@garretonRupturaEntrePolitica2016]: factores asociados.
+:::
+
+::: {.column width="50%"}
+
+![](images/mov_estudiantil.jpg){.absolute top=50 width="300"}
+
+![](images/estallido-social.jpeg){.absolute top=250 width="300"}
+
+:::
+
+
+:::
+
+## La idea de confianza política
+
+::: {.incremental  style="font-size: 105%;"}
+
+- La confianza política se define como “la expectativa de que las instituciones políticas funcionen según reglas justas incluso en ausencia de escrutinio constante” [@marienMeasuringPoliticalTrust2013].
+
+- Indicador intermedio de apoyo político, dirigido a las instituciones políticas del régimen [@monterogibertConfianzaSocialConfianza2008; @zmerliPoliticalTrust2022].
+
+- Requisito básico para la consolidación en el tiempo de los regímenes democráticos: facilita la implentación de servicios públicos, el consenso de los perdedores y brinda mayor resistencia a las instituciones en periodos de crisis [@citrinPoliticalTrustCynical2018; @newtonSocialPoliticalTrust2017 ;@vandermeerDeeplyRootedConcern2017].
+
+- Este indicador ha disminuido sostenidamente en las democracias alrededor del mundo [@valgardssonCrisisPoliticalTrust2025]. En Chile, todas las las instituciones políticas han presenciado una disminución en su confianza durante los últimos 30 años [@bargstedCulturaPoliticaDiagnostico2018; @corporacionlatinobarometroInformeLatinobarometro20242024]. 
+
+
+
+:::
+
+## Confianza política en Chile: análisis longitudinal
+
+
+```{r}
+#| label: fig-esquem1
+#| fig-cap-location: top
+#| fig-cap: "**Evolución de la confianza política en Chile: porcentaje de encuestados que reporta 'mucha' o 'algo' de confianza.**"
+#| fig-align: center
+#| fig-width: 8.5
+#| out-width: '100%'
+
+
+knitr::include_graphics(path = "C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/presentations/examen_titulo/graphs/graf_long.png") 
+
+```
+
+
+## Confianza política en Chile: análisis comparado
+
+
+```{r}
+#| label: fig-esquem2
+#| fig-cap-location: top
+#| fig-cap: "**Confianza política comparada en América Latina: promedio de confianza política.**"
+#| fig-align: center
+#| fig-width: 8.5
+#| out-width: '100%'
+
+
+knitr::include_graphics(path = "C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/presentations/examen_titulo/graphs/graf_pais.png") 
+
+```
+
+## El estudio de la confianza política
+
+::: {.incremental  style="font-size: 105%;"}
+
+- Dos grupos de factores que explicarían su origen [@mishlerWhatAreOrigins2001; @vandermeerDeeplyRootedConcern2017; @zmerliPoliticalTrust2022]:
+
+  - Institucional: producto de una **evaluación racional** del desempeño institucional en cumplir con las expectativas de los ciudadanos en distintos ámbitos. Destacan tres indicadores: **desempeño económico**, **corrupción** y **distribución de riqueza**.
+  - Sociocultural: **conjunto de orientaciones valóricas y disposiciones** a confiar, cooperar y solidarizar con los otros en función de objetivos comunes. Tiene su pilar en la **confianza generalizada**.
+  
+- La evidencia empírica dice que **ambos grupos inciden** en la construcción de confianza política, aunque **las primeras importarían más** que las segundas.
+
+
+:::
+
+## Problematización 
+  
+::: {.incremental  style="font-size: 105%;"}
+  
+  
+- Las investigaciones previas tienen, al menos, dos grandes limitaciones:
+
+  1. Conciben la relación entre confianza generalizada y confianza política como un vínculo **exclusivamente** directo. Al ser la confianza generalizada un lente para interpretar el mundo, esta podría **moderar la relación** entre percepción del desempeño institucional y confianza política.
+  
+  2. Se han construido sobre información de **sociedades de alta confianza generalizada**. Es posible encontrar un panorama diferente en **sociedades son de baja confianza**, como la chilena.
+
+- Se busca superar estas limitaciones mediante la presente propuesta de investigación:
+
+:::
+
+# Propuesta de investigación {.slide-celeste}
+
+::: {.incremental  style="font-size: 105%;"}
+
+- **Pregunta de investigación**: ¿Cómo influyen la percepción del desempeño institucional y la confianza generalizada en la confianza política de los ciudadanos chilenos?
+
+
+- **Objetivos específicos**:
+  - Analizar el rol de la **percepción del desempeño institucional** en la confianza política de los ciudadanos chilenos.
+
+  - Examinar el rol de la **confianza generalizada** en la confianza política de los ciudadanos chilenos.
+
+  - Explorar si varía o no la relación entre la percepción del desempeño institucional y la confianza política al **moderar**  por el nivel de confianza generalizada de los ciudadanos chilenos.
+
+
+:::
+
+# Antecedentes {.antecedentes-grid}
+
+## Percepción del desempeño institucional
+
+::: {.incremental  style="font-size: 100%;"}
+
+- Confianza de tipo **estratégica** que se puede resumir en la fórmula "A confía en B para que haga *x*" [@hardinWeWantTrust1999, p.26]. Confiar implicaría un riesgo, por lo que es una **decisión racional** que se toma sobre la base de información.
+
+  - **Desempeño económico**: los ciudadanos evaluarían sus instituciones en función de la capacidad que estas tienen de satisfacer sus expectativas de **incremento en los estándares de vida de la población** [@thomassenSupportDemocraticValues1998; @mcallisterEconomicPerformanceGovernments1999; @quarantaDoesEconomyReally2016].
+  - **Corrupción**: los individuos que identifican el **mal uso de fondos públicos para fines privados** como una práctica recurrente al interior de una institución, van a calificar a esta de deshonesta e injusta, tendiendo a confiar menos en ella [@beesleyCorruptionInstitutionalTrust2022; @uslanerCorruptionInequalityTrap2013].
+  - **Justicia distributiva**: en la medida en que los ciudadanos consideren la distribución de ingresos incompatible con los **principios de igualdad, equidad y suficiencia**, percibirán esta distribución como injusta y confiarán menos en las instituciones políticas [@tylerInfluencePerceivedInjustice1985; @tylerSocialJustice2015; @zmerliIncomeInequalityDistributive2015].
+
+
+:::
+
+## Confianza generalizada
+
+::: {.incremental  style="font-size: 100%;"}
+
+- La confianza generalizada se entiende como la confianza que se deposita sobre **la mayoría de la gente**. En este sentido, no se construye sobre la base de información, sino que mediante una **disposición moral** a confiar en cuanto son parte de nuestra misma comunidad moral [@uslanerMoralFoundationsTrust2002].Se resume en la frase “A confía” [@uslanerMoralFoundationsTrust2002, p. 26].
+
+- Funciona como un lente a través del cual cierto tipo de individuo interpreta el mundo que lo rodea de forma positiva, creyendo en la buena voluntad de los demás [@oskarssonGeneralizedTrustPolitical2010].
+
+- Esta disposición está a la base de un conjunto de orientaciones y actitudes que se retroalimentan, y que derivan en ciudadanos más dispuestos a participar y a confiar en las instituciones.
+
+- A su vez, estos individuos, al poseer una predisposición a confiar que no depende de la información, serían **menos sensibles a disminuir su confianza** en las instituciones políticas en función de una evaluación negativa de su desempeño al corto plazo.
+
+:::
+
+## Particularidades del caso chileno
+
+::: {.incremental  style="font-size: 105%;"}
+
+- En Chile, la baja en la confianza política ha convivido con mejoras sustantivas en indicadores económicos, baja corrupción política y disminución de la desigualdad de ingreso.
+
+- Necesidad de buscar explicación en factores exógenos, como lo es la erosión del lazo social:
+
+  - Solo un 15% de los chilenos dice confiar en los demás [@pnudInformeSobreDesarrollo2024].
+  - Circuito del desapego [@araujoCircuitoDesapegoNeoliberalismo2025a]: distanciamiento de los individuos respecto a las normas e instituciones que regulan la vida social. 
+  - Individuos fuertemente individualizados que perciben a las instituciones políticas como una amenaza.
+  
+- En este escenario, es posible que la confianza generalizada tenga un **peso mayor** que la percepción del desempeño institucional en la construcción de la confianza política de los chilenos.
+
+:::
+
+# Estrategia de análisis {.antecedentes-grid}
+
+## Hipótesis {.slide-celeste style="font-size: 90%;"} 
+
+- *H1*: La percepción de la situación económica nacional se relaciona positivamente con la confianza política. Es decir, los ciudadanos que evalúan de mejor forma la situación económica del país tendrán un mayor nivel de confianza política que los ciudadanos que evalúan de peor forma esta situación.
+
+- *H2*: El progreso en reducir la corrupción se relaciona positivamente con la confianza política. Lo anterior significa que los ciudadanos que perciban un mayor progreso en reducir la corrupción en el país van a tener un mayor nivel de confianza política respecto a los ciudadanos que perciban un menor progreso en reducir la corrupción.
+
+- *H3*: La percepción de justicia distributiva se relaciona positivamente con la confianza política. Esto significa que los ciudadanos que perciban como justa la distribución de ingresos en el país van a tener un mayor nivel de confianza política respecto a los ciudadanos que la perciban como injusta.
+
+- *H4*: La confianza generalizada se relaciona positivamente con la confianza política. Es decir, los ciudadanos que reporten un mayor grado de confianza en la mayoría de las personas van a tener un mayor nivel de confianza política respecto a los ciudadanos que reporten un menor grado de confianza en la mayoría de las personas.
+
+## Hipótesis {.slide-celeste style="font-size: 87%;"}  
+
+- *H5*: La relación entre percepción de la situación económica del país y nivel de confianza política se ve moderada negativamente por la confianza generalizada. Esto significa que el efecto de la percepción de la situación económica del país sobre el nivel de confianza política será menor en ciudadanos que reporten confiar en la mayoría de las personas respecto a ciudadanos que no lo hagan. 
+
+- *H6*: La relación entre el progreso en reducir la corrupción y el nivel de confianza política se ve moderada negativamente por la confianza generalizada. Esto quiere decir que el efecto del progreso en reducir la corrupción en el país sobre el nivel de confianza política será menor en ciudadanos que reporten confiar en la mayoría de las personas respecto a ciudadanos que no lo hagan.
+
+- *H7*: La relación entre justicia distributiva y nivel de confianza política se ve moderada negativamente por la confianza generalizada. Lo anterior significa que el efecto de la justicia distributiva sobre el nivel de confianza política será menor en ciudadanos que reporten confiar en la mayoría de las personas respecto a ciudadanos que no lo hagan.
+
+- *H8*: La confianza generalizada presenta una asociación con la confianza política de mayor magnitud que la percepción del desempeño institucional. Lo anterior implica que el efecto de la confianza generalizada sobre la confianza política va a ser de mayor tamaño que el de los distintos indicadores de la percepción del desempeño sobre la misma variable.
+
+## Metodología
+
+::: {.incremental  style="font-size: 105%;"}
+
+- Como base de datos se usó la **Encuesta Latinobarómetro 2024**. Para el caso chileno, esta encuesta presenta una muestra de 1200 entrevistados, los cuales fueron seleccionados mediante un muestreo probabilístico en tres etapas y representan al 100% de la población adulta en el país. Al eliminar observaciones influyentes y valores ausentes, la muestra quedó de 944 personas.
+
+- Para los análisis, se construyeron un total de seis **modelos de regresión lineal (MCO)** siguiendo una estrategia incremental. Siguiendo esta lógica, el Modelo 1 se calculó solo con las variables de percepción del desempeño. Luego, en los Modelos 2 y 3 se introdujeron, respectivamente, la variable de confianza generalizada y las variables de control. Por último, en los modelos 4, 5 y 6 se introdujeron cada uno de los términos de interacción por separado.
+
+
+:::
+
+## Metodología
+
+::: {.incremental  style="font-size: 97%;"}
+
+- Variables:
+
+  - Dependiente: Indice de confianza política ($\alpha$ = 0.82) con valores de 1 a 10. Incluye confianza en el Gobierno, el Congreso, el Poder Judicial y los Partidos Políticos.
+  
+  - Independientes: 
+  
+    - **Indice de percepción de desempeño económico** ($\alpha$ = 0.80) con valores de 1 a 10. Incluye la referencia a tres periodos (presente, pasado y futuro).
+    - **Progreso en reducir la corrupción**. Variable *dummy*, donde "0" indica evaluación negativa y "1" positiva
+    - **Justicia distributiva**. Variable *dummy*, donde "0" indica injusticia y "1" justicia.
+    - **Confianza generalizada**. Variable *dummy*, donde "0" indica que es cuidadoso en el trato con los demás y "1" que se confía en la mayoría de las personas.
+  
+  - Control:
+    - **Sociodemográficas**: sexo, edad, religión, educación y ESS.
+  
+::: 
+
+## Variables 2
+
+::: {style="font-size: 2em; width: 100%;"}
+
+| Default        | Left           | 
+|:---------------|---------------:|
+| 12             |                |  
+| 123            |                |
+| 1              | 1              |
+
+:::
+
+# Resultados {.antecedentes-grid}
+
+## Descrptivos: situación económica y confianza política
+
+```{r}
+#| label: fig-esquem3
+#| fig-cap-location: top
+#| fig-cap: "**Gráfico coeficientes modelo 4 y 5**"
+#| fig-align: center
+#| fig-width: 8.5
+#| out-width: '100%'
+
+
+knitr::include_graphics(path = "C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/presentations/examen_titulo/graphs/graf_sitecon.png")
+
+```
+
+
+## Descriptivos: progreso en reducir corrupción y confianza política
+
+```{r}
+#| label: fig-esquem4
+#| fig-cap-location: top
+#| fig-cap: "**Gráfico coeficientes modelo 4 y 5**"
+#| fig-align: center
+#| fig-width: 8.5
+#| out-width: '100%'
+
+
+knitr::include_graphics(path = "C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/presentations/examen_titulo/graphs/graf_corrup.png")
+
+```
+
+
+## Descriptivos: justicia distributiva y confianza política
+
+
+```{r}
+#| label: fig-esquem5
+#| fig-cap-location: top
+#| fig-cap: "**Gráfico coeficientes modelo 4 y 5**"
+#| fig-align: center
+#| fig-width: 8.5
+#| out-width: '100%'
+
+
+knitr::include_graphics(path = "C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/presentations/examen_titulo/graphs/graf_justdist.png")
+
+```
+
+
+## Descriptivos: confianza generalizada y confianza política
+
+```{r}
+#| label: fig-esquem6
+#| fig-cap-location: top
+#| fig-cap: "**Gráfico coeficientes modelo 4 y 5**"
+#| fig-align: center
+#| fig-width: 8.5
+#| out-width: '100%'
+
+
+knitr::include_graphics(path = "C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/presentations/examen_titulo/graphs/graf_confgen.png")
+
+```
+
+## Regresiones sin interacción
+
+```{r}
+#| label: fig-esquem7
+#| fig-cap-location: top
+#| fig-cap: "**Gráfico coeficientes modelo 4 y 5**"
+#| fig-align: center
+#| fig-width: 8.5
+#| out-width: '100%'
+
+
+knitr::include_graphics(path = "C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/presentations/examen_titulo/graphs/coeficientes.png")
+
+```
+
+
+## Regresiones con interacción: perc. situación económica X confianza generalizada
+
+
+```{r}
+#| label: fig-esquem8
+#| fig-cap-location: top
+#| fig-cap: "**Gráfico interacción justicia distributiva con confianza generalizada**"
+#| fig-align: center
+#| fig-width: 8.5
+#| out-width: '100%'
+
+
+knitr::include_graphics(path = "C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/presentations/examen_titulo/graphs/interaccion_sitecon-p.png")
+
+```
+
+
+## Regresiones con interacción: justicia distributiva X confianza generalizada
+
+```{r}
+#| label: fig-esquem9
+#| fig-cap-location: top
+#| fig-cap: "**Gráfico interacción justicia distributiva con confianza generalizada**"
+#| fig-align: center
+#| fig-width: 8.5
+#| out-width: '100%'
+
+
+knitr::include_graphics(path = "C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/presentations/examen_titulo/graphs/interaccion_justdist-p.png")
+
+```
+
+
+# Discusión { .antecedentes-grid}
+
+## Hallazgos
+
+::: {.incremental  style="font-size: 100%;"}
+
+- Primer hallazgo: La confianza generalizada presenta una relación positiva con la confianza política. A su vez, **modera positivamente** la relación que el desempeño económico y la justicia distributiva tienen con la confianza política.
+  - La confianza generalizada tiene como fundamento un ideal igualitario [@uslanerMoralFoundationsTrust2002]. Es posible que un buen desempeño económico y una distribución de ingresos más justa se interprete como un paso hacia la consecución de este ideal. 
+
+- Segundo hallazgo: En Chile, la percepción de la corrupción y de la justicia distributiva importarían más que el desempeño económico. 
+  - Escándalos de corrupción pública [@lunaDelegativeDemocracyRevisited2016a].
+  - Politización de las desigualdades [@castiglioniChallengesPoliticalRepresentation2016].
+  
+- Tercer hallazgo: La confianza generalizada importa tanto o más que la percepción del desempeño en la construcción de los juicios de confianza política de los chilenos. 
+  - Progresiva erosión del tejido social, que se manifiesta en un circuito de desapego que convierte la sociedad chilena en una "sociedad archipielago" [@araujoCircuitoDesapegoNeoliberalismo2025a]. 
+  
+
+
+:::
+
+# Conclusiones {.slide-celeste}
+
+::: {.incremental  style="font-size: 110%;"}
+
+- Más allá de la dicotomía: la confianza política es un fenómeno complejo, en cuya construcción inciden tanto la evaluación racional del desempeño como la disposición moral a confiar en los demás.
+
+- Para comprender el efecto que tiene la confianza generalizada en la confianza política, hay que superar la concepción de este vínculo como uno **exclusivamente** directo, prestando atención a su efecto moderados.
+
+- La baja confianza en las instituciones chilenas solo se puede entender si se tienen en cuenta tanto los factores endógenos (desempeño institucional) como los factores exógenos (lazo social).
+
+:::
+
+# Proyecciones {.slide-celeste}
+
+::: {.incremental  style="font-size: 110%;"}
+
+- Llevar a cabo modelos de tipo multinivel sobre **datos longitudinales** para analizar cómo estos efectos varían en el tiempo (si es que lo hacen).
+
+- Incluir **variables contextuales** y compararlas con las de percepción.
+
+- Expandir el radio de estudio hacia **mas países** de la región. 
+
+:::
+
+# ¡Gracias por su atención! 
+
+
+-   **Github del proyecto:** <https://github.com/jp-diaz-c/tesis-pregrado> 
+
+## Apéndice 1: Incluir Análisis Factorial Exploratorio.
+
+
+## Apéndice 2: Tablas de regresión sin interacción
+
+Incluir tabla de regresión con modelos sin interacción.
+
+::: {.table style="font-size: 74%"}
+
+
+
+```{r}
+#| echo: false
+#| results: asis
+
+library(sjPlot)
+
+mod1 <- readRDS("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/presentations/coloquio-2025/desempeño_simple.rds")
+mod2 <- readRDS("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/presentations/coloquio-2025/desempeño_confianza_simple.rds")
+mod3 <- readRDS("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/presentations/coloquio-2025/desempeño_confianza_multiple.rds")
+mod4 <- readRDS("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/presentations/coloquio-2025/inter1.rds")
+
+nombres_modelos <-  c("Perc. situación económica nacional", "Progreso en corrupción", "Justicia distributiva", "Conf. generalizada")
+
+
+vars_to_show <- c("perc_sitecon", "reduc_corrup_rec", "just_distr_rec", "conf_gen_rec") 
+
+
+# tab_model imprimirá HTML; file = NULL hace que no guarde en disco
+
+sjPlot::tab_model(list(mod1, mod2, mod3), terms = vars_to_show, show.ci = FALSE, p.style = "stars",  dv.labels = c("Modelo 1", "Modelo 2", "Modelo 3"), string.pred = "Predictores", string.est = "beta", show.se = TRUE, string.se = "se", pred.labels = nombres_modelos, title = "", file = NULL)
+
+
+```
+
+
+::: 
+
+## Apéndice 2: Tablas de regresión sin interacción
+
+INCLUIR CONTROLES MODELOS SIN INTERACCIÓN
+
+## Apéndice 3: Tablas de regresión con interacción
+
+Incluir tabla de regresión de modelos con interacción, 
+
+## Apéndice 3: Tablas de regresión con interacción
+
+INCLUIR CONTROLES MODELOS CON INTERACCIÓN
+
+
+
+## Referencias
+
+

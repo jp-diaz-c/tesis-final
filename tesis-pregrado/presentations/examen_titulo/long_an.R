@@ -5,6 +5,7 @@ library(tidyverse)
 library(haven)
 library(foreign)
 library(summarytools)
+library(gghighlight)
 
 #1. Cargar bbdd ----
 
@@ -428,18 +429,18 @@ graf_long <- ggplot(data_grafico, aes(x = anio, y = porcentaje, color = instituc
   # Estética profesional
   theme_minimal() +
   labs(
-    x = "Año",
+    x = "",
     y = "% de Confianza",
     color = "Institución",
     caption = "Elaboración propia basada en Latinobarómetro (2002-2024)."
   ) +
   theme(legend.position = "right", 
-        plot.caption = element_text(hjust = 0, size = 8, color = "black"), # El caption se va a la izquierda
+        plot.caption = element_text(hjust = 0, size = 38, color = "black"), # El caption se va a la izquierda
         plot.caption.position = "plot",
-        axis.title = element_text(size = 14, color = "black"),       # títulos ejes X e Y
-        axis.text = element_text(size = 14, color = "black"),        # etiquetas de ejes
-        legend.title = element_text(size = 14, color = "black"),     # título leyenda
-        legend.text = element_text(size = 14, color = "black"))
+        axis.title = element_text(size = 48, color = "black"),       # títulos ejes X e Y
+        axis.text = element_text(size = 44, color = "black"),        # etiquetas de ejes
+        legend.title = element_text(size = 48, color = "black"),     # título leyenda
+        legend.text = element_text(size = 44, color = "black"))
 
 ggsave("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/presentations/examen_titulo/graphs/graf_long.png", 
        graf_long, width = 8, height = 4, dpi = 300)
@@ -476,17 +477,17 @@ medias_pais$IDENPA <- factor(medias_pais$IDENPA,
                                         "Mex", "Pan", "Par", "Peru", "Urug", "Venez") 
                              )
 
-
+freq(medias_pais$IDENPA)
 
 #9. Crear gráfico para análisis comparado
 
-
-
+medias_pais <- medias_pais %>% 
+  mutate(resaltar = ifelse(IDENPA == "Chi", "Destacado", "Normal"))
 
 graf_pais <- ggplot(medias_pais, aes(x = reorder(IDENPA, media_confpol), y = media_confpol, fill = IDENPA)) +
   geom_col() +
   scale_y_continuous(limits = c(0, 10))+
-  # Estética profesional
+  gghighlight (IDENPA == "Chi") +
   theme_minimal() +
   labs(
     x = "",
@@ -494,11 +495,13 @@ graf_pais <- ggplot(medias_pais, aes(x = reorder(IDENPA, media_confpol), y = med
     caption = "Elaboración propia basada en Latinobarómetro 2024."
   ) +
   theme(legend.position = "none", 
-        plot.caption = element_text(hjust = 0, size = 10, color = "black"), # El caption se va a la izquierda
+        plot.caption = element_text(hjust = 0, size = 38, color = "black"), # El caption se va a la izquierda
         plot.caption.position = "plot",
-        axis.title = element_text(size = 16, color = "black"),       # títulos ejes X e Y
-        axis.text = element_text(size = 14, color = "black"),        # etiquetas de ejes
+        axis.title = element_text(size = 48, color = "black"),       # títulos ejes X e Y
+        axis.text = element_text(size = 44, color = "black"),        # etiquetas de ejes
         )
+
+graf_pais
  
 
 ggsave("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/presentations/examen_titulo/graphs/graf_pais.png", 

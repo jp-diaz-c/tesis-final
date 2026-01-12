@@ -223,10 +223,7 @@ $selectionColor: #fff;
 /* ====== JUSTIFICADO + LONGITUD DE LÍNEA ====== */
 .reveal section p,
 .reveal section li {
-  text-align: justify;
-  text-justify: inter-word;
-  -webkit-hyphens: auto;
-  -ms-hyphens: auto;
+  text-align: left;
   hyphens: auto;
   line-height: 1.45;
 }
@@ -452,12 +449,13 @@ iframe { border: 1px solid rgba(0,0,0,.2); width: 100%; }
 .reveal section.title-cover h1,
 .reveal section .title-cover h1 {
   font-weight: 800;
-  font-size: clamp(64px, 8vw, 96px);
+  font-size: clamp(54px, 6.8vw, 82px); /* más pequeño para el título */
   line-height: 1.06;
   letter-spacing: 0.02em;
   word-spacing: 0.08em;
   margin: 0 0 .35em 0;
   text-wrap: balance;
+  color: $emerald-900;
 }
 
 /* H2 con MÁS aire para que no se vea apretado */
@@ -470,6 +468,7 @@ iframe { border: 1px solid rgba(0,0,0,.2); width: 100%; }
   word-spacing: 0.12em;    /* ↑ aire entre palabras */
   margin: 0 0 1rem 0;
   text-wrap: balance;
+  color: $emerald-900; /* mismo color que el título, distinto tamaño */
 }
 
 /* línea alineada al mismo ancho (borde izquierdo) */
@@ -490,10 +489,10 @@ iframe { border: 1px solid rgba(0,0,0,.2); width: 100%; }
   letter-spacing:.04em;
   word-spacing:.12em;
   margin:0 0 1rem 0;
-  color: lighten($emerald-500,22%); /* letras más claras */
+  color: $emerald-900; /* mismo color que el título */
 }
 .reveal section.title-cover .title-meta{
-  font-size:1.05rem;
+  font-size:0.9rem; /* un poco más pequeño */
 }
 
 /* ====== Antecedentes: tarjetas elegantes ====== */

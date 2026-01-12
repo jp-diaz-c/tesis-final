@@ -179,6 +179,8 @@ tabla_desc_df <- tabla_desc_df |>
 
  saveRDS(tabla_desc_df, file = "C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/output/tables/tabla_descriptiva.rds")
 
+
+ 
 ```
 
 
@@ -294,23 +296,65 @@ resumen_corrup <- latbaro_graf %>% group_by(reduc_corrup_rec) %>%
             lower = mean - 1.96 * se,
             upper = mean + 1.96 * se)
 
+resumen_confgen <- latbaro_graf %>% group_by(conf_gen_rec) %>%
+  summarise(n = n(),
+            mean = mean(confpol, na.rm = TRUE),
+            sd = sd(confpol, na.rm = TRUE),
+            se = sd / sqrt(n),
+            lower = mean - 1.96 * se,
+            upper = mean + 1.96 * se)
 
-graf_congen <- ggplot(resumen_confgen, aes(x = conf_gen_rec, y = mean, fill = conf_gen_rec)) +
+resumen_justdist <- latbaro_graf %>% group_by(just_distr_rec) %>%
+  summarise(n = n(),
+            mean = mean(confpol, na.rm = TRUE),
+            sd = sd(confpol, na.rm = TRUE),
+            se = sd / sqrt(n),
+            lower = mean - 1.96 * se,
+            upper = mean + 1.96 * se)
+
+
+graf_sitecon <- ggplot(latbaro_graf, aes(x = perc_sitecon, y = confpol)) +
+  geom_point() +
+  geom_smooth() +
+  labs(
+    x = "Perc. situación económica",
+    y = "Confianza política",
+    caption = "Elaboración propia basada en Latinobarómetro 2024."
+  ) +
+  theme_minimal() + 
+  theme(       
+    axis.title = element_text(size = 24, color = "black"),       # títulos ejes X e Y
+    axis.text = element_text(size = 24, color = "black"), 
+    plot.caption = element_text(hjust = 0, size = 16, color = "black"),
+    plot.caption.position = "plot"
+  )
+  
+graf_sitecon
+
+graf_confgen <- ggplot(resumen_confgen, aes(x = conf_gen_rec, y = mean, fill = conf_gen_rec)) +
   geom_col() +
+  scale_y_continuous(limits = c(0, 10)) +
   labs(
     x = " ",                               # elimina o cambia el título del eje x
     y = "Promedio confpol",           # título eje y
-    fill = "Confianza generalizada"    # título de la leyenda
+    fill = "Confianza generalizada",
+    caption = "Elaboración propia basada en Latinobarómetro 2024." # título de la leyenda
   ) +
-  theme_minimal() +                        # puedes usar otro tema si prefieres
+  theme_minimal()+   
   theme(
-    axis.text.x = element_blank(),         # oculta los nombres en el eje x
-    axis.ticks.x = element_blank(),        # elimina las marcas del eje x
-    plot.title = element_text(hjust = 0.5, face = "bold")
+    axis.title = element_text(size = 24, color = "black"),       # títulos ejes X e Y
+    axis.text = element_text(size = 24, color = "black"),        # etiquetas de ejes
+    legend.title = element_text(size = 18, color = "black"),     # título leyenda
+    legend.text = element_text(size = 16, color = "black"),
+    plot.caption = element_text(hjust = 0, size = 16, color = "black"),
+    plot.caption.position = "plot"
   )
+
+graf_confgen
 
 graf_justdist <- ggplot(resumen_justdist, aes(x = just_distr_rec, y = mean, fill = just_distr_rec)) +
   geom_col() +
+  scale_y_continuous(limits = c(0, 10)) +
   labs(
     x = " ",                               # elimina o cambia el título del eje x
     y = "Promedio confpol",           # título eje y
@@ -318,13 +362,17 @@ graf_justdist <- ggplot(resumen_justdist, aes(x = just_distr_rec, y = mean, fill
   ) +
   theme_minimal() +                        # puedes usar otro tema si prefieres
   theme(
-    axis.text.x = element_blank(),         # oculta los nombres en el eje x
-    axis.ticks.x = element_blank(),        # elimina las marcas del eje x
-    plot.title = element_text(hjust = 0.5, face = "bold")
+    axis.title = element_text(size = 24, color = "black"),       # títulos ejes X e Y
+    axis.text = element_text(size = 24, color = "black"),        # etiquetas de ejes
+    legend.title = element_text(size = 18, color = "black"),     # título leyenda
+    legend.text = element_text(size = 16, color = "black"),
+    plot.caption = element_text(hjust = 0, size = 16, color = "black"),
+    plot.caption.position = "plot"
   )
 
 graf_corrup <- ggplot(resumen_corrup, aes(x = reduc_corrup_rec, y = mean, fill = reduc_corrup_rec)) +
   geom_col() +
+  scale_y_continuous(limits = c(0, 10)) +
   labs(
     x = " ",                               # elimina o cambia el título del eje x
     y = "Promedio confpol",           # título eje y
@@ -332,49 +380,31 @@ graf_corrup <- ggplot(resumen_corrup, aes(x = reduc_corrup_rec, y = mean, fill =
   ) +
   theme_minimal() +                        # puedes usar otro tema si prefieres
   theme(
-    axis.text.x = element_blank(),         # oculta los nombres en el eje x
-    axis.ticks.x = element_blank(),        # elimina las marcas del eje x
-    plot.title = element_text(hjust = 0.5, face = "bold")
+    axis.title = element_text(size = 24, color = "black"),       # títulos ejes X e Y
+    axis.text = element_text(size = 24, color = "black"),        # etiquetas de ejes
+    legend.title = element_text(size = 18, color = "black"),     # título leyenda
+    legend.text = element_text(size = 16, color = "black"),
+    plot.caption = element_text(hjust = 0, size = 16, color = "black"),
+    plot.caption.position = "plot"
   )
+graf_sitecon
 
 graf_corrup
 
 graf_justdist
 
-graf_congen
+graf_confgen
 
-graf_corrup <- graf_corrup +
-  theme(
-    plot.title = element_text(size = 26, color = "black"),       # título del gráfico
-    axis.title = element_text(size = 18, color = "black"),       # títulos ejes X e Y
-    axis.text = element_text(size = 18, color = "black"),        # etiquetas de ejes
-    legend.title = element_text(size = 18, color = "black"),     # título leyenda
-    legend.text = element_text(size = 16, color = "black")       # texto de leyenda
-  )
 
-graf_justdist <- graf_justdist +
-  theme(
-    plot.title = element_text(size = 26, color = "black"),       # título del gráfico
-    axis.title = element_text(size = 18, color = "black"),       # títulos ejes X e Y
-    axis.text = element_text(size = 18, color = "black"),        # etiquetas de ejes
-    legend.title = element_text(size = 18, color = "black"),     # título leyenda
-    legend.text = element_text(size = 16, color = "black")       # texto de leyenda
-  )
 
-graf_congen <- graf_congen +
-  theme(
-    plot.title = element_text(size = 26, color = "black"),       # título del gráfico
-    axis.title = element_text(size = 20, color = "black"),       # títulos ejes X e Y
-    axis.text = element_text(size = 20, color = "black"),        # etiquetas de ejes
-    legend.title = element_text(size = 20, color = "black"),     # título leyenda
-    legend.text = element_text(size = 18, color = "black")       # texto de leyenda
-  )
 
-ggsave("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/output/graphs/graf_corrup.png", graf_corrup, width = 6, height = 4, dpi = 100)
+ggsave("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/presentations/examen_titulo/graphs/graf_sitecon.png", graf_sitecon, width = 6, height = 3, dpi = 300)
 
-ggsave("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/output/graphs/graf_justdist.png", graf_justdist, width = 6, height = 4, dpi = 100)
+ggsave("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/presentations/examen_titulo/graphs/graf_corrup.png", graf_corrup, width = 6, height = 3, dpi = 300)
 
-ggsave("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/output/graphs/graf_congen.png", graf_congen, width = 6, height = 4, dpi = 100)
+ggsave("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/presentations/examen_titulo/graphs/graf_justdist.png", graf_justdist, width = 6, height = 3, dpi = 300)
+
+ggsave("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/presentations/examen_titulo/graphs/graf_confgen.png", graf_confgen, width = 6, height = 3, dpi = 300)
 
 
 ```
@@ -559,7 +589,7 @@ saveRDS(desempeño_simple, file = "C:/Users/jpdia/OneDrive/Documents/GitHub/tesi
  
  saveRDS(desempeño_confianza_multiple, file = "C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/input/proc/desempeño_confianza_multiple.rds")
 
-  saveRDS(inter1, file = "C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/input/proc/inter1.rds")
+ saveRDS(inter1, file = "C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/input/proc/inter1.rds")
  saveRDS(inter2, file = "C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/input/proc/inter2.rds")
  saveRDS(inter3, file = "C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/input/proc/inter3.rds")
 
@@ -762,6 +792,56 @@ coeficientes <- coeficientes +
 
 ggsave("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/output/graphs/coeficientes.png", coeficientes, width = 6, height = 4, dpi = 300)
 
+
+coeficientes <- plot_models(desempeño_confianza_multiple, inter1, inter3,
+                            rm.terms = c("sexo_mujer", "edad", "religion2", "religion3", "nivel_educ_rec", "estatus_subj2", "estatus_subj3"),
+                            axis.labels = c("Just. dist X Conf.gen", "Sit. econ X Conf. gen", "Conf. generalizada", "Just. distributiva", "Prog. corrupción", "Perc. situación económica"),
+                            axis.title = "β",
+                            legend.title = "Modelos",
+                            title = "",
+                            show.values = TRUE,
+                            m.labels = c("Modelo múltiple", "Interacción 1", "Interacción 3"),
+                            value.size = 8
+) +
+  labs(caption = "Elaboración propia basado en Latinobarómetro 2024.") +
+  theme_minimal() +
+  theme(       # título del gráfico
+    axis.title = element_text(size = 24, color = "black"),       # títulos ejes X e Y
+    axis.text = element_text(size = 24, color = "black"),        # etiquetas de ejes
+    legend.title = element_text(size = 24, color = "black"),     # título leyenda
+    legend.text = element_text(size = 24, color = "black"),
+    plot.caption = element_text(hjust = 0, size = 18, color = "black"), # El caption se va a la izquierda
+    plot.caption.position = "plot"# texto de leyenda
+  )
+
+coeficientes$data <- coeficientes$data %>% 
+  filter(!(group == "Interacción 1" & term == "perc_sitecon"))
+
+coeficientes$data <- coeficientes$data %>% 
+  filter(!(group == "Interacción 1" & term == "reduc_corrup_rec"))
+
+coeficientes$data <- coeficientes$data %>% 
+  filter(!(group == "Interacción 1" & term == "just_distr_rec"))
+
+coeficientes$data <- coeficientes$data %>% 
+  filter(!(group == "Interacción 1" & term == "conf_gen_rec"))
+
+coeficientes$data <- coeficientes$data %>% 
+  filter(!(group == "Interacción 3" & term == "perc_sitecon"))
+
+coeficientes$data <- coeficientes$data %>% 
+  filter(!(group == "Interacción 3" & term == "reduc_corrup_rec"))
+
+coeficientes$data <- coeficientes$data %>% 
+  filter(!(group == "Interacción 3" & term == "just_distr_rec"))
+
+coeficientes$data <- coeficientes$data %>% 
+  filter(!(group == "Interacción 3" & term == "conf_gen_rec"))
+
+coeficientes
+
+ggsave("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/presentations/examen_titulo/graphs/coeficientes.png", coeficientes, width = 6, height = 3, dpi = 300)
+
 ```
 
 ```{r}
@@ -875,7 +955,168 @@ tabla_desc_df <- tabla_desc_df |>
 
  saveRDS(tabla_desc_df, file = "C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/IPO/output/tables/tabla_descriptiva_final.rds")
 
+dfSummary(latbaro_descr, 
+          plain.ascii = FALSE,
+          varnumbers = F,
+          class = F,
+          valid.col = F,
+          na.col = F,
+          headings = F
+          )
 
+
+
+```
+
+
+```{r}
+
+#Bivariados sin OI
+
+# Grafico 1----
+
+
+
+resumen_confgen <- latbaro_descr %>% group_by(conf_gen_rec) %>%
+  summarise(n = n(),
+            mean = mean(confpol, na.rm = TRUE),
+            sd = sd(confpol, na.rm = TRUE),
+            se = sd / sqrt(n),
+            lower = mean - 1.96 * se,
+            upper = mean + 1.96 * se)
+
+resumen_justdist <- latbaro_descr %>% group_by(just_distr_rec) %>%
+  summarise(n = n(),
+            mean = mean(confpol, na.rm = TRUE),
+            sd = sd(confpol, na.rm = TRUE),
+            se = sd / sqrt(n),
+            lower = mean - 1.96 * se,
+            upper = mean + 1.96 * se)
+
+resumen_corrup <- latbaro_descr %>% group_by(reduc_corrup_rec) %>%
+  summarise(n = n(),
+            mean = mean(confpol, na.rm = TRUE),
+            sd = sd(confpol, na.rm = TRUE),
+            se = sd / sqrt(n),
+            lower = mean - 1.96 * se,
+            upper = mean + 1.96 * se)
+
+resumen_confgen <- latbaro_descr %>% group_by(conf_gen_rec) %>%
+  summarise(n = n(),
+            mean = mean(confpol, na.rm = TRUE),
+            sd = sd(confpol, na.rm = TRUE),
+            se = sd / sqrt(n),
+            lower = mean - 1.96 * se,
+            upper = mean + 1.96 * se)
+
+resumen_justdist <- latbaro_descr %>% group_by(just_distr_rec) %>%
+  summarise(n = n(),
+            mean = mean(confpol, na.rm = TRUE),
+            sd = sd(confpol, na.rm = TRUE),
+            se = sd / sqrt(n),
+            lower = mean - 1.96 * se,
+            upper = mean + 1.96 * se)
+
+
+graf_sitecon <- ggplot(latbaro_descr, aes(x = perc_sitecon, y = confpol)) +
+  geom_point(color = "lightgrey") +
+  geom_smooth() + #Añade la linea de tendencia, mostrando el intervalo de confianza. La banda representa la incertidumbre de la media predicha. 
+  labs(
+    x = "Perc. situación económica",
+    y = "Confianza política",
+    caption = "Elaboración propia basada en Latinobarómetro 2024."
+  ) +
+  theme_minimal() + 
+  theme(       
+    axis.title = element_text(size = 28, color = "black"),       # títulos ejes X e Y
+    axis.text = element_text(size = 28, color = "black"), 
+    plot.caption = element_text(hjust = 0, size = 20, color = "black"),
+    plot.caption.position = "plot"
+  )
+  
+graf_sitecon
+
+graf_confgen <- ggplot(resumen_confgen, aes(x = conf_gen_rec, y = mean, fill = conf_gen_rec)) +
+  geom_col() +
+  geom_errorbar(aes(ymin = lower, ymax = upper), 
+                width = 0.2, 
+                color = "black") +
+  scale_y_continuous(limits = c(0, 10)) +
+  labs(
+    x = "Confianza generalizada",                               # elimina o cambia el título del eje x
+    y = "Promedio confpol",           # título eje y
+    fill = "Confianza generalizada",
+    caption = "Elaboración propia basada en Latinobarómetro 2024." # título de la leyenda
+  ) +
+  theme_minimal()+   
+  theme(
+    axis.title = element_text(size = 26, color = "black"),       # títulos ejes X e Y
+    axis.text = element_text(size = 20, color = "black"),        # etiquetas de ejes
+    legend.position = "none",
+    plot.caption = element_text(hjust = 0, size = 18, color = "black"),
+    plot.caption.position = "plot"
+  )
+
+graf_confgen
+
+graf_justdist <- ggplot(resumen_justdist, aes(x = just_distr_rec, y = mean, fill = just_distr_rec)) +
+  geom_col() +
+   geom_errorbar(aes(ymin = lower, ymax = upper), 
+                width = 0.2, 
+                color = "black") +
+  scale_y_continuous(limits = c(0, 10)) +
+  labs(
+    x = "Justicia distributiva",                               # elimina o cambia el título del eje x
+    y = "Promedio confpol",           # título eje y
+    fill = "Justicia distributiva",
+    caption = "Elaboración propia basada en Latinobarómetro 2024."# título de la leyenda
+  ) +
+  theme_minimal() +                        # puedes usar otro tema si prefieres
+  theme(
+    axis.title = element_text(size = 26, color = "black"),       # títulos ejes X e Y
+    axis.text = element_text(size = 22, color = "black"),        # etiquetas de ejes
+    legend.position = "none",
+    plot.caption = element_text(hjust = 0, size = 18, color = "black"),
+    plot.caption.position = "plot"
+  )
+
+graf_corrup <- ggplot(resumen_corrup, aes(x = reduc_corrup_rec, y = mean, fill = reduc_corrup_rec)) +
+  geom_col() +
+   geom_errorbar(aes(ymin = lower, ymax = upper), 
+                width = 0.2, 
+                color = "black") +
+  scale_y_continuous(limits = c(0, 10)) +
+  labs(
+    x = "Progreso corrupción",                               # elimina o cambia el título del eje x
+    y = "Promedio confpol",           # título ejeY
+    caption = "Elaboración propia basada en Latinobarómetro 2024."
+  ) +
+  theme_minimal() +                        # puedes usar otro tema si prefieres
+  theme(
+    axis.title = element_text(size = 26, color = "black"),       # títulos ejes X e Y
+    axis.text = element_text(size = 22, color = "black"),        # etiquetas de ejes
+    legend.position = "none",
+    plot.caption = element_text(hjust = 0, size = 18, color = "black"),
+    plot.caption.position = "plot"
+  )
+
+
+graf_sitecon
+
+graf_corrup
+
+graf_justdist
+
+graf_confgen
+
+
+ggsave("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/presentations/examen_titulo/graphs/graf_sitecon.png", graf_sitecon, width = 6, height = 3, dpi = 300)
+
+ggsave("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/presentations/examen_titulo/graphs/graf_corrup.png", graf_corrup, width = 6, height = 3, dpi = 300)
+
+ggsave("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/presentations/examen_titulo/graphs/graf_justdist.png", graf_justdist, width = 6, height = 3, dpi = 300)
+
+ggsave("C:/Users/jpdia/OneDrive/Documents/GitHub/tesis-final/tesis-pregrado/presentations/examen_titulo/graphs/graf_confgen.png", graf_confgen, width = 6, height = 3, dpi = 300)
 
 ```
 
