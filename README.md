@@ -8,3 +8,4 @@ La presente investigación corresponde a una tesis para optar al grado de Soció
 ## Archivos
 
 - [Documento final](https://jp-diaz-c.github.io/tesis-final/tesis-pregrado/docs/index.html)
+- [Presentación Examen de Título](https://jp-diaz-c.github.io/tesis-final/tesis-pregrado/presentations/examen_titulo/examen_titulo.html#/)
